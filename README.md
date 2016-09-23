@@ -1,4 +1,4 @@
-RC
+DSS
 ==
 
 Trabalho prático de Desenvolvimento de Sistemas de Software (2016/17)
