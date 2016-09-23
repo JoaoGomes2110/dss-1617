@@ -1,7 +1,7 @@
 DSS
 ==
 
-Trabalho prático de Desenvolvimento de Sistemas de Software (2016/17)
+Trabalho prático da U.C. de Desenvolvimento de Sistemas de Software (2016/17)
 
 Mestrado Integrado em Eng. Informática - 3º ano - Universidade do Minho
 
