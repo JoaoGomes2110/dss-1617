@@ -9,11 +9,10 @@ package dividedespesa;
  *
  * @author Carlos Pereira
  */
-public class Administrador extends Utilizador {
+public class DivideDespesaFacade {
+    Apartamento apartamento;
     
-    public Administrador(String username, String password) {
-        super(username, password);
-    }
+    
     
     
     

@@ -14,6 +14,17 @@ package dividedespesa;
 public class Senhorio extends Utilizador {
     private String nome;
 
+    /**
+     *
+     * @param nome
+     * @param username
+     * @param password
+     */
+    public Senhorio(String nome, String username, String password) {
+        super(username, password);
+        this.nome = nome;
+    }
+
 
 
 }
