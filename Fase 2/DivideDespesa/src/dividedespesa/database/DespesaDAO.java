@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.Map;
@@ -52,17 +53,17 @@ public class DespesaDAO {
             PreparedStatement ps = con.prepareStatement("select * from despesa where id = ?");
             ps.setInt(1, Integer.parseInt(key.toString()));
             ResultSet rs = ps.executeQuery();
-            GregorianCalendar dataEmissao = new GregorianCalendar(), dataLimite = new GregorianCalendar(), dataPagamento = new GregorianCalendar();
+            SimpleDateFormat dataEmissao = new SimpleDateFormat(), dataLimite = new SimpleDateFormat(), dataPagamento = new SimpleDateFormat();
    
             if(rs.next())
-                dataEmissao.setTime(rs.getDate("data_emissao"));
-                dataLimite.setTime(rs.getDate("data_limite"));
-                dataPagamento.setTime(rs.getDate("data_pagamento"));
-                c = new Despesa(rs.getString("info"), rs.getInt("id"),rs.getDouble("numero_moradores"), dataEmissao, dataLimite, dataPagamento, rs.getString("tipo"));
+                dataEmissao.format(rs.getDate("data_emissao"));
+                dataLimite.format(rs.getDate("data_limite"));
+                dataPagamento.format(rs.getDate("data_pagamento"));
+                d = new Despesa(rs.getInt("id"), rs.getString("info"), rs.getDouble("valor"), rs.getString("tipo"), dataEmissao, dataLimite, dataPagamento);
             
             con.close();
         } catch (SQLException e) {}
-        return c;
+        return d;
     }
     
 }
