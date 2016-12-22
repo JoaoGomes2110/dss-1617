@@ -8,7 +8,7 @@ package dividedespesa;
 
 
 import java.util.Arrays;
-import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
@@ -67,8 +67,8 @@ public class Apartamento {
     }
     
     public void adicionarDespesaPorPagar(String username, String info, double valor,
-                                         String tipo, SimpleDateFormat dataEmissao,
-                                         SimpleDateFormat dataLimite) {
+                                         String tipo, Date dataEmissao,
+                                         Date dataLimite) {
         
         moradores.get(username).adicionarDespesaPorPagar(info, valor, tipo, dataEmissao,
                                                          dataLimite);
@@ -76,7 +76,7 @@ public class Apartamento {
     }
     
     public void cobrarRenda() {
-        SimpleDateFormat date = new SimpleDateFormat();
+        Date date = new Date();
         
         for (String user : moradores.keySet()) {
             for (Quarto qrt : quartos.values()) {
@@ -100,7 +100,19 @@ public class Apartamento {
         }
     }
     
-    
+    public void alterarQuartosMorador(Morador m, List<Integer> numQuartos) {
+        // remove morador de todos os quartos
+        for (Quarto q : quartos.values()) {
+            if (q.getMoradores().contains(m)) {
+                q.getMoradores().remove(m);
+            }
+        }
+        
+        // adiciona morador aos quartos pretendidos
+        for (Integer i : numQuartos) {
+            quartos.get(i).addMorador(m.getUsername());
+        }
+    }
     
     // Getters e Setters
     

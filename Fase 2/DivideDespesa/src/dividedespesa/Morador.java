@@ -6,7 +6,7 @@
 package dividedespesa;
 
 import java.util.Arrays;
-import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import java.util.HashMap;
 import static java.util.stream.Collectors.toMap;
@@ -23,8 +23,8 @@ public class Morador extends Utilizador {
     private Conta contaCorrente;
     private Map<Integer, Despesa> despesasPorPagar;
     private Map<Integer, Despesa> despesasPagas;
-    private SimpleDateFormat dataEntrada;
-    private SimpleDateFormat dataSaida;
+    private Date dataEntrada;
+    private Date dataSaida;
 
     // Construtores
     
@@ -34,13 +34,13 @@ public class Morador extends Utilizador {
         contaCorrente = new Conta();
         despesasPorPagar = new HashMap<>();
         despesasPagas = new HashMap<>();
-        dataEntrada = new SimpleDateFormat(); // data atual
+        dataEntrada = new Date(); // data atual
         dataSaida = null;
     }
     
     public Morador(String username, String password, String nome, Conta contaCorrente, 
                    Map<Integer, Despesa> despesasPorPagar, Map<Integer, Despesa> despesasPagas, 
-                   SimpleDateFormat dataEntrada, SimpleDateFormat dataSaida) {
+                   Date dataEntrada, Date dataSaida) {
         super(username, password);
         this.setNome(nome);
         this.contaCorrente = contaCorrente.clone();
@@ -72,15 +72,15 @@ public class Morador extends Utilizador {
     }
     
     public void adicionarDespesaPorPagar(String info, double valor, String tipo,
-                                         SimpleDateFormat dataEmissao,
-                                         SimpleDateFormat dataLimite) {
+                                         Date dataEmissao,
+                                         Date dataLimite) {
         int id = despesasPorPagar.size() + 1;
         Despesa desp = new Despesa(id, info, valor, tipo, dataEmissao, dataLimite, null);
         despesasPorPagar.put(desp.hashCode(), desp.clone());
     }
     
     public void adicionarDespesaPaga(Despesa d) {
-        SimpleDateFormat gc = new SimpleDateFormat(); // data atual
+        Date gc = new Date(); // data atual
         
         d.setDataPagamento(gc);
         despesasPagas.put(d.hashCode(), d.clone());
@@ -93,7 +93,7 @@ public class Morador extends Utilizador {
     
     
     public void cobrarRenda(double preco, int numQrt, int numMrds,
-                            SimpleDateFormat data) {
+                            Date data) {
         String info = "RENDA mes ";
        
         double parte = preco/((double) numMrds);
@@ -132,9 +132,9 @@ public class Morador extends Utilizador {
         return temp;
     }
     
-    public SimpleDateFormat getDataEntrada() { return dataEntrada; }
+    public Date getDataEntrada() { return dataEntrada; }
 
-    public SimpleDateFormat getDataSaida() { return dataSaida; }
+    public Date getDataSaida() { return dataSaida; }
     
     public void setNome(String nome) { this.nome = nome; }
     
@@ -154,11 +154,11 @@ public class Morador extends Utilizador {
                                           .collect(toMap(Despesa::hashCode, Despesa::clone));        
     }
     
-    public void setDataEntrada(SimpleDateFormat dataEntrada) {
+    public void setDataEntrada(Date dataEntrada) {
         this.dataEntrada = dataEntrada;
     }
 
-    public void setDataSaida(SimpleDateFormat dataSaida) {
+    public void setDataSaida(Date dataSaida) {
         this.dataSaida = dataSaida;
     }
     

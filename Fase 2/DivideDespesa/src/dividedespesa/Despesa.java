@@ -6,7 +6,7 @@
 package dividedespesa;
 
 import java.util.Arrays;
-import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -30,9 +30,9 @@ public class Despesa {
     private String info;
     private double valor;
     private TipoDespesa tipo;
-    private SimpleDateFormat dataEmissao;
-    private SimpleDateFormat dataLimite;
-    private SimpleDateFormat dataPagamento; // null para despesas por pagar
+    private Date dataEmissao;
+    private Date dataLimite;
+    private Date dataPagamento; // null para despesas por pagar
     
     
     //Construtores
@@ -47,8 +47,8 @@ public class Despesa {
     }
     
     public Despesa (int id, String info, double valor, String t,
-                    SimpleDateFormat dataEmissao, SimpleDateFormat dataLimite,
-                    SimpleDateFormat dataPagamento) {
+                    Date dataEmissao, Date dataLimite,
+                    Date dataPagamento) {
         
         this.id = id;
         this.info = new String(info);
@@ -113,19 +113,19 @@ public class Despesa {
         return tipo.toString();
     }
     
-    public SimpleDateFormat getDataEmissao() {
+    public Date getDataEmissao() {
         return dataEmissao;
     }
     
-    public SimpleDateFormat getDataLimite() {
+    public Date getDataLimite() {
         return dataLimite;
     }
     
-    public SimpleDateFormat getDataPagamento() {
+    public Date getDataPagamento() {
         return dataPagamento;
     }
     
-    public void setDataPagamento(SimpleDateFormat g) { // confirmar gregorian
+    public void setDataPagamento(Date g) { // confirmar gregorian
         dataPagamento = g;
     }
     
