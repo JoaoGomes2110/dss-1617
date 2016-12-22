@@ -26,6 +26,7 @@ public class Despesa {
     
     // Variáveis de instância
     
+    private int id;
     private String info;
     private double valor;
     private TipoDespesa tipo;
@@ -37,6 +38,7 @@ public class Despesa {
     //Construtores
     
     public Despesa (Despesa desp) {
+        this.id = desp.getId();
         this.info = desp.getInfo();
         this.valor = desp.getValor();
         this.tipo = desp.getTipoDespesa();
@@ -44,11 +46,11 @@ public class Despesa {
         this.dataLimite = desp.getDataLimite();
     }
     
-    public Despesa (String info, double valor, String t,
+    public Despesa (int id, String info, double valor, String t,
                     SimpleDateFormat dataEmissao,
                     SimpleDateFormat dataLimite) {
         
-        
+        this.id = id;
         this.info = new String(info);
         this.valor = valor;
         this.tipo = returnTipo(t);
@@ -83,6 +85,10 @@ public class Despesa {
     }
     
     //Getters e Setters
+    
+    public int getId() {
+        return id;
+    }
     
     public String getInfo() {
         return new String(info);
@@ -143,7 +149,7 @@ public class Despesa {
         
         Despesa desp = (Despesa) o;
         
-        return (dataLimite.equals(desp.getDataLimite()) &&
+        return (id == desp.getId() && dataLimite.equals(desp.getDataLimite()) &&
                 dataEmissao.equals(desp.getDataEmissao()) &&
                 valor == desp.getValor() && this.equalsTipo(desp.getTipoDespesa()));
     }

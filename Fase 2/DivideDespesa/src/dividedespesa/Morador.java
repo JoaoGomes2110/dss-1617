@@ -74,8 +74,8 @@ public class Morador extends Utilizador {
     public void adicionarDespesaPorPagar(String info, double valor, String tipo,
                                          SimpleDateFormat dataEmissao,
                                          SimpleDateFormat dataLimite) {
-       
-        Despesa desp = new Despesa(info, valor, tipo, dataEmissao, dataLimite);
+        int id = despesasPorPagar.size() + 1;
+        Despesa desp = new Despesa(id, info, valor, tipo, dataEmissao, dataLimite);
         despesasPorPagar.put(desp.hashCode(), desp.clone());
     }
     
