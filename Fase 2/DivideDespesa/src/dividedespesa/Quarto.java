@@ -5,8 +5,8 @@
  */
 package dividedespesa;
 
-import java.util.Map;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -19,17 +19,15 @@ public class Quarto {
     private int numQuarto; // número do quarto
     private int numMoradores;
     private double preco;
+    private List<String> moradores;
 
-
-
-
-    
     // Construtores
     
-    public Quarto (int numQuarto, int numMoradores, double preco) {
+    public Quarto (int numQuarto, int numMoradores, double preco, List<String> moradores) {
         this.numQuarto = numQuarto;
         this.numMoradores = numMoradores;
         this.preco = preco;
+        this.moradores = moradores;
     }
     
     
@@ -37,6 +35,7 @@ public class Quarto {
         this.numQuarto = q.getNumQuarto();
         this.numMoradores = q.getNumMoradores();
         this.preco = q.getPreco();
+        this.moradores = q.getMoradores();
     }
     
     // Métodos de instância
@@ -55,6 +54,10 @@ public class Quarto {
     
     public double getPreco() {
         return preco;
+    }
+
+    public List<String> getMoradores() {
+        return moradores;
     }
     
     public void setNumQuarto(int numQuarto) {
