@@ -19,7 +19,7 @@ public class Quarto {
     private int numQuarto; // número do quarto
     private int numMoradores;
     private double preco;
-    private Map<String, Morador> moradores; // username - Morador
+    private List<QuartoMorador> moradores;
     
     // Construtores
     
