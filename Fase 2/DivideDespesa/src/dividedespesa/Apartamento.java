@@ -47,6 +47,16 @@ public class Apartamento {
 
     // Métodos de instância
     
+    public void addMorador(String nome, String username, String password, 
+                           List<Integer> numQuartos) {
+        Morador novo = new Morador(username, password, nome);
+        
+        moradores.put(username, novo);
+        
+        for (Integer i : numQuartos) {
+            quartos.get(i).addMorador(novo);
+        }
+    }
     
     // Getters e Setters
     

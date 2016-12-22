@@ -5,8 +5,9 @@
  */
 package dividedespesa;
 
-import java.util.Map;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -16,32 +17,30 @@ public class Quarto {
     
     // Variáveis de instância
     
-    private int numQuarto; // número do quarto
-    private int numMoradores;
+    private int numQuarto;          // número do quarto
     private double preco;
-
-
-
-
+    private List<String> moradores; // lista dos usernames dos moradores do quarto
     
     // Construtores
     
-    public Quarto (int numQuarto, int numMoradores, double preco) {
+    public Quarto (int numQuarto, double preco, List<String> moradores) {
         this.numQuarto = numQuarto;
-        this.numMoradores = numMoradores;
         this.preco = preco;
+        this.moradores = new ArrayList<>(moradores);
     }
     
     
     public Quarto (Quarto q) {
-        this.numQuarto = q.getNumQuarto();
-        this.numMoradores = q.getNumMoradores();
-        this.preco = q.getPreco();
+        numQuarto = q.getNumQuarto();
+        preco = q.getPreco();
+        moradores = q.getMoradores();
     }
     
     // Métodos de instância
     
-    
+    public void addMorador() {
+        
+    }
     
     // Getters e Setters
     
@@ -49,24 +48,24 @@ public class Quarto {
         return numQuarto;
     }
     
-    public int getNumMoradores() {
-        return numMoradores;
-    }
-    
     public double getPreco() {
         return preco;
+    }
+    
+    public List<String> getMoradores() {
+        return new ArrayList<>(moradores);
     }
     
     public void setNumQuarto(int numQuarto) {
         this.numQuarto = numQuarto;
     }
-    
-    public void setNumMoradores(int numMoradores) {
-        this.numMoradores = numMoradores;
-    }
-    
+   
     public void setPreco(double preco) {
         this.preco = preco;
+    }
+    
+    public void setMoradores(List<Morador> moradores) {
+        this.moradores = moradores.stream().map(Morador::clone).collect(Collectors.toList());
     }
     
     //Métodos complementares comuns
@@ -82,7 +81,7 @@ public class Quarto {
         
         Quarto q = (Quarto) o;
         
-        return (q.getNumQuarto() == numQuarto && q.getNumMoradores() == numMoradores && q.getPreco() == preco);
+        return (q.getNumQuarto() == numQuarto && q.getPreco() == preco);
     }
     
     @Override
