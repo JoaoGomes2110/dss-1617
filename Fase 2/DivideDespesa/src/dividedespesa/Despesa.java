@@ -5,6 +5,7 @@
  */
 package dividedespesa;
 
+import java.util.Arrays;
 import java.util.GregorianCalendar;
 
 /**
@@ -16,16 +17,17 @@ import java.util.GregorianCalendar;
 
 public class Despesa {
     
+    // Variáveis de instância
     
-    //Variáveis de instância
-    
+    private String info;
     private double valor;
     private TipoDespesa tipo;
     private GregorianCalendar dataEmissao;
     private GregorianCalendar dataLimite;
+    private GregorianCalendar dataPagamento; // null para despesas por pagar
     
     private enum TipoDespesa {
-        RECORRENTE, EXTRAORDINARIA, RENDA
+        RECORRENTE, EXTRAORDINARIA
     }
     
     //Construtores
@@ -46,6 +48,10 @@ public class Despesa {
         this.dataEmissao = dataEmissao;
         this.dataLimite = dataLimite;
     }
+    
+    public boolean equalsTipo (TipoDespesa t) {
+        return tipo == t;
+    }    
     
     //Gets e Sets
     
@@ -80,14 +86,19 @@ public class Despesa {
         return dataLimite;
     }
     
+    public void setDataPagamento(GregorianCalendar g) { // confirmar gregorian
+        dataPagamento = g;
+    }
+    
     
     //Métodos complementares comuns
     
-    
-    public boolean equalsTipo (TipoDespesa t) {
-        return tipo == t;
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(new Object[] {info, valor, tipo, dataEmissao, dataLimite, dataPagamento});
     }
-    
+        
+    @Override
     public boolean equals (Object o) {
         if (this == o) {
             return true;
@@ -102,6 +113,10 @@ public class Despesa {
         return (dataLimite.equals(desp.getDataLimite()) &&
                 dataEmissao.equals(desp.getDataEmissao()) &&
                 valor == desp.getValor() && this.equalsTipo(desp.getTipoDespesa()));
+    }
+    
+    public Despesa clone() {
+        return new Despesa(this);
     }
 } 
 

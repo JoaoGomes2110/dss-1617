@@ -10,62 +10,60 @@ import java.util.HashMap;
 
 /**
  *
- * @author Carlos Pereira
+ * @author Carlos Pereira, João Gomes, João Pires Barreira, João Reis
  */
 public class Quarto {
     
-    //Variáveis de instância
+    // Variáveis de instância
     
-    private Map<Integer, Morador> moradores;
-    private double preco;
-    private int num;
+    private int numQuarto; // número do quarto
+    private int numMoradores;
+    private double preco;    
 
     
-    //Construtores
+    // Construtores
     
-    public Quarto (int num, double preco) {
+    public Quarto (int numQuarto, int numMoradores, double preco) {
+        this.numQuarto = numQuarto;
+        this.numMoradores = numMoradores;
         this.preco = preco;
-        this.num = num;
-        this.moradores = new HashMap<>();
     }
     
     
-    public Quarto (Quarto qrt) {
-        this.preco = qrt.getPreco();
-        this.num = qrt.getNum();
-        this.moradores = qrt.getMoradores();
+    public Quarto (Quarto q) {
+        this.numQuarto = q.getNumQuarto();
+        this.numMoradores = q.getNumMoradores();
+        this.preco = q.getPreco();
     }
     
-    //Métodos de instância
+    // Métodos de instância
     
     
     
-    //Gets e Sets
+    // Getters e Setters
     
-    public int getNum() {
-        return num;
+    public int getNumQuarto() {
+        return numQuarto;
     }
     
+    public int getNumMoradores() {
+        return numMoradores;
+    }
     
     public double getPreco() {
         return preco;
     }
     
-    
-    public Map<Integer, Morador> getMoradores() {
-        return new HashMap<>(moradores);
+    public void setNumQuarto(int numQuarto) {
+        this.numQuarto = numQuarto;
     }
     
-    public void setNum(int num) {
-        this.num = num;
+    public void setNumMoradores(int numMoradores) {
+        this.numMoradores = numMoradores;
     }
     
     public void setPreco(double preco) {
         this.preco = preco;
-    }
-    
-    public void setMoradores(Map<Integer, Morador> m) {
-        moradores = m;
     }
     
     //Métodos complementares comuns
@@ -81,6 +79,11 @@ public class Quarto {
         
         Quarto q = (Quarto) o;
         
-        return (q.getNum() == num);
+        return (q.getNumQuarto() == numQuarto && q.getNumMoradores() == numMoradores && q.getPreco() == preco);
+    }
+    
+    @Override
+    public Quarto clone() {
+        return new Quarto(this);
     }
 }

@@ -7,39 +7,53 @@ package dividedespesa;
 
 /**
  *
- * @author Carlos Pereira
+ * @author Carlos Pereira, João Gomes, João Pires Barreira, João Reis
  */
 public class Conta {
     
-    //Variáveis de instância
-    private double valor;
-    
-    //Construtores
+    // Variáveis de instância
+    private double saldo;
+     
+    // Construtores
     
     public Conta() {
-        valor = 0;
+        saldo = 0;
     }
     
     public Conta(Conta c) {
-        valor = c.getValor();
+        saldo = c.getSaldo();
     }
     
-    //Métodos de instância
-    
-    
-    
-    
-    //Gets e Sets
-    
-    public double getValor() {
-        return this.valor;
+    // Métodos de instância
+   
+    public boolean debito(double valor) {
+        if (saldo >= valor) {
+            saldo -= valor;
+            return true;
+        } else {
+            // saldo insuficiente
+            return false;
+        }
     }
     
-    public void setValor(double v) {
-        valor = v;
+    public void credito(double valor) {
+        saldo += valor;
     }
     
-    //Métodos complementares comuns
+    // Getters e Setters
     
+    public double getSaldo() {
+        return this.saldo;
+    }
+    
+    public void setSaldo(double valor) {
+        saldo = valor;
+    }
+    
+    // Métodos complementares comuns
+    
+    public Conta clone() {
+        return new Conta(this);
+    }
     
 }

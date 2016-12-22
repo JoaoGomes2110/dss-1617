@@ -7,15 +7,13 @@ package dividedespesa;
 
 /**
  *
- * @author Carlos Pereira
+ * @author Carlos Pereira, João Gomes, João Pires Barreira, João Reis
  */
 public class Administrador extends Utilizador {
     
     public Administrador(String username, String password) {
         super(username, password);
     }
-    
-    
     
     
 }

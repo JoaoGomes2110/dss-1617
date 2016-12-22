@@ -6,74 +6,86 @@
 package dividedespesa;
 
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
+import static java.util.stream.Collectors.toMap;
 
 /**
- *
- * @author Carlos Pereira
+ * @author Carlos Pereira, João Gomes, João Pires Barreira, João Reis
  */
 
 public class Apartamento {
     
-    //Variáveis de instância
-    private Map<Integer, Quarto> quartos;
+    // Variáveis de instância
     private String info;
-    
-    
-    //Construtores
+    private Map<Integer, Quarto> quartos;
+    private Map<Integer, Morador> moradores;
+
+    // Construtores
     
     public Apartamento () {
-        quartos = new HashMap<>();
         info = "";
+        quartos = new HashMap<>();
+        moradores = new HashMap<>();
     }
-    
     
     public Apartamento (Apartamento apt) {
-        quartos = new HashMap<> (apt.getQuartos());
         info = apt.getInfo();
+        quartos = apt.getQuartos();
+        moradores = apt.getMoradores();
     }
-    
 
-    //Métodos de instância
-    
-    public void criaQuarto(int num, double preco) {
-        quartos.put(quartos.size(), new Quarto(num, preco));
-    }
+    // Métodos de instância
     
     
-    public void adicionarMorador(int num_qrt, String nome,
-                                 String username, String password) {
-        Morador morador = new Morador(nome, username, password);
+    // Getters e Setters
     
-        quartos.put(num_qrt, morador);
-        
-        
-    }
-    
-    
-    //Gets e Sets
+    public String getInfo() { return info; }    
     
     public Map<Integer, Quarto> getQuartos() {
-        return quartos;
+        Map<Integer, Quarto> temp = new HashMap<>();
+        
+        for (Quarto q : quartos.values()) {
+            temp.put(q.hashCode(), q.clone());
+        }
+        
+        return temp;
     }
 
-    
-    public String getInfo() {
-        return info;
+    public Map<Integer, Morador> getMoradores() {
+        Map<Integer, Morador> temp = new HashMap<>();
+        
+        for (Morador m : moradores.values()) {
+            temp.put(m.hashCode(), m.clone());
+        }
+        
+        return temp;
     }
+   
+    public void setInfo(String info) { this.info = info; }    
     
     public void setQuartos(Map<Integer, Quarto> quartos) {
-        this.quartos = quartos;
+        this.quartos = quartos.values()
+                              .stream()
+                              .collect(toMap(Quarto::hashCode, Quarto::clone));  
     }
     
-    public void setInfo(String info) {
-        this.info = info;
-    }
-    
+    public void setMoradores(Map<Integer, Morador> Moradores) {
+        this.moradores = moradores.values()
+                                  .stream()
+                                  .collect(toMap(Morador::hashCode, Morador::clone));  
+    }    
+   
     
     //Métodos complementares comuns
 
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(new Object[] {info, quartos, moradores});
+    }
+    
+    @Override
     public boolean equals(Object o) {
         
         if (this == o) {
@@ -88,6 +100,11 @@ public class Apartamento {
 
         return (quartos.equals(apt.getQuartos()) &&
                 info.equals(apt.getInfo()));
+    }
+    
+    @Override
+    public Apartamento clone() {
+        return new Apartamento(this);
     }
       
 }
