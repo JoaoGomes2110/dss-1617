@@ -9,6 +9,7 @@ package dividedespesa;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
 import static java.util.stream.Collectors.toMap;
 
 /**
@@ -27,11 +28,12 @@ public class Apartamento {
 
     // Construtores
     
-    public Apartamento () {
-        info = "";
-        senhorio = new Senhorio();
-        
-        quartos = new HashMap<>();
+    public Apartamento (String info, Senhorio senhorio, Administrador admin,
+                        Map<Integer, Quarto> quartos) {
+        this.info = info;
+        this.senhorio = senhorio.clone();
+        this.admin = admin.clone();
+        this.setQuartos(quartos);
         moradores = new HashMap<>();
         moradoresAntigos = new HashMap<>();
     }
@@ -89,19 +91,19 @@ public class Apartamento {
     public void setQuartos(Map<Integer, Quarto> quartos) {
         this.quartos = quartos.values()
                               .stream()
-                              .collect(toMap(Quarto::hashCode, Quarto::clone));  
+                              .collect(toMap(Quarto::getNumQuarto, Quarto::clone));  
     }
     
     public void setMoradores(Map<Integer, Morador> Moradores) {
         this.moradores = moradores.values()
                                   .stream()
-                                  .collect(toMap(Morador::hashCode, Morador::clone));  
+                                  .collect(toMap(Morador::getUsername, Morador::clone));  
     }
     
     public void setMoradoresAntigos(Map<Integer, Morador> moradoresAntigos) {
         this.moradoresAntigos = moradoresAntigos.values()
                                                 .stream()
-                                                .collect(toMap(Morador::hashCode, Morador::clone));
+                                                .collect(toMap(Morador::getUsername, Morador::clone));
     }
     
     //Métodos complementares comuns

@@ -26,13 +26,12 @@ public class Conta {
     
     // Métodos de instância
    
-    public boolean debito(double valor) {
+    public boolean debito(double valor) throws SaldoInsuficienteException {
         if (saldo >= valor) {
             saldo -= valor;
             return true;
         } else {
-            // saldo insuficiente
-            return false;
+            throw new SaldoInsuficienteException();
         }
     }
     
