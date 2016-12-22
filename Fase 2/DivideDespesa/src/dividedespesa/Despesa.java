@@ -59,16 +59,12 @@ public class Despesa {
         dataPagamento = null;
     }
     
-
-    
-    
     //Métodos de instância
     
     public boolean equalsTipo(TipoDespesa t) {
         return tipo == t;
     }  
-    
-    
+
     public TipoDespesa returnTipo(String t) {
         TipoDespesa tipo;
         
@@ -123,6 +119,10 @@ public class Despesa {
     
     public SimpleDateFormat getDataLimite() {
         return dataLimite;
+    }
+    
+    public SimpleDateFormat getDataPagamento() {
+        return dataPagamento;
     }
     
     public void setDataPagamento(SimpleDateFormat g) { // confirmar gregorian
