@@ -41,9 +41,19 @@ public class UserAdministrador extends javax.swing.JDialog {
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton1.setText("Ver Despesas");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton2.setText("Adicionar Despesa");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton3.setText("Sair");
@@ -102,6 +112,16 @@ public class UserAdministrador extends javax.swing.JDialog {
        }
        else System.out.print("não");
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        VerDespesas dialog = new VerDespesas(new javax.swing.JFrame(),true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        AdicionarDespesa dialog = new AdicionarDespesa(new javax.swing.JFrame(),true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

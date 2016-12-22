@@ -5,6 +5,11 @@
  */
 package pkginterface;
 
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.YES_NO_OPTION;
+
+
+
 /**
  *
  * @author Gomes
@@ -32,10 +37,9 @@ public class VerDespesas extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jComboBox2 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -49,41 +53,51 @@ public class VerDespesas extends javax.swing.JDialog {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText(" Tipo");
 
-        jRadioButton3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jRadioButton3.setText("Ver Despesas por Pagar");
-
-        jRadioButton4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jRadioButton4.setText("Ver Despesas Pagas");
+        jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton1.setText("Ver");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton2.setText("Cancelar");
+        jComboBox2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ver Despesas Por Pagar", "Ver Despesas Pagas" }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(36, 36, 36)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap()
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(20, 20, 20)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButton4)
-                            .addComponent(jRadioButton3))))
-                .addContainerGap(112, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(36, 36, 36)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 89, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -93,20 +107,15 @@ public class VerDespesas extends javax.swing.JDialog {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
-                        .addComponent(jRadioButton3)))
-                .addGap(18, 18, 18)
-                .addComponent(jRadioButton4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addGap(29, 29, 29)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(18, 18, 18))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
+                .addGap(17, 17, 17))
         );
 
         jComboBox1.getAccessibleContext().setAccessibleName("");
@@ -124,6 +133,30 @@ public class VerDespesas extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+         VerDespesasPorPagar dialog1 = new VerDespesasPorPagar(new javax.swing.JFrame(),true);
+         VerDespesasPagas dialog2 = new VerDespesasPagas(new javax.swing.JFrame(),true);
+         String s;
+         s = String.valueOf(jComboBox2.getSelectedItem());
+         if(s.equals("Ver Despesas Por Pagar"))
+             dialog1.setVisible(true);
+         if(s.equals("Ver Despesas Pagas"))
+             dialog2.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int opcao = JOptionPane.showConfirmDialog(this,"Deseja Cancelar?","Confirmaçao",YES_NO_OPTION);
+        if(opcao == 0){
+            System.out.print("sim");
+            this.dispose();
+        }
+        else System.out.print("não");
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+            
+    }//GEN-LAST:event_jComboBox2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -171,18 +204,9 @@ public class VerDespesas extends javax.swing.JDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }

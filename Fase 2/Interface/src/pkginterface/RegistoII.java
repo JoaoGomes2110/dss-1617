@@ -1,5 +1,8 @@
 package pkginterface;
 
+import java.awt.event.WindowEvent;
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,8 +18,8 @@ public class RegistoII extends javax.swing.JDialog {
     /**
      * Creates new form RegistoII
      */
-    public RegistoII(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public RegistoII(java.awt.Frame Registo, boolean modal) {
+        super(Registo, modal);
         initComponents();
     }
 
@@ -30,73 +33,75 @@ public class RegistoII extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Registo(II)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 3, 18))); // NOI18N
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText(" Morada");
-
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel2.setText(" Quartos");
+        jLabel2.setText("Nº Quartos");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(102, 0, 0));
         jLabel3.setText("        0");
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton1.setText("Continuar");
+        jButton1.setText("Terminar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton2.setText("Cancelar");
+        jButton2.setText("Retroceder");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jButton3.setText("Adicionar Quartos");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(44, 44, 44)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton3)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(35, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addGap(37, 37, 37)
+                    .addComponent(jLabel3)
+                    .addComponent(jButton3))
+                .addGap(51, 51, 51)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -112,6 +117,30 @@ public class RegistoII extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int opcao = JOptionPane.showConfirmDialog(this,"Deseja retroceder?","Confirmaçao",JOptionPane.YES_NO_OPTION);
+        if(opcao == 0){
+            System.out.print("sim");
+            this.dispose();
+        }
+        else System.out.print("não");
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        UserSenhorio dialog = new UserSenhorio(new javax.swing.JFrame(),true);
+        int opcao = JOptionPane.showConfirmDialog(this,"Deseja Terminar?","Confirmaçao",JOptionPane.YES_NO_OPTION);
+        if(opcao == 0){
+            System.out.print("sim");
+            System.gc();
+            java.awt.Window win[] = java.awt.Window.getWindows();  
+            win[1].dispose(); 
+            win[1]=null;
+            this.dispose();
+            dialog.setVisible(true);
+        }
+        else System.out.print("não");
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -139,7 +168,7 @@ public class RegistoII extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(RegistoII.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -158,10 +187,9 @@ public class RegistoII extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

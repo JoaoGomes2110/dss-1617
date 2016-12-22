@@ -5,6 +5,9 @@
  */
 package pkginterface;
 
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.YES_NO_OPTION;
+
 /**
  *
  * @author Gomes
@@ -14,8 +17,8 @@ public class Conta extends javax.swing.JDialog {
     /**
      * Creates new form Saldo
      */
-    public Conta(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public Conta(java.awt.Frame UserMorador, boolean modal) {
+        super(UserMorador, modal);
         initComponents();
     }
 
@@ -51,12 +54,27 @@ public class Conta extends javax.swing.JDialog {
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton1.setText("Carregar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton2.setText("Consultar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton3.setText("Retroceder");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -98,6 +116,25 @@ public class Conta extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        int opcao = JOptionPane.showConfirmDialog(this,"Deseja retroceder","Confirmação",YES_NO_OPTION);
+        if(opcao == 0){
+            System.out.print("sim");
+            this.dispose();
+        }
+        else System.out.print("não");
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Carregar dialog = new Carregar(new javax.swing.JFrame(),true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Consultar dialog = new Consultar(new javax.swing.JFrame(),true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

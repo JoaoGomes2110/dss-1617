@@ -5,6 +5,9 @@
  */
 package pkginterface;
 
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.YES_NO_OPTION;
+
 /**
  *
  * @author Gomes
@@ -14,8 +17,8 @@ public class PagarDespesa extends javax.swing.JDialog {
     /**
      * Creates new form PagarDespesa
      */
-    public PagarDespesa(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public PagarDespesa(java.awt.Frame UserMorador, boolean modal) {
+        super(UserMorador, modal);
         initComponents();
     }
 
@@ -47,6 +50,11 @@ public class PagarDespesa extends javax.swing.JDialog {
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton1.setText("Confirmar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -103,6 +111,15 @@ public class PagarDespesa extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int opcao = JOptionPane.showConfirmDialog(this,"Deseja Confirmar?","Confirmação",YES_NO_OPTION);
+        if(opcao == 0){
+            System.out.println("sim");
+            this.dispose();
+        }
+        else System.out.print("não");
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

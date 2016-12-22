@@ -5,6 +5,9 @@
  */
 package pkginterface;
 
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.YES_NO_OPTION;
+
 /**
  *
  * @author Gomes
@@ -56,9 +59,19 @@ public class AdicionarMorador extends javax.swing.JDialog {
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton1.setText("Cancelar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton2.setText("Adicionar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText("Username");
@@ -144,6 +157,24 @@ public class AdicionarMorador extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       int opcao = JOptionPane.showConfirmDialog(this,"Deseja Cancelar?","Confirmação",JOptionPane.YES_NO_OPTION);
+       if(opcao == 0){
+           System.out.print("sim");
+           this.dispose();
+       }
+       else System.out.print("não");
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int opcao = JOptionPane.showConfirmDialog(this,"Deseja Adiciona?","Confirmação",YES_NO_OPTION);
+        if(opcao == 0){
+            System.out.print("sim");
+            this.dispose();
+        }
+        else System.out.print("não");
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -5,6 +5,9 @@
  */
 package pkginterface;
 
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.YES_NO_OPTION;
+
 /**
  *
  * @author Gomes
@@ -14,8 +17,8 @@ public class RemoverMorador extends javax.swing.JDialog {
     /**
      * Creates new form RemoverMorador
      */
-    public RemoverMorador(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public RemoverMorador(java.awt.Frame UserSenhorio, boolean modal) {
+        super(UserSenhorio, modal);
         initComponents();
     }
 
@@ -53,6 +56,11 @@ public class RemoverMorador extends javax.swing.JDialog {
 
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -104,6 +112,15 @@ public class RemoverMorador extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       int opcao = JOptionPane.showConfirmDialog(this,"Deseja Cancelar?","Confirmação",YES_NO_OPTION);
+       if(opcao == 0){
+           System.out.print("sim");
+           this.dispose();
+       }
+       else System.out.print("não");
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

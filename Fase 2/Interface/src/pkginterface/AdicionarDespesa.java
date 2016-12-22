@@ -5,6 +5,8 @@
  */
 package pkginterface;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Gomes
@@ -65,10 +67,20 @@ public class AdicionarDespesa extends javax.swing.JDialog {
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton1.setText("Cancelar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton2.setText("Confirmar");
         jButton2.setToolTipText("");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jCalendar1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
@@ -149,6 +161,24 @@ public class AdicionarDespesa extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       int opcao = JOptionPane.showConfirmDialog(this,"Deseja Cancelar?","Confirmação",JOptionPane.YES_NO_OPTION);
+       if(opcao == 0){
+           System.out.print("sim");
+           this.dispose();
+       }
+       else System.out.print("não");        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       int opcao = JOptionPane.showConfirmDialog(this,"Deseja Confirmar?","Confirmação",JOptionPane.YES_NO_OPTION);
+       if(opcao == 0){
+           System.out.print("sim");
+           this.dispose();
+       }
+       else System.out.print("não");
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

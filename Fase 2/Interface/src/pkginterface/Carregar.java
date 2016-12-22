@@ -5,6 +5,9 @@
  */
 package pkginterface;
 
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.YES_NO_OPTION;
+
 /**
  *
  * @author Gomes
@@ -14,8 +17,8 @@ public class Carregar extends javax.swing.JDialog {
     /**
      * Creates new form Carregar
      */
-    public Carregar(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public Carregar(java.awt.Frame Conta, boolean modal) {
+        super(Conta, modal);
         initComponents();
     }
 
@@ -100,7 +103,12 @@ public class Carregar extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        int opcao = JOptionPane.showConfirmDialog(this,"Deseja retroceder","Confirmação",YES_NO_OPTION);
+        if(opcao == 0){
+            System.out.print("sim");
+            this.dispose();
+        }
+        else System.out.print("não");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

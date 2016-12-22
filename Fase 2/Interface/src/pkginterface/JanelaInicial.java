@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
  *
  * @author Gomes
  */
-public class JanelaInicial extends javax.swing.JFrame {
+public class JanelaInicial extends javax.swing.JFrame  {
 
     /**
      * Creates new form JanelaInicial
@@ -40,6 +40,11 @@ public class JanelaInicial extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton2.setText("Login");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton3.setText("Registar Apartamento");
@@ -103,7 +108,8 @@ public class JanelaInicial extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        Registo dialog = new Registo(new javax.swing.JFrame(), true);
+        dialog.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -114,6 +120,11 @@ public class JanelaInicial extends javax.swing.JFrame {
        }
        else System.out.print("não");
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+     Login dialog = new Login(new javax.swing.JFrame(), true); 
+     dialog.setVisible(true); 
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
