@@ -5,6 +5,7 @@
  */
 package dividedespesa;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -67,17 +68,18 @@ public class DivideDespesa {
         return apartamento.getMoradores().get(m.hashCode()).getDespesasPagas().values();
     }
     
-    public Utilizador registaApartamento(Apartamento apt) {
-        if (utilizador != null && utilizador.getUsername().equals("root")) {
-            apartamento = apt.clone();
+    public void registaApartamento(String info, Senhorio senhorio,
+                                         Administrador admin, Map<Integer, 
+                                         Double> precoQuartos ) {
+        Map<Integer, Quarto> quartos = new HashMap<>();
+        
+        for (Integer i : precoQuartos.keySet()) {
+            Quarto novo = new Quarto(i, precoQuartos.get(i), new ArrayList<>());
+                                   
+            quartos.put(i, novo);
         }
         
-        // gerar credenciais para administrador
-        String admin_usr = "admin12345";
-        String admin_pwd = "admin12345";
-        Administrador admin = new Administrador(admin_usr, admin_pwd);
-        utilizadores.put(admin.getUsername(), admin);
-        return admin;
+        apartamento = new Apartamento(info, senhorio, admin, quartos);
     }
     
     public void adicionarMorador(Morador m, Quarto q) throws UtilizadorExistenteException {
