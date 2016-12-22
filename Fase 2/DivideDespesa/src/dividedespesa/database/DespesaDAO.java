@@ -58,7 +58,7 @@ public class DespesaDAO {
                 dataEmissao.setTime(rs.getDate("data_emissao"));
                 dataLimite.setTime(rs.getDate("data_limite"));
                 dataPagamento.setTime(rs.getDate("data_pagamento"));
-                c = new Despesa(rs.getInt("id"),rs.getDouble("numero_moradores"), dataEmissao, dataLimite, dataPagamento, rs.getString("tipo"));
+                c = new Despesa(rs.getString("info"), rs.getInt("id"),rs.getDouble("numero_moradores"), dataEmissao, dataLimite, dataPagamento, rs.getString("tipo"));
             
             con.close();
         } catch (SQLException e) {}

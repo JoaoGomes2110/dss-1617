@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
@@ -26,10 +27,9 @@ public class QuartoDAO implements Map<Integer, Quarto>{
     
     public void toDB(Quarto quarto) throws SQLException{
         Connection c = Connect.connect();
-        PreparedStatement st = c.prepareStatement("INSERT INTO quarto VALUES(?,?,?)");
+        PreparedStatement st = c.prepareStatement("INSERT INTO quarto VALUES(?,?)");
         
         st.setInt(1,quarto.getNumQuarto());
-        st.setInt(2,quarto.getNumMoradores());
         st.setDouble(2,quarto.getPreco());
                 
         st.executeUpdate();
@@ -82,7 +82,7 @@ public class QuartoDAO implements Map<Integer, Quarto>{
             if(rs.isBeforeFirst()) {
                 r = true;
             }
-            
+     
             con.close();
         } catch (SQLException e) {}
         return r;
@@ -113,16 +113,15 @@ public class QuartoDAO implements Map<Integer, Quarto>{
                                  "WHERE MQ.quarto = ?");
             ps.setInt(1, Integer.parseInt(key.toString()));
             ResultSet rs_moradorcliente = ps.executeQuery();
-            ArrayList<String> listamorador = new ArrayList<>();
-            while(rs_moradorcliente.next()){
-
-                listamorador.add(rs_moradorcliente.getString("morador"));
+            
+            Set<String> listamorador = new HashSet<>();
+            
+            if(rs_morador.next()){
+                while(rs_moradorcliente.next())
+                   listamorador.add(rs_moradorcliente.getString("morador"));
+            
+                c = new Quarto(rs_morador.getInt("id"),rs_morador.getInt("preco"),listamorador);
             }
-            
-            
-            if(rs_morador.next())
-                c = new Quarto(rs_morador.getInt("id"),rs_morador.getInt("numero_moradores"),rs_morador.getInt("preco"),listamorador);
-            
             con.close();
         } catch (SQLException e) {}
         return c;
