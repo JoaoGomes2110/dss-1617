@@ -23,7 +23,7 @@ public class Apartamento {
     // Variáveis de instância
     private String info;
     private Senhorio senhorio;
-    private Administrador admin;
+    private Administrador administrador;
     private Map<Integer, Quarto> quartos;
     private Map<String, Morador> moradores;
     private Map<String, Morador> moradoresAntigos;
@@ -31,11 +31,11 @@ public class Apartamento {
     
     // Construtores
     
-    public Apartamento (String info, Senhorio senhorio, Administrador admin,
+    public Apartamento (String info, Senhorio senhorio, Administrador administrador,
                         Map<Integer, Quarto> quartos) {
         this.info = info;
         this.senhorio = senhorio.clone();
-        this.admin = admin.clone();
+        this.administrador = administrador.clone();
         this.setQuartos(quartos);
         moradores = new HashMap<>();
         moradoresAntigos = new HashMap<>();
@@ -135,7 +135,7 @@ public class Apartamento {
     }
     
     public Administrador getAdministrador() {
-        return admin.clone();
+        return administrador.clone();
     }
    
     public void setInfo(String info) {

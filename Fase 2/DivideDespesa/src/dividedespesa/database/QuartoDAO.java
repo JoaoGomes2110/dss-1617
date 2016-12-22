@@ -5,11 +5,13 @@
  */
 package dividedespesa.database;
 
+import dividedespesa.Morador;
 import dividedespesa.Quarto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -29,10 +31,7 @@ public class QuartoDAO implements Map<Integer, Quarto>{
         st.setInt(1,quarto.getNumQuarto());
         st.setInt(2,quarto.getNumMoradores());
         st.setDouble(2,quarto.getPreco());
-        
-
                 
-        
         st.executeUpdate();
         c.close();
     }
@@ -85,13 +84,14 @@ public class QuartoDAO implements Map<Integer, Quarto>{
             }
             
             con.close();
-        } catch (SQLException | ClassNotFoundException e) {}
+        } catch (SQLException e) {}
         return r;
     }
 
     @Override
     public boolean containsValue(Object value) {
         //return containsKey()
+        return false;
     }
 
     @Override
@@ -100,15 +100,31 @@ public class QuartoDAO implements Map<Integer, Quarto>{
         Connection con = null;
         try {
             con = Connect.connect();
+            
+            // OBTEM DADOS DO QUARTO
             PreparedStatement ps = con.prepareStatement("select * from quarto where id = ?");
             ps.setInt(1, Integer.parseInt(key.toString()));
-            ResultSet rs = ps.executeQuery();
+            ResultSet rs_morador = ps.executeQuery();
             
-            if(rs.next())
-                c = new Quarto(rs.getInt("id"),rs.getInt("numero_moradores"),rs.getInt("preco"));
+            //OBTEM DADOS DO MORADOR QUE ESTA NAQUELE QUARTO
+            con.prepareStatement("SELECT morador \n" +
+                                 "	FROM moradorquarto AS MQ INNER JOIN quarto AS M\n" +
+                                 "		ON MQ.quarto = M.id\n" +
+                                 "WHERE MQ.quarto = ?");
+            ps.setInt(1, Integer.parseInt(key.toString()));
+            ResultSet rs_moradorcliente = ps.executeQuery();
+            ArrayList<String> listamorador = new ArrayList<>();
+            while(rs_moradorcliente.next()){
+
+                listamorador.add(rs_moradorcliente.getString("morador"));
+            }
+            
+            
+            if(rs_morador.next())
+                c = new Quarto(rs_morador.getInt("id"),rs_morador.getInt("numero_moradores"),rs_morador.getInt("preco"),listamorador);
             
             con.close();
-        } catch (SQLException |ClassNotFoundException ex) {}
+        } catch (SQLException e) {}
         return c;
     }
 
@@ -124,8 +140,8 @@ public class QuartoDAO implements Map<Integer, Quarto>{
 
     @Override
     public Quarto remove(Object key) {
-        Connection con = Connect.connect();
-        PreparedStatement ps = con.prepareStatement("DELETE FROM Morador WHERE username = ?")
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     @Override
