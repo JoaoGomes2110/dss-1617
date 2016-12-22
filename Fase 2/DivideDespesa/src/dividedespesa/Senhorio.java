@@ -17,11 +17,17 @@ public class Senhorio extends Utilizador {
     
     private String nome;
 
+    
     // Construtores
     
     public Senhorio(String nome, String username, String password) {
         super(username, password);
         this.nome = nome;
+    }
+    
+    public Senhorio(Senhorio s) {
+        super(s.getUsername(), s.getPassword());
+        nome = s.getNome();
     }
     
     // Métodos de instância
@@ -56,6 +62,28 @@ public class Senhorio extends Utilizador {
     
     public void setNome(String nome) {
         this.nome = nome;
+    }
+    
+    //Métodos complementares comuns
+    
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        
+        if (this.getClass() != o.getClass() || o == null) {
+            return false;
+        }
+        
+        Senhorio s = (Senhorio) o;
+        
+        return (s.getNome().equals(this.getNome()) &&
+                s.getUsername().equals(this.getUsername()) &&
+                s.getPassword().equals(this.getPassword()));
+    }
+    
+    public Senhorio clone() {
+        return new Senhorio(this);
     }
 
 

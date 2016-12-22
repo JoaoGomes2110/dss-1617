@@ -5,6 +5,9 @@
  */
 package dividedespesa;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  *
  * @author Carlos Pereira, João Gomes, João Pires Barreira, João Reis
@@ -29,6 +32,32 @@ public class Utilizador {
     }    
     
     // Métodos de instância
+    
+
+    public void validaUsername(String user) throws CarateresEspeciaisException {
+        Pattern ptrn = Pattern.compile(" /#$%&><-,");
+        Matcher mtchr = ptrn.matcher(user);
+        
+        if (mtchr.find()) {
+            throw new CarateresEspeciaisException();
+        }
+    }
+    
+    
+    public void validaPassword(String pswrd) throws CarateresEspeciaisException {
+        Pattern ptrn = Pattern.compile(" /#$%&><-,");
+        Matcher mtchr = ptrn.matcher(pswrd);
+        
+        if (mtchr.find()) {
+            throw new CarateresEspeciaisException();
+        }
+    }
+    
+    public boolean login(Utilizador u) {
+        return username.equals(u.getUsername()) &&
+               password.equals(u.getPassword());
+    }
+    
     
     
     // Getters e setters

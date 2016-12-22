@@ -11,9 +11,40 @@ package dividedespesa;
  */
 public class Administrador extends Utilizador {
     
+    
+    //Construtores
+    
     public Administrador(String username, String password) {
         super(username, password);
     }
     
+    public Administrador(Administrador admin) {
+        super(admin.getUsername(), admin.getPassword());
+    }
     
+    
+    //Métodos complementares comuns
+    
+    public boolean equals(Object o) {
+        
+        if (this == o) {
+            return true;
+        }
+        
+        if (this.getClass() != o.getClass() || o == null) {
+            return false;
+        }
+        
+        Administrador admin = (Administrador) o;
+        
+        String user = this.getUsername();
+        String pswd = this.getPassword();
+        
+        return user.equals(admin.getUsername()) &&
+               pswd.equals(admin.getPassword());
+    }
+    
+    public Administrador clone() {
+        return new Administrador(this);
+    }   
 }

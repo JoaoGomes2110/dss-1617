@@ -6,7 +6,7 @@
 package dividedespesa;
 
 import java.util.Arrays;
-import java.util.GregorianCalendar;
+import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.HashMap;
 import static java.util.stream.Collectors.toMap;
@@ -23,8 +23,8 @@ public class Morador extends Utilizador {
     private Conta contaCorrente;
     private Map<Integer, Despesa> despesasPorPagar;
     private Map<Integer, Despesa> despesasPagas;
-    private GregorianCalendar dataEntrada;
-    private GregorianCalendar dataSaida;
+    private SimpleDateFormat dataEntrada;
+    private SimpleDateFormat dataSaida;
 
     // Construtores
     
@@ -34,13 +34,13 @@ public class Morador extends Utilizador {
         contaCorrente = new Conta();
         despesasPorPagar = new HashMap<>();
         despesasPagas = new HashMap<>();
-        dataEntrada = new GregorianCalendar(); // data atual
+        dataEntrada = new SimpleDateFormat(); // data atual
         dataSaida = null;
     }
     
     public Morador(String username, String password, String nome, Conta contaCorrente, 
                    Map<Integer, Despesa> despesasPorPagar, Map<Integer, Despesa> despesasPagas, 
-                   GregorianCalendar dataEntrada, GregorianCalendar dataSaida) {
+                   SimpleDateFormat dataEntrada, SimpleDateFormat dataSaida) {
         super(username, password);
         this.setNome(nome);
         this.contaCorrente = contaCorrente.clone();
@@ -71,8 +71,16 @@ public class Morador extends Utilizador {
         }     
     }
     
+    public void adicionarDespesaPorPagar(String info, double valor, String tipo,
+                                         SimpleDateFormat dataEmissao,
+                                         SimpleDateFormat dataLimite) {
+       
+        Despesa desp = new Despesa(info, valor, tipo, dataEmissao, dataLimite);
+        despesasPorPagar.put(desp.hashCode(), desp.clone());
+    }
+    
     public void adicionarDespesaPaga(Despesa d) {
-        GregorianCalendar gc = new GregorianCalendar(); // data atual
+        SimpleDateFormat gc = new SimpleDateFormat(); // data atual
         
         d.setDataPagamento(gc);
         despesasPagas.put(d.hashCode(), d.clone());
@@ -83,11 +91,26 @@ public class Morador extends Utilizador {
         contaCorrente.credito(valor);
     }
     
+    
+    public void cobrarRenda(double preco, int numQrt, int numMrds,
+                            SimpleDateFormat data) {
+        String info = "RENDA mes ";
+       
+        double parte = preco/((double) numMrds);
+        
+        adicionarDespesaPorPagar(info, parte, "RENDA", data, data);
+    }
+    
+    
     // Getters e setters
     
-    public String getNome() { return nome; }
+    public String getNome() {
+        return nome;
+    }
     
-    public Conta getContaCorrente() { return contaCorrente.clone(); }
+    public Conta getContaCorrente() {
+        return contaCorrente.clone();
+    }
     
     public Map<Integer, Despesa> getDespesasPorPagar() {
         Map<Integer, Despesa> temp = new HashMap<>();
@@ -109,9 +132,9 @@ public class Morador extends Utilizador {
         return temp;
     }
     
-    public GregorianCalendar getDataEntrada() { return dataEntrada; }
+    public SimpleDateFormat getDataEntrada() { return dataEntrada; }
 
-    public GregorianCalendar getDataSaida() { return dataSaida; }
+    public SimpleDateFormat getDataSaida() { return dataSaida; }
     
     public void setNome(String nome) { this.nome = nome; }
     
@@ -131,11 +154,11 @@ public class Morador extends Utilizador {
                                           .collect(toMap(Despesa::hashCode, Despesa::clone));        
     }
     
-    public void setDataEntrada(GregorianCalendar dataEntrada) {
+    public void setDataEntrada(SimpleDateFormat dataEntrada) {
         this.dataEntrada = dataEntrada;
     }
 
-    public void setDataSaida(GregorianCalendar dataSaida) {
+    public void setDataSaida(SimpleDateFormat dataSaida) {
         this.dataSaida = dataSaida;
     }
     

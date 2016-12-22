@@ -5,9 +5,8 @@
  */
 package dividedespesa;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -19,14 +18,14 @@ public class Quarto {
     
     private int numQuarto;          // número do quarto
     private double preco;
-    private List<String> moradores; // lista dos usernames dos moradores do quarto
+    private Set<String> moradores; // lista dos usernames dos moradores do quarto
     
     // Construtores
     
-    public Quarto (int numQuarto, double preco, List<String> moradores) {
+    public Quarto (int numQuarto, double preco, Set<String> moradores) {
         this.numQuarto = numQuarto;
         this.preco = preco;
-        this.moradores = new ArrayList<>(moradores);
+        this.moradores = new HashSet<>(moradores);
     }
     
     
@@ -38,9 +37,22 @@ public class Quarto {
     
     // Métodos de instância
     
-    public void addMorador() {
-        
+    public void addMorador(String morador) {
+        if (!moradores.contains(morador)) {
+            moradores.add(morador);
+        }
     }
+    
+    
+    public boolean containsUsername(String user) {
+        return moradores.contains(user);
+    }
+    
+    public int getNumMoradores() {
+        return moradores.size();
+    }
+    
+
     
     // Getters e Setters
     
@@ -52,8 +64,8 @@ public class Quarto {
         return preco;
     }
     
-    public List<String> getMoradores() {
-        return new ArrayList<>(moradores);
+    public Set<String> getMoradores() {
+        return new HashSet<>(moradores);
     }
     
     public void setNumQuarto(int numQuarto) {
@@ -64,8 +76,8 @@ public class Quarto {
         this.preco = preco;
     }
     
-    public void setMoradores(List<Morador> moradores) {
-        this.moradores = moradores.stream().map(Morador::clone).collect(Collectors.toList());
+    public void setMoradores(Set<String> moradores) {
+        this.moradores = new HashSet<>(moradores);
     }
     
     //Métodos complementares comuns

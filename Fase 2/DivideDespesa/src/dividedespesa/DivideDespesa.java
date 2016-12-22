@@ -5,13 +5,11 @@
  */
 package dividedespesa;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import static java.util.stream.Collectors.toMap;
 
 /**
  *
@@ -38,43 +36,52 @@ public class DivideDespesa {
     
     // Métodos de instância
     
-    public void registaMorador(String username, String password, String nome, List<Integer>) {
+    public void addMorador(String username, String password, String nome,
+                               List<Integer> qrts) {
         
-        Morador novo = new Morador(username, password, nome);
-        
-        if (apartamento.getMoradores().containsValue(novo)) {
-            throw new UtilizadorExistenteException();
+        try {
+            apartamento.addMorador(nome, username, password, qrts);
+        } catch (MoradorExistenteException e) {
+            
         }
-        
-        apartamento.put(novo.hashCode(), novo);
+
     }
     
     public void autenticarUtilizador(String username, String password) throws SemAutorizacaoException {
+        Utilizador u = new Utilizador(username, password);
         
-        if (apartamento.get)
-        
-        if (utilizadores.containsKey(username) && utilizadores.get(username).getPassword().equals(password)) {
-            utilizador = utilizadores.get(username).clone();
+        if (u.login(apartamento.getSenhorio())) {
+            utilizador = u;
         } else {
-            throw new SemAutorizacaoException();
+            if (u.login(apartamento.getAdministrador())) {
+                utilizador = u;
+            } else {
+                if (apartamento.getMoradores().containsKey(username)) {
+                    if (apartamento.getMoradores().get(username).getPassword().equals(password)) {
+                       utilizador = u; 
+                    }
+                }
+            }
         }
+        
+        throw new SemAutorizacaoException();
     }
     
     public Collection<Despesa> verDespesasPorPagar(Morador m) {
-        return apartamento.getMoradores().get(m.hashCode()).getDespesasPorPagar().values();
+        return apartamento.getMoradores().get(m.getUsername()).getDespesasPorPagar().values();
     }
     
     public Collection<Despesa> verDespesasPagas(Morador m) {
-        return apartamento.getMoradores().get(m.hashCode()).getDespesasPagas().values();
+        return apartamento.getMoradores().get(m.getUsername()).getDespesasPagas().values();
     }
     
     public void registaApartamento(String info, Senhorio senhorio,
-                                         Administrador admin, Map<Integer, 
-                                         Double> precoQuartos ) {
+                                   Administrador admin, Map<Integer, 
+                                   Double> precoQuartos ) {
         Map<Integer, Quarto> quartos = new HashMap<>();
         
         for (Integer i : precoQuartos.keySet()) {
-            Quarto novo = new Quarto(i, precoQuartos.get(i), new ArrayList<>());
+            Quarto novo = new Quarto(i, precoQuartos.get(i), new HashSet<>());
                                    
             quartos.put(i, novo);
         }
@@ -82,36 +89,19 @@ public class DivideDespesa {
         apartamento = new Apartamento(info, senhorio, admin, quartos);
     }
     
-    public void adicionarMorador(String nome, String username, String password, 
-                                 List<Integer> quartos) {
-        try {
-            apartamento.addMorador(String nome, String username, String password, 
-                                   List<Integer> quartos);    
-        } catch (UtilizadorExistenteException e) {
-            
-        }
-    }
-    
-    public boolean cobrarRenda() {
-        double total = 0;
-        
-        GregorianCalendar gc = new GregorianCalendar(); // data atual
-                
-        for (Morador m : apartamento.getMoradores().values()) {
-            for ()) {
-                
-                total += (q.getPreco() / q.getNumMoradores());
-            }
-            
-            
-        }
+    public void cobrarRenda() {
+        apartamento.cobrarRenda();
     }
     
     // Getters e setters
     
-    public Apartamento getApartamento() { return apartamento.clone(); }
+    public Apartamento getApartamento() {
+        return apartamento.clone(); 
+    }
   
-    public Utilizador getUtilizador() { return utilizador.clone(); }
+    public Utilizador getUtilizador() {
+        return utilizador.clone();
+    }
     
     public void setApartamento(Apartamento apartamento) {
         this.apartamento = apartamento.clone();

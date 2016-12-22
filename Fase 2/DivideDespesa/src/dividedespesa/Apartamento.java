@@ -6,7 +6,9 @@
 package dividedespesa;
 
 
+
 import java.util.Arrays;
+import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +28,7 @@ public class Apartamento {
     private Map<String, Morador> moradores;
     private Map<String, Morador> moradoresAntigos;
 
+    
     // Construtores
     
     public Apartamento (String info, Senhorio senhorio, Administrador admin,
@@ -45,18 +48,50 @@ public class Apartamento {
         moradoresAntigos = apt.getMoradoresAntigos();
     }
 
+    
     // Métodos de instância
     
     public void addMorador(String nome, String username, String password, 
-                           List<Integer> numQuartos) {
-        Morador novo = new Morador(username, password, nome);
+                           List<Integer> numQuartos) throws MoradorExistenteException {
         
-        moradores.put(username, novo);
+        if (moradores.containsKey(username)) {
+            throw new MoradorExistenteException();
+        } else {
+            Morador novo = new Morador(username, password, nome);
+            moradores.put(username, novo);
         
-        for (Integer i : numQuartos) {
-            quartos.get(i).addMorador(novo);
+            for (Integer i : numQuartos) {
+                quartos.get(i).addMorador(username);
+            }
         }
     }
+    
+    public void adicionarDespesaPorPagar(String username, String info, double valor,
+                                         String tipo, SimpleDateFormat dataEmissao,
+                                         SimpleDateFormat dataLimite) {
+        
+        moradores.get(username).adicionarDespesaPorPagar(info, valor, tipo, dataEmissao,
+                                                         dataLimite);
+        
+    }
+    
+    public void cobrarRenda() {
+        SimpleDateFormat date = new SimpleDateFormat();
+        
+        for (String user : moradores.keySet()) {
+            for (Quarto qrt : quartos.values()) {
+                if (qrt.containsUsername(user)) {
+                    moradores.get(user).cobrarRenda(qrt.getPreco(),
+                                                    qrt.getNumQuarto(),
+                                                    qrt.getNumMoradores(),
+                                                    date);
+                }
+            }
+        }    
+    }
+
+    
+    
     
     // Getters e Setters
     
@@ -74,24 +109,33 @@ public class Apartamento {
         return temp;
     }
 
-    public Map<Integer, Morador> getMoradores() {
-        Map<Integer, Morador> temp = new HashMap<>();
+    public Map<String, Morador> getMoradores() {
+        Map<String, Morador> temp = new HashMap<>();
         
         for (Morador m : moradores.values()) {
-            temp.put(m.hashCode(), m.clone());
+            temp.put(m.getUsername(), m.clone());
         }
         
         return temp;
     }
     
-    public Map<Integer, Morador> getMoradoresAntigos() {
-        Map<Integer, Morador> temp = new HashMap<>();
+    public Map<String, Morador> getMoradoresAntigos() {
+        Map<String, Morador> temp = new HashMap<>();
         
         for (Morador m : moradoresAntigos.values()) {
-            temp.put(m.hashCode(), m.clone());
+            temp.put(m.getUsername(), m.clone());
         }
         
         return temp;
+    }
+    
+    
+    public Senhorio getSenhorio() {
+        return senhorio.clone();
+    }
+    
+    public Administrador getAdministrador() {
+        return admin.clone();
     }
    
     public void setInfo(String info) {

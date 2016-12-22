@@ -7,15 +7,12 @@ package dividedespesa;
 
 /**
  *
- * @author JPB
+ * @author Carlos Pereira
  */
 class SemAutorizacaoException extends Exception {
-   
+
     public SemAutorizacaoException() {
-       super();
-   }
-  
-   public SemAutorizacaoException(String mensagem) {
-       super(mensagem);
-   }    
+        super();
+    }
+    
 }
