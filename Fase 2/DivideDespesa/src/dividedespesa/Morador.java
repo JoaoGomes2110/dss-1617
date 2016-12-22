@@ -75,7 +75,7 @@ public class Morador extends Utilizador {
                                          SimpleDateFormat dataEmissao,
                                          SimpleDateFormat dataLimite) {
         int id = despesasPorPagar.size() + 1;
-        Despesa desp = new Despesa(id, info, valor, tipo, dataEmissao, dataLimite);
+        Despesa desp = new Despesa(id, info, valor, tipo, dataEmissao, dataLimite, null);
         despesasPorPagar.put(desp.hashCode(), desp.clone());
     }
     

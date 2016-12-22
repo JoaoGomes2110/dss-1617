@@ -47,8 +47,8 @@ public class Despesa {
     }
     
     public Despesa (int id, String info, double valor, String t,
-                    SimpleDateFormat dataEmissao,
-                    SimpleDateFormat dataLimite) {
+                    SimpleDateFormat dataEmissao, SimpleDateFormat dataLimite,
+                    SimpleDateFormat dataPagamento) {
         
         this.id = id;
         this.info = new String(info);
