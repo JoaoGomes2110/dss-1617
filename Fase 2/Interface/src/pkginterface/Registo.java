@@ -5,6 +5,8 @@
  */
 package pkginterface;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Gomes
@@ -60,6 +62,11 @@ public class Registo extends javax.swing.JDialog {
 
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -120,6 +127,15 @@ public class Registo extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       int opcao = JOptionPane.showConfirmDialog(this,"Deseja Cancelar Registo?","Confirmação",JOptionPane.YES_NO_OPTION);
+       if(opcao == 0){
+           System.out.print("sim");
+           System.exit(1); 
+       }
+       else System.out.print("não");
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

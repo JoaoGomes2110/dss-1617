@@ -5,6 +5,8 @@
  */
 package pkginterface;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Gomes
@@ -105,7 +107,12 @@ public class JanelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+       int opcao = JOptionPane.showConfirmDialog(this,"Deseja Sair?","Confirmação",JOptionPane.YES_NO_OPTION);
+       if(opcao == 0){
+           System.out.print("sim");
+           System.exit(1); 
+       }
+       else System.out.print("não");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
