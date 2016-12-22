@@ -24,11 +24,14 @@ public class QuartoDAO implements Map<Integer, Quarto>{
     
     public void toDB(Quarto quarto) throws SQLException{
         Connection c = Connect.connect();
-        PreparedStatement st = c.prepareStatement("INSERT INTO quarto VALUES(?,?)");
+        PreparedStatement st = c.prepareStatement("INSERT INTO quarto VALUES(?,?,?)");
         
         st.setInt(1,quarto.getNumQuarto());
         st.setInt(2,quarto.getNumMoradores());
         st.setDouble(2,quarto.getPreco());
+        
+
+                
         
         st.executeUpdate();
         c.close();
