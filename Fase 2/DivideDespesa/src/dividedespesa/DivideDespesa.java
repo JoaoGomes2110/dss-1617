@@ -82,10 +82,12 @@ public class DivideDespesa {
         apartamento = new Apartamento(info, senhorio, admin, quartos);
     }
     
-    public void adicionarMorador(Morador m, Quarto q) throws UtilizadorExistenteException {
-        if (apartamento.getMoradores().containsKey(m.hashCode())) {
-            throw new UtilizadorExistenteException();
-        } else {
+    public void adicionarMorador(String nome, String username, String password, 
+                                 List<Integer> quartos) {
+        try {
+            apartamento.addMorador(String nome, String username, String password, 
+                                   List<Integer> quartos);    
+        } catch (UtilizadorExistenteException e) {
             
         }
     }
