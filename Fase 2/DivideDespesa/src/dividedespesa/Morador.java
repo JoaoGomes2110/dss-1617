@@ -63,9 +63,10 @@ public class Morador extends Utilizador {
     // Métodos de instância
     
     public void pagarDespesa(Despesa d) throws SaldoInsuficienteException {
-        if (contaCorrente.debito(d.getValor())) {
-            despesasPagas.put(d.hashCode(), d.clone());
-            despesasPorPagar.remove(d.hashCode(), d.clone());    
+        if (contaCorrente.getSaldo() >= d.getValor()) {
+            contaCorrente.debito(d.getValor());
+            despesasPagas.put(d.getId(), d.clone());
+            despesasPorPagar.remove(d.getId(), d.clone());    
         } else {
             throw new SaldoInsuficienteException();
         }     
@@ -76,15 +77,15 @@ public class Morador extends Utilizador {
                                          Date dataLimite) {
         int id = despesasPorPagar.size() + 1;
         Despesa desp = new Despesa(id, info, valor, tipo, dataEmissao, dataLimite, null);
-        despesasPorPagar.put(desp.hashCode(), desp.clone());
+        despesasPorPagar.put(desp.getId(), desp.clone());
     }
     
     public void adicionarDespesaPaga(Despesa d) {
-        Date gc = new Date(); // data atual
+        Date data = new Date(); // data atual
         
-        d.setDataPagamento(gc);
-        despesasPagas.put(d.hashCode(), d.clone());
-        despesasPorPagar.remove(d.hashCode());
+        d.setDataPagamento(data);
+        despesasPagas.put(d.getId(), d.clone());
+        despesasPorPagar.remove(d.getId());
     }
     
     public void carregarConta(double valor) {

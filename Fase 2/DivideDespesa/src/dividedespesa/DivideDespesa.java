@@ -93,6 +93,10 @@ public class DivideDespesa {
         apartamento.cobrarRenda();
     }
     
+    public void alteraRendaQuarto(int numQuarto, double valor) {
+        apartamento.alteraRendaQuarto(numQuarto, valor);
+    }
+    
     // Getters e setters
     
     public Apartamento getApartamento() {

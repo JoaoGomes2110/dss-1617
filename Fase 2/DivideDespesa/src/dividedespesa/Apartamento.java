@@ -114,6 +114,10 @@ public class Apartamento {
         }
     }
     
+    public void alteraRendaQuarto(int numQuarto, double valor) {
+        quartos.get(numQuarto).setPreco(valor);
+    }
+    
     // Getters e Setters
     
     public String getInfo() { 
