@@ -19,6 +19,10 @@ public class Senhorio extends Utilizador {
 
     // Construtores
     
+    public Senhorio() {
+        
+    }
+    
     public Senhorio(String nome, String username, String password) {
         super(username, password);
         this.nome = nome;

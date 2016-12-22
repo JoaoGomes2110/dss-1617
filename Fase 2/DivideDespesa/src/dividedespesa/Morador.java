@@ -5,13 +5,10 @@
  */
 package dividedespesa;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toMap;
 
 /**
@@ -26,21 +23,29 @@ public class Morador extends Utilizador {
     private Conta contaCorrente;
     private Map<Integer, Despesa> despesasPorPagar;
     private Map<Integer, Despesa> despesasPagas;
-    private List<Quarto> quartos;
     private GregorianCalendar dataEntrada;
     private GregorianCalendar dataSaida;
 
     // Construtores
     
+    public Morador(String username, String password, String nome) {
+        super(username, password);
+        this.setNome(nome);
+        contaCorrente = new Conta();
+        despesasPorPagar = new HashMap<>();
+        despesasPagas = new HashMap<>();
+        dataEntrada = new GregorianCalendar(); // data atual
+        dataSaida = null;
+    }
+    
     public Morador(String username, String password, String nome, Conta contaCorrente, 
                    Map<Integer, Despesa> despesasPorPagar, Map<Integer, Despesa> despesasPagas, 
-                   List<Quarto> quartos, GregorianCalendar dataEntrada, GregorianCalendar dataSaida) {
+                   GregorianCalendar dataEntrada, GregorianCalendar dataSaida) {
         super(username, password);
         this.setNome(nome);
         this.contaCorrente = contaCorrente.clone();
         this.setDespesasPorPagar(despesasPorPagar);
         this.setDespesasPagas(despesasPagas);
-        this.setQuartos(quartos);
         this.setDataEntrada(dataEntrada);
         this.setDataSaida(dataSaida);
     }
@@ -51,13 +56,8 @@ public class Morador extends Utilizador {
         contaCorrente = m.getContaCorrente();
         despesasPorPagar = m.getDespesasPorPagar();
         despesasPagas = m.getDespesasPagas();
-        quartos = m.getQuartos();
         dataEntrada = m.getDataEntrada();
         dataSaida = m.getDataSaida();
-    }
-        
-    public boolean validaMorador(Utilizador morador) {
-        return true;
     }
     
     // Métodos de instância
@@ -72,11 +72,7 @@ public class Morador extends Utilizador {
     }
     
     public void adicionarDespesaPaga(Despesa d) {
-        GregorianCalendar gc = new GregorianCalendar();            
-        String ano = String.valueOf(gc.get(GregorianCalendar.YEAR));
-        String mes = String.valueOf(gc.get(GregorianCalendar.MONTH));            
-        String dia = String.valueOf(gc.get(GregorianCalendar.DAY_OF_MONTH));
-        gc.set(Integer.getInteger(ano), Integer.getInteger(mes), Integer.getInteger(dia));
+        GregorianCalendar gc = new GregorianCalendar(); // data atual
         
         d.setDataPagamento(gc);
         despesasPagas.put(d.hashCode(), d.clone());
@@ -113,10 +109,6 @@ public class Morador extends Utilizador {
         return temp;
     }
     
-    public List<Quarto> getQuartos() {
-        return quartos.stream().map(Quarto::clone).collect(Collectors.toList());
-    }
-    
     public GregorianCalendar getDataEntrada() { return dataEntrada; }
 
     public GregorianCalendar getDataSaida() { return dataSaida; }
@@ -139,11 +131,6 @@ public class Morador extends Utilizador {
                                           .collect(toMap(Despesa::hashCode, Despesa::clone));        
     }
     
-    public void setQuartos(List<Quarto> quartos) {
-        this.quartos = quartos.stream().map(Quarto::clone)
-                                       .collect(Collectors.toList());
-    }
-    
     public void setDataEntrada(GregorianCalendar dataEntrada) {
         this.dataEntrada = dataEntrada;
     }
@@ -156,7 +143,7 @@ public class Morador extends Utilizador {
     
     @Override
     public int hashCode() {
-        return Arrays.hashCode(new Object[] {nome, contaCorrente, despesasPorPagar, despesasPagas, quartos, dataEntrada, dataSaida});
+        return Arrays.hashCode(new Object[] {nome, contaCorrente, despesasPorPagar, despesasPagas, dataEntrada, dataSaida});
     }
     
     @Override

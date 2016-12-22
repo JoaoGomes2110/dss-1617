@@ -6,6 +6,7 @@
 package dividedespesa;
 
 import java.util.Collection;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,32 +20,37 @@ public class DivideDespesa {
     
     // Variáveis de instância
     
-    Apartamento apartamento;              // apartamento registado no sistema
-    Utilizador utilizador;                // utilizar com sessão iniciada
-    Map<String, Utilizador> utilizadores; // map dos utilizadores e respetivos usernames
+    Apartamento apartamento; // apartamento registado no sistema
+    Utilizador utilizador;   // utilizar com sessão iniciada
     
     // Construtores
     
     public DivideDespesa() {
         apartamento = null;
         utilizador = new Utilizador("root", "root");
-        utilizadores = new HashMap<>();
     }
     
     public DivideDespesa(DivideDespesa dd) {
         apartamento = dd.getApartamento();
         utilizador = dd.getUtilizador();
-        utilizadores = dd.getUtilizadores();
     }
     
     // Métodos de instância
     
-    public void registaUtilizador(String username, String password) {
-        Utilizador novo = new Utilizador(username, password);
-        utilizadores.put(username, novo);
+    public void registaMorador(String username, String password, String nome, List<Integer>) {
+        
+        Morador novo = new Morador(username, password, nome);
+        
+        if (apartamento.getMoradores().containsValue(novo)) {
+            throw new UtilizadorExistenteException();
+        }
+        
+        apartamento.put(novo.hashCode(), novo);
     }
     
     public void autenticarUtilizador(String username, String password) throws SemAutorizacaoException {
+        
+        if (apartamento.get)
         
         if (utilizadores.containsKey(username) && utilizadores.get(username).getPassword().equals(password)) {
             utilizador = utilizadores.get(username).clone();
@@ -82,21 +88,26 @@ public class DivideDespesa {
         }
     }
     
+    public boolean cobrarRenda() {
+        double total = 0;
+        
+        GregorianCalendar gc = new GregorianCalendar(); // data atual
+                
+        for (Morador m : apartamento.getMoradores().values()) {
+            for ()) {
+                
+                total += (q.getPreco() / q.getNumMoradores());
+            }
+            
+            
+        }
+    }
+    
     // Getters e setters
     
     public Apartamento getApartamento() { return apartamento.clone(); }
   
     public Utilizador getUtilizador() { return utilizador.clone(); }
-    
-    public Map<String, Utilizador> getUtilizadores() {
-        Map<String, Utilizador> temp = new HashMap<>();
-        
-        for (Utilizador u : utilizadores.values()) {
-            temp.put(u.getUsername(), u.clone());
-        }
-        
-        return temp;
-    }
     
     public void setApartamento(Apartamento apartamento) {
         this.apartamento = apartamento.clone();
@@ -104,12 +115,6 @@ public class DivideDespesa {
     
     public void setUtilizador(Utilizador utilizador) {
         this.utilizador = utilizador.clone();
-    }
-    
-    public void setUtilizadores(Map<String, Utilizador> utilizadores) {
-        this.utilizadores = utilizadores.values()
-                                        .stream()
-                                        .collect(toMap(Utilizador::getUsername, Utilizador::clone));
     }
     
     /**

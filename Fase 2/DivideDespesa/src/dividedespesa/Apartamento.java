@@ -19,21 +19,28 @@ public class Apartamento {
     
     // Variáveis de instância
     private String info;
+    private Senhorio senhorio;
+    private Administrador admin;
     private Map<Integer, Quarto> quartos;
-    private Map<Integer, Morador> moradores;
+    private Map<String, Morador> moradores;
+    private Map<String, Morador> moradoresAntigos;
 
     // Construtores
     
     public Apartamento () {
         info = "";
+        senhorio = new Senhorio();
+        
         quartos = new HashMap<>();
         moradores = new HashMap<>();
+        moradoresAntigos = new HashMap<>();
     }
     
     public Apartamento (Apartamento apt) {
         info = apt.getInfo();
         quartos = apt.getQuartos();
         moradores = apt.getMoradores();
+        moradoresAntigos = apt.getMoradoresAntigos();
     }
 
     // Métodos de instância
@@ -41,7 +48,9 @@ public class Apartamento {
     
     // Getters e Setters
     
-    public String getInfo() { return info; }    
+    public String getInfo() { 
+        return info;
+    }    
     
     public Map<Integer, Quarto> getQuartos() {
         Map<Integer, Quarto> temp = new HashMap<>();
@@ -62,8 +71,20 @@ public class Apartamento {
         
         return temp;
     }
+    
+    public Map<Integer, Morador> getMoradoresAntigos() {
+        Map<Integer, Morador> temp = new HashMap<>();
+        
+        for (Morador m : moradoresAntigos.values()) {
+            temp.put(m.hashCode(), m.clone());
+        }
+        
+        return temp;
+    }
    
-    public void setInfo(String info) { this.info = info; }    
+    public void setInfo(String info) {
+        this.info = info;
+    }    
     
     public void setQuartos(Map<Integer, Quarto> quartos) {
         this.quartos = quartos.values()
@@ -75,14 +96,19 @@ public class Apartamento {
         this.moradores = moradores.values()
                                   .stream()
                                   .collect(toMap(Morador::hashCode, Morador::clone));  
-    }    
-   
+    }
+    
+    public void setMoradoresAntigos(Map<Integer, Morador> moradoresAntigos) {
+        this.moradoresAntigos = moradoresAntigos.values()
+                                                .stream()
+                                                .collect(toMap(Morador::hashCode, Morador::clone));
+    }
     
     //Métodos complementares comuns
 
     @Override
     public int hashCode() {
-        return Arrays.hashCode(new Object[] {info, quartos, moradores});
+        return Arrays.hashCode(new Object[] {info, quartos, moradores, moradoresAntigos});
     }
     
     @Override
