@@ -5,6 +5,7 @@
  */
 package dividedespesa.database;
 
+import dividedespesa.Conta;
 import dividedespesa.Despesa;
 import dividedespesa.Morador;
 import dividedespesa.Quarto;
@@ -13,6 +14,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -72,24 +75,52 @@ public class MoradorDAO {
             
             if(rs.next()){
                 
-                PreparedStatement ps_despesa = con.prepareStatement("select * from despesa where id = ?");
-                ps.setString(1, key.toString());
-                ResultSet rs_despesa = ps_despesa.executeQuery();
-                Date dataEmissao, dataLimite, dataPagamento;
-                while(rs_despesa.next()){
-                    dataEmissao = rs_despesa.getDate("data_emissao");
-                    dataLimite = rs_despesa.getDate("data_limite");
-                    dataPagamento = rs_despesa.getDate("data_pagamento");
-                    d = new Despesa(rs_despesa.getInt("id"), rs_despesa.getString("info"), rs_despesa.getDouble("valor"), rs_despesa.getString("tipo"),dataEmissao, dataLimite, dataPagamento);
-                    
-            }
+                PreparedStatement ps_dPagas = con.prepareStatement("SELECT *" +
+                                                                     "FROM despesa" +
+                                                                   "WHERE data_pagamento IS NOT NULL AND username = ?"),
+                                  ps_dPorPagar = con.prepareStatement("SELECT *" +
+                                                                        "FROM despesa" +
+                                                                      "WHERE data_pagamento IS NULL AND username = ?");
                 
-                m = new Morador(rs.getInt("id"), rs.getString("info"), rs.getDouble("valor"), rs.getString("tipo"),dataEmissao, dataLimite, dataPagamento);
+                
+                ps_dPagas.setString(1, key.toString());
+                ps_dPorPagar.setString(1, key.toString());
+                
+                ResultSet rs_dPagas = ps_dPagas.executeQuery(),
+                          rs_dPorPagar = ps_dPagas.executeQuery();
+                
+                Date dataEmissao, dataLimite, dataPagamento;
+                Despesa dPagas, dPorPagar;
+                
+                Map<Integer,Despesa> mapPagas = new HashMap<>(),
+                                     mapPorPagar = new HashMap<>();
+                
+                
+                while(rs_dPagas.next()){
+                    dataEmissao = rs_dPagas.getDate("data_emissao");
+                    dataLimite = rs_dPagas.getDate("data_limite");
+                    dataPagamento = rs_dPagas.getDate("data_pagamento");
+                    dPagas = new Despesa(rs_dPagas.getInt("id"), rs_dPagas.getString("info"), rs_dPagas.getDouble("valor"), rs_dPagas.getString("tipo"),dataEmissao, dataLimite, dataPagamento);
+                    mapPagas.put(dPagas.getId(),dPagas);
+                }
+                
+                while(rs_dPorPagar.next()){
+                    dataEmissao = rs_dPorPagar.getDate("data_emissao");
+                    dataLimite = rs_dPorPagar.getDate("data_limite");
+                    dataPagamento = rs_dPorPagar.getDate("data_pagamento");
+                    dPagas = new Despesa(rs_dPorPagar.getInt("id"), rs_dPorPagar.getString("info"), rs_dPorPagar.getDouble("valor"), rs_dPorPagar.getString("tipo"),dataEmissao, dataLimite, dataPagamento);
+                    mapPorPagar.put(dPagas.getId(),dPagas);
+                }
+                
+                Conta conta = new Conta(rs.getDouble("saldo"));
+                
+                return new Morador(rs.getString("username"), rs.getString("pasword"), rs.getString("nome"), conta, mapPorPagar, mapPagas, rs.getDate("data_cheaga"), rs.getDate("data_saida"));
+               
             }
             
             con.close();
         } catch (SQLException e) {}
-        return d;
+        return m;
     }
     
 }

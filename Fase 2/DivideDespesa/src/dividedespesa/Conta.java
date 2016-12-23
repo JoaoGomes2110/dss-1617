@@ -24,6 +24,10 @@ public class Conta {
         saldo = c.getSaldo();
     }
     
+    public Conta(Double saldo){
+        this.saldo = saldo;
+    }
+    
     // Métodos de instância
    
     public void debito(double valor) {
