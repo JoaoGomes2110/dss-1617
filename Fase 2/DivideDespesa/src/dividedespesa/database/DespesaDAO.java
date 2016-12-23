@@ -8,6 +8,7 @@ package dividedespesa.database;
 import dividedespesa.Despesa;
 import dividedespesa.Morador;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,11 +28,12 @@ public class DespesaDAO {
         Connection c = Connect.connect();
         PreparedStatement st = c.prepareStatement("INSERT INTO despesa VALUES(?,?,?,?,?,?,?)");
         
-        java.sql.Date dataEmissao = new java.sql.Date(despesa.getDataEmissao().getTimeInMillis());
-        java.sql.Date dataLimite = new java.sql.Date(despesa.getDataLimite().getTimeInMillis());
-        java.sql.Date dataPagamento = new java.sql.Date(despesa.getDataPagamento().getTimeInMillis());
+
+        java.sql.Date dataEmissao = new java.sql.Date(despesa.getDataEmissao().getTime());
+        java.sql.Date dataLimite = new java.sql.Date(despesa.getDataLimite().getTime());
+        java.sql.Date dataPagamento = new java.sql.Date(despesa.getDataPagamento().getTime());
         
-        st.setInt(1,despesa.getNumDespesa());
+        st.setInt(1,despesa.getId());
         st.setDouble(2,despesa.getValor());
         st.setDate(3,dataEmissao);
         st.setDate(4,dataLimite);
@@ -53,13 +55,13 @@ public class DespesaDAO {
             PreparedStatement ps = con.prepareStatement("select * from despesa where id = ?");
             ps.setInt(1, Integer.parseInt(key.toString()));
             ResultSet rs = ps.executeQuery();
-            SimpleDateFormat dataEmissao = new SimpleDateFormat(), dataLimite = new SimpleDateFormat(), dataPagamento = new SimpleDateFormat();
-   
-            if(rs.next())
-                dataEmissao.format(rs.getDate("data_emissao"));
-                dataLimite.format(rs.getDate("data_limite"));
-                dataPagamento.format(rs.getDate("data_pagamento"));
-                d = new Despesa(rs.getInt("id"), rs.getString("info"), rs.getDouble("valor"), rs.getString("tipo"), dataEmissao, dataLimite, dataPagamento);
+            Date dataEmissao, dataLimite, dataPagamento;
+            if(rs.next()){
+                dataEmissao = rs.getDate("data_emissao");
+                dataLimite = rs.getDate("data_limite");
+                dataPagamento = rs.getDate("data_pagamento");
+                d = new Despesa(rs.getInt("id"), rs.getString("info"), rs.getDouble("valor"), rs.getString("tipo"),dataEmissao, dataLimite, dataPagamento);
+            }
             
             con.close();
         } catch (SQLException e) {}

@@ -5,9 +5,11 @@
  */
 package dividedespesa.database;
 
+import dividedespesa.Despesa;
 import dividedespesa.Morador;
 import dividedespesa.Quarto;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,8 +24,8 @@ public class MoradorDAO {
         Connection c = Connect.connect();
         PreparedStatement st = c.prepareStatement("INSERT INTO morador VALUES(?,?,?,?,?)");
         
-        java.sql.Date dataEntrada = new java.sql.Date(morador.getDataEntrada().getTimeInMillis());
-        java.sql.Date dataSaida = new java.sql.Date(morador.getDataSaida().getTimeInMillis());
+        java.sql.Date dataEntrada = new java.sql.Date(morador.getDataEntrada().getTime());
+        java.sql.Date dataSaida = new java.sql.Date(morador.getDataSaida().getTime());
         
         st.setString(1,morador.getUsername());
         st.setString(2,morador.getPassword());
@@ -56,15 +58,38 @@ public class MoradorDAO {
         return size;
     }
     
-    public void get(String username) throws SQLException{
-        Connection c = Connect.connect();
-        PreparedStatement st_morador = c.prepareStatement("INSERT INTO morador VALUES(?,?,?,?,?)");
-        PreparedStatment st_despesas = c.prepareStatment("SELECT")
-                +
-        
-        Morador m 
-        
-        c.close();
+    public Morador get(Object key) {
+        Morador m = null;
+        Connection con = null;
+        try {
+            con = Connect.connect();
+            
+            // OBTEM DADOS DO QUARTO
+            PreparedStatement ps = con.prepareStatement("select * from morador where username = ?");
+            
+            ps.setString(1, key.toString());
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next()){
+                
+                PreparedStatement ps_despesa = con.prepareStatement("select * from despesa where id = ?");
+                ps.setString(1, key.toString());
+                ResultSet rs_despesa = ps_despesa.executeQuery();
+                Date dataEmissao, dataLimite, dataPagamento;
+                while(rs_despesa.next()){
+                    dataEmissao = rs_despesa.getDate("data_emissao");
+                    dataLimite = rs_despesa.getDate("data_limite");
+                    dataPagamento = rs_despesa.getDate("data_pagamento");
+                    d = new Despesa(rs_despesa.getInt("id"), rs_despesa.getString("info"), rs_despesa.getDouble("valor"), rs_despesa.getString("tipo"),dataEmissao, dataLimite, dataPagamento);
+                    
+            }
+                
+                m = new Morador(rs.getInt("id"), rs.getString("info"), rs.getDouble("valor"), rs.getString("tipo"),dataEmissao, dataLimite, dataPagamento);
+            }
+            
+            con.close();
+        } catch (SQLException e) {}
+        return d;
     }
     
 }

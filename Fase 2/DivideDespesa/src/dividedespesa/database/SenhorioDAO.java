@@ -37,7 +37,7 @@ public class SenhorioDAO {
             
             // OBTEM DADOS DO QUARTO
             PreparedStatement ps = con.prepareStatement("select * from senhorio where username = ?");
-            ps.setInt(1, Integer.parseInt(key.toString()));
+            ps.setString(1, key.toString());
             ResultSet rs = ps.executeQuery();
             
             if(rs.next())
