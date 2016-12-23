@@ -102,11 +102,11 @@ public class Despesa {
         String ret;
         
         switch(tipo) {
-            case RECORRENTE:        ret = new String("Recorrente");
+            case RECORRENTE:        ret = new String("recorrente");
                                     break;
-            case EXTRAORDINARIA:    ret = new String("Extraordinaria");
+            case EXTRAORDINARIA:    ret = new String("extraordinaria");
                                     break;
-            default:                ret = new String("Renda");
+            default:                ret = new String("renda");
                                     break;
         }
     

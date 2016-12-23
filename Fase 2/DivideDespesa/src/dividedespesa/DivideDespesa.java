@@ -5,7 +5,12 @@
  */
 package dividedespesa;
 
+import dividedespesa.database.DespesaDAO;
+import dividedespesa.database.MoradorDAO;
+import dividedespesa.database.QuartoDAO;
+import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -21,6 +26,9 @@ public class DivideDespesa {
     
     Apartamento apartamento; // apartamento registado no sistema
     Utilizador utilizador;   // utilizar com sessão iniciada
+    private static QuartoDAO quartos_dao;
+    private static MoradorDAO morador_dao;
+    private static DespesaDAO despesas;
     
     // Construtores
     
@@ -117,9 +125,18 @@ public class DivideDespesa {
     
     /**
      * @param args the command line arguments
+     * @throws java.sql.SQLException
      */
-    public static void main(String[] args) {
-        
+
+  
+    public static void main(String[] args) throws SQLException {
+       despesas = new DespesaDAO();
+       morador_dao = new MoradorDAO();
+       
+       if (morador_dao.get("gomes") == null)
+           System.out.println("null");
+       
+       //System.out.println(m.toString());
+     
     }
-    
 }

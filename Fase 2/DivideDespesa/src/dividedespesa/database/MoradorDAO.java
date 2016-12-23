@@ -25,16 +25,20 @@ public class MoradorDAO {
     
     public void put(Morador morador, Quarto quarto) throws SQLException{
         Connection c = Connect.connect();
-        PreparedStatement st = c.prepareStatement("INSERT INTO morador VALUES(?,?,?,?,?)");
+        PreparedStatement st = c.prepareStatement("INSERT INTO morador VALUES(?,?,?,?,?,?)");
         
         java.sql.Date dataEntrada = new java.sql.Date(morador.getDataEntrada().getTime());
-        java.sql.Date dataSaida = new java.sql.Date(morador.getDataSaida().getTime());
+        java.sql.Date dataSaida = null;
+        if (morador.getDataSaida() != null)
+            dataSaida = new java.sql.Date(morador.getDataSaida().getTime());
         
         st.setString(1,morador.getUsername());
         st.setString(2,morador.getPassword());
         st.setString(3,morador.getNome());
         st.setDate(4,dataEntrada);
-        st.setDate(5,dataSaida);        
+        st.setDate(5,dataSaida); 
+        st.setDouble(6,morador.getContaCorrente().getSaldo());
+        
         st.executeUpdate();
         
         st = c.prepareStatement("INSERT INTO moradorquarto VALUES(?,?)");
@@ -61,18 +65,21 @@ public class MoradorDAO {
         return size;
     }
     
-    public Morador get(Object key) {
+    public Morador get(String username) {
         Morador m = null;
         Connection con = null;
+        
         try {
             con = Connect.connect();
-            
+
             // OBTEM DADOS DO QUARTO
-            PreparedStatement ps = con.prepareStatement("select * from morador where username = ?");
-            
-            ps.setString(1, key.toString());
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM morador WHERE username = ?");
+            ps.setString(1, username);
+  
+            System.out.println(ps.toString());
             ResultSet rs = ps.executeQuery();
             
+            System.out.println("ola"+rs.getString("username"));
             if(rs.next()){
                 
                 PreparedStatement ps_dPagas = con.prepareStatement("SELECT *" +
@@ -83,8 +90,8 @@ public class MoradorDAO {
                                                                       "WHERE data_pagamento IS NULL AND username = ?");
                 
                 
-                ps_dPagas.setString(1, key.toString());
-                ps_dPorPagar.setString(1, key.toString());
+                ps_dPagas.setString(1, username);
+                ps_dPorPagar.setString(1, username);
                 
                 ResultSet rs_dPagas = ps_dPagas.executeQuery(),
                           rs_dPorPagar = ps_dPagas.executeQuery();
@@ -113,8 +120,8 @@ public class MoradorDAO {
                 }
                 
                 Conta conta = new Conta(rs.getDouble("saldo"));
-                
-                return new Morador(rs.getString("username"), rs.getString("pasword"), rs.getString("nome"), conta, mapPorPagar, mapPagas, rs.getDate("data_cheaga"), rs.getDate("data_saida"));
+                System.out.println("ola");
+                m = new Morador(rs.getString("username"), rs.getString("pasword"), rs.getString("nome"), conta, mapPorPagar, mapPagas, rs.getDate("data_chegada"), rs.getDate("data_saida"));
                
             }
             
@@ -123,4 +130,27 @@ public class MoradorDAO {
         return m;
     }
     
+    public void updateSaldo (String username, Morador m) throws SQLException{
+        //ainda nao suportado
+    }
+    
+    public void updateSaida (String username, Date saida) throws SQLException{
+        Connection con = Connect.connect();
+        
+        PreparedStatement ps = con.prepareStatement("UPDATE morador SET data_saida = ? WHERE username = ?");
+        ps.setDate(1,saida);
+        ps.setString(2,username);
+        ps.executeUpdate();
+        con.close();
+    } 
+    
+    public void updateSaldo (String username, double saldo) throws SQLException{
+        Connection con = Connect.connect();
+        
+        PreparedStatement ps = con.prepareStatement("UPDATE morador SET saldo = ? WHERE username = ?");
+        ps.setDouble(1,saldo);
+        ps.setString(2,username);
+        ps.executeUpdate();
+        con.close();
+    }
 }

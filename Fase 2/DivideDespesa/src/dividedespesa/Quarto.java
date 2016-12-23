@@ -29,7 +29,6 @@ public class Quarto {
 
         this.numQuarto = numQuarto;
         this.preco = preco;
-        this.moradores = new HashSet<>(moradores);
         this.moradores = moradores;
     }
     

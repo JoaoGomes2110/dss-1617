@@ -24,22 +24,25 @@ import java.util.Set;
  */
 public class DespesaDAO {
     
-    public void put(Despesa despesa, Morador m) throws SQLException{
+    public void put(Despesa despesa, String m) throws SQLException{
         Connection c = Connect.connect();
-        PreparedStatement st = c.prepareStatement("INSERT INTO despesa VALUES(?,?,?,?,?,?,?)");
+        PreparedStatement st = c.prepareStatement("INSERT INTO despesa VALUES(?,?,?,?,?,?,?,?)");
         
 
         java.sql.Date dataEmissao = new java.sql.Date(despesa.getDataEmissao().getTime());
         java.sql.Date dataLimite = new java.sql.Date(despesa.getDataLimite().getTime());
-        java.sql.Date dataPagamento = new java.sql.Date(despesa.getDataPagamento().getTime());
+        java.sql.Date dataPagamento = null;
+        if (despesa.getDataPagamento() != null)
+            dataPagamento = new java.sql.Date(despesa.getDataPagamento().getTime());
         
         st.setInt(1,despesa.getId());
-        st.setDouble(2,despesa.getValor());
-        st.setDate(3,dataEmissao);
-        st.setDate(4,dataLimite);
-        st.setDate(5,dataPagamento);        
-        st.setString(5,despesa.getTipoDespesaString()); // possivelmente mal
-        st.setString(6, m.getUsername());
+        st.setString(2,despesa.getInfo());
+        st.setDouble(3,despesa.getValor());
+        st.setDate(4,dataEmissao);
+        st.setDate(5,dataLimite);
+        st.setDate(6,dataPagamento);        
+        st.setString(7,despesa.getTipoDespesaString()); // possivelmente mal
+        st.setString(8, m);
         st.executeUpdate();
         
         c.close();

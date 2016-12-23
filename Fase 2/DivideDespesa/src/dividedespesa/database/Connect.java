@@ -15,11 +15,6 @@ import java.sql.SQLException;
  */
 public class Connect{
         
-        
-      public Connect(){
-             
-      }
-      
     /**
      *
      * @return
@@ -29,14 +24,20 @@ public class Connect{
         Connection connect = null;  
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connect = (Connection) DriverManager.getConnection("jdbc:mysql://host/divide_despesas?user=root&password=password");
+            connect = (Connection ) DriverManager.getConnection("jdbc:mysql://localhost/divide_despesas", "root", "password");
         } catch (ClassNotFoundException ex) {System.out.println("Base de dados inexistente");}
         
         return connect;
       }
       
-      public void disconnect(Connection con) throws SQLException {
-           con.close();
-      }
+      public static void close(java.sql.Connection c) {
+        try {
+            if(c!=null && !c.isClosed()) {
+                c.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
         
