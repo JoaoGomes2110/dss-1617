@@ -60,6 +60,7 @@ public class DespesaDAO {
             ResultSet rs = ps.executeQuery();
             Date dataEmissao, dataLimite, dataPagamento;
             if(rs.next()){
+                System.out.println("ola");
                 dataEmissao = rs.getDate("data_emissao");
                 dataLimite = rs.getDate("data_limite");
                 dataPagamento = rs.getDate("data_pagamento");

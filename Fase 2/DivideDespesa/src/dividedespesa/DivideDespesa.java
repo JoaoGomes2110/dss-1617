@@ -132,9 +132,23 @@ public class DivideDespesa {
     public static void main(String[] args) throws SQLException {
        despesas = new DespesaDAO();
        morador_dao = new MoradorDAO();
+       quartos_dao = new QuartoDAO();
        
-       if (morador_dao.get("gomes") == null)
-           System.out.println("null");
+       /*
+       Quarto q = new Quarto(1,50, new HashSet<>());
+       quartos_dao.put(q.getNumQuarto(),q);
+       
+       Morador m = new Morador("gomes","gay","paneleiro");
+       morador_dao.put(m, q);
+       
+       Despesa d = new Despesa(1,"gay porn",69,"extra", new Date(), new Date(), new Date());
+       despesas.put(d, m.getUsername());
+       
+       morador_dao.updateSaldo(m.getUsername(), 6999);
+       */
+       
+       System.out.println(quartos_dao.get(1).getPreco());
+
        
        //System.out.println(m.toString());
      

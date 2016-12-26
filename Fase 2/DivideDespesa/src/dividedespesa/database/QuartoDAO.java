@@ -93,27 +93,27 @@ public class QuartoDAO {
         try {
             con = Connect.connect();
             
-            // OBTEM DADOS DO QUARTO
-            PreparedStatement ps = con.prepareStatement("select * from quarto where id = ?");
-            ps.setInt(1,key);
-            ResultSet rs_morador = ps.executeQuery();
-            
             //OBTEM DADOS DO MORADOR QUE ESTA NAQUELE QUARTO
-            con.prepareStatement("SELECT morador \n" +
-                                 "	FROM moradorquarto AS MQ INNER JOIN quarto AS M\n" +
-                                 "		ON MQ.quarto = M.id\n" +
-                                 "WHERE MQ.quarto = ?");
-            ps.setInt(1, key);
-            ResultSet rs_moradorcliente = ps.executeQuery();
-            
+            PreparedStatement ps_quarto = con.prepareStatement("SELECT morador FROM moradorquarto WHERE quarto = ?");
+            ps_quarto.setInt(1, key);
+            ResultSet rs_quarto = ps_quarto.executeQuery();
             Set<String> listamorador = new HashSet<>();
             
-            if(rs_morador.next()){
-                while(rs_moradorcliente.next())
-                   listamorador.add(rs_moradorcliente.getString("morador"));
+
+            while(rs_quarto.next())
+                listamorador.add(rs_quarto.getString("morador"));
             
-                return new Quarto(rs_morador.getInt("id"),rs_morador.getInt("preco"),listamorador);
-            }
+
+                
+            PreparedStatement ps = con.prepareStatement("select * from quarto where id = ?");
+            ps.setInt(1,key);
+            ResultSet rs = ps.executeQuery();
+
+
+            if (rs.next())
+                return new Quarto(rs.getInt("id"),rs.getInt("preco"),listamorador);
+
+            
             con.close();
         } catch (SQLException e) {}
         return c;
