@@ -64,6 +64,13 @@ public class DivideDespesaFacade extends Observable {
     }
     
     
-    
+    public void registarApartamento(String usernameSenhorio, String usernameAdmin,
+                                    String nomeSenhorio, String passSenhorio,
+                                    String passAdmin, String descApartamento) {
+        
+        
+        
+        
+    }
     
 }

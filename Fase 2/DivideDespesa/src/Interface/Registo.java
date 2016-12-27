@@ -310,7 +310,9 @@ public class Registo extends javax.swing.JDialog {
         }
             
         if (campos && senhorio && admin) {
-            RegistoII dialog = new RegistoII(new javax.swing.JFrame(), true, facade);
+            RegistoII dialog = new RegistoII(new javax.swing.JFrame(), true, facade,
+                                             usernameSenhorio, usernameAdmin, nomeSenhorio, passSenhorio,
+                                             passAdmin, descApartamento);
             dialog.setVisible(true);
         }
 

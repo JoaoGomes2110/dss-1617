@@ -21,19 +21,26 @@ import javax.swing.JOptionPane;
 public class RegistoII extends javax.swing.JDialog implements Observer {
 
     private static DivideDespesaFacade facade;
-    private static ArrayList<Double> precos;
-    
+    private static String usernameSenhorio, usernameAdmin, nomeSenhorio, passSenhorio,
+                          passAdmin, descApartamento;
     
     /**
      * Creates new form RegistoII
      */
     public RegistoII(java.awt.Frame Registo, boolean modal,
-                     DivideDespesaFacade facade) {
+                     DivideDespesaFacade facade, String usernameSenhorio,
+                     String usernameAdmin, String nomeSenhorio, String passSenhorio,
+                     String passAdmin, String descApartamento) {
         super(Registo, modal);
         initComponents();
         this.facade = facade;
-        this.precos = new ArrayList<>();
         this.facade.addObserver(this);
+        usernameAdmin = "";
+        usernameSenhorio = "";
+        nomeSenhorio = "";
+        passSenhorio = "";
+        passAdmin = "";
+        descApartamento = "";
     }
 
     /**
@@ -176,7 +183,10 @@ public class RegistoII extends javax.swing.JDialog implements Observer {
         UserSenhorio dialog = new UserSenhorio(new javax.swing.JFrame(),true);
         int opcao = JOptionPane.showConfirmDialog(this,"Deseja Terminar?","Confirmaçao",JOptionPane.YES_NO_OPTION);
         if(opcao == 0){
-            System.out.print("sim");
+            
+            facade.registarApartamento(usernameSenhorio, usernameAdmin, nomeSenhorio,
+                                       passSenhorio, passAdmin, descApartamento);
+            
             System.gc();
             java.awt.Window win[] = java.awt.Window.getWindows();  
             win[1].dispose(); 
@@ -184,7 +194,6 @@ public class RegistoII extends javax.swing.JDialog implements Observer {
             this.dispose();
             dialog.setVisible(true);
         }
-        else System.out.print("não");
     }//GEN-LAST:event_terminaQuartosActionPerformed
 
     private void adicionaQuartoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionaQuartoActionPerformed
@@ -241,7 +250,10 @@ public class RegistoII extends javax.swing.JDialog implements Observer {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 RegistoII dialog = new RegistoII(new javax.swing.JFrame(), true,
-                                                 facade);
+                                                 facade, usernameSenhorio,
+                                                 usernameAdmin, nomeSenhorio,
+                                                 passSenhorio, passAdmin,
+                                                 descApartamento);
                 
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
