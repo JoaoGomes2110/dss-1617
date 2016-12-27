@@ -37,14 +37,12 @@ public class DivideDespesaFacade extends Observable {
     }
     
     public boolean fieldSize(String usernameSenhorio, String usernameAdmin, 
-                             String nomeSenhorio, String nomeAdmin,
-                             String pswrdSenhorio, String pswrdAdmin,
-                             String descApartamento) {
+                             String nomeSenhorio, String pswrdSenhorio,
+                             String pswrdAdmin, String descApartamento) {
         
         return (usernameAdmin.length() == 0 || usernameSenhorio.length() == 0 ||
-                nomeSenhorio.length() == 0 || nomeAdmin.length() == 0 ||
-                pswrdSenhorio.length() == 0 || pswrdAdmin.length() == 0 ||
-                descApartamento.length() == 0);
+                nomeSenhorio.length() == 0 || pswrdSenhorio.length() == 0 ||
+                pswrdAdmin.length() == 0 || descApartamento.length() == 0);
     }
     
     public void addToPrecos(String str) {

@@ -17,8 +17,8 @@ import javax.swing.JOptionPane;
 public class Registo extends javax.swing.JDialog {
     
     private static DivideDespesaFacade facade;
-    private String usernameSenhorio, usernameAdmin, nomeSenhorio, nomeAdmin,
-                   passSenhorio, passAdmin, descApartamento;
+    private String usernameSenhorio, usernameAdmin, nomeSenhorio, passSenhorio,
+                   passAdmin, descApartamento;
     
     /**
      * Creates new form Registo
@@ -32,7 +32,6 @@ public class Registo extends javax.swing.JDialog {
         usernameAdmin = "";
         usernameSenhorio = "";
         nomeSenhorio = "";
-        nomeAdmin = "";
         passSenhorio = "";
         passAdmin = "";
         descApartamento = "";
@@ -60,10 +59,8 @@ public class Registo extends javax.swing.JDialog {
         jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        nomeAdminField = new javax.swing.JTextField();
         usernameAdminField = new javax.swing.JTextField();
         passwordAdminField = new javax.swing.JPasswordField();
         jLabel9 = new javax.swing.JLabel();
@@ -127,21 +124,11 @@ public class Registo extends javax.swing.JDialog {
         jLabel5.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jLabel5.setText("Administrador ");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel6.setText(" Nome");
-
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setText(" Username");
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setText(" Password");
-
-        nomeAdminField.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        nomeAdminField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nomeAdminFieldActionPerformed(evt);
-            }
-        });
 
         usernameAdminField.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         usernameAdminField.addActionListener(new java.awt.event.ActionListener() {
@@ -222,11 +209,7 @@ public class Registo extends javax.swing.JDialog {
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(jLabel7)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(usernameAdminField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jLabel6)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(nomeAdminField, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                .addComponent(usernameAdminField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                     .addComponent(jLabel9))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())))
@@ -248,13 +231,9 @@ public class Registo extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(passwordSenhorioField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(38, 38, 38)
                 .addComponent(jLabel5)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(nomeAdminField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(usernameAdminField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -268,7 +247,7 @@ public class Registo extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
                     .addComponent(descApartamentoField, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(continuarButton)
                     .addComponent(jButton2))
@@ -300,13 +279,12 @@ public class Registo extends javax.swing.JDialog {
         usernameAdmin = usernameAdminField.getText();
         usernameSenhorio = usernameSenhorioField.getText();
         nomeSenhorio = nomeSenhorioField.getText();
-        nomeAdmin = nomeAdminField.getText();
         passSenhorio = String.valueOf(passwordSenhorioField.getPassword());
         passAdmin = String.valueOf(passwordAdminField.getPassword());
         descApartamento = descApartamentoField.getText();
         boolean campos, senhorio, admin;
 
-        if (facade.fieldSize(usernameSenhorio, usernameAdmin, nomeSenhorio, nomeAdmin,
+        if (facade.fieldSize(usernameSenhorio, usernameAdmin, nomeSenhorio, 
                              passSenhorio, passAdmin, descApartamento)) {
             campos = false;
             String msgCampos = "Todos os campos têm que estar preenchidos!";
@@ -353,10 +331,6 @@ public class Registo extends javax.swing.JDialog {
     private void usernameSenhorioFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameSenhorioFieldActionPerformed
 
     }//GEN-LAST:event_usernameSenhorioFieldActionPerformed
-
-    private void nomeAdminFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeAdminFieldActionPerformed
-
-    }//GEN-LAST:event_nomeAdminFieldActionPerformed
 
     private void descApartamentoFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descApartamentoFieldActionPerformed
 
@@ -418,12 +392,10 @@ public class Registo extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField nomeAdminField;
     private javax.swing.JTextField nomeSenhorioField;
     private javax.swing.JPasswordField passwordAdminField;
     private javax.swing.JPasswordField passwordSenhorioField;
