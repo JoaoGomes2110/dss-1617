@@ -6,6 +6,7 @@
 package dividedespesa;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 import java.util.HashMap;
@@ -93,13 +94,29 @@ public class Morador extends Utilizador {
     }
     
     
-    public void cobrarRenda(double preco, int numQrt, int numMrds,
-                            Date data) {
-        String info = "RENDA mes ";
-       
-        double parte = preco/((double) numMrds);
+    public void cobrarRenda(double preco, int numQrt, int numMoradores, Date data) {
         
-        adicionarDespesaPorPagar(info, parte, "RENDA", data, data);
+        Calendar c1 = Calendar.getInstance(); // pois classe Calendar é abstrata (não pode ser instanciada)
+        c1.setTime(data);
+        int mes = c1.get(Calendar.MONTH);
+        
+        Calendar c2 = Calendar.getInstance();
+        c2.setTime(dataEntrada);
+        int mesEntrada = c2.get(Calendar.MONTH);
+        
+        double parte = preco/((double) numMoradores);
+        double precoFinal;
+        
+        if (mes == mesEntrada) {
+            int semana = c2.get(Calendar.WEEK_OF_MONTH);
+            precoFinal = parte/semana;
+        } else {
+            precoFinal = parte;
+        }
+        
+        String info = "RENDA mes " + mes;
+        
+        adicionarDespesaPorPagar(info, precoFinal, "RENDA", data, data);
     }
     
     

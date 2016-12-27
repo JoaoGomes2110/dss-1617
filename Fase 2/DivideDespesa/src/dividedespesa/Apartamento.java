@@ -76,11 +76,11 @@ public class Apartamento {
     }
     
     public void cobrarRenda() {
-        Date date = new Date();
+        Date date = new Date(); // data atual
         
         for (String user : moradores.keySet()) {
             for (Quarto qrt : quartos.values()) {
-                if (qrt.containsUsername(user)) {
+                if (qrt.getMoradores().contains(user)) {
                     moradores.get(user).cobrarRenda(qrt.getPreco(),
                                                     qrt.getNumQuarto(),
                                                     qrt.getNumMoradores(),
