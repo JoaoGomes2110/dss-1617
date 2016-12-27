@@ -31,6 +31,20 @@ public class Senhorio extends Utilizador {
     }
     
     // Métodos de instância
+
+    public boolean validaSenhorio() {
+        String [] special = {" ", "/", "#", "$", "%", "&", ">", "<", "-", ","};
+        boolean ret = true;
+
+        for(String s : special) {
+            if(nome.contains(s)) {
+                ret = false;
+                break;
+            }
+        }
+        
+        return ret && this.validaUsername() && this.validaPassword();
+    }
     
     public void adicionarMorador(Morador m, Quarto q) {
         

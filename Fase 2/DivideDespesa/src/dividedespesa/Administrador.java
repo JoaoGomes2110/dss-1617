@@ -22,8 +22,14 @@ public class Administrador extends Utilizador {
         super(admin.getUsername(), admin.getPassword());
     }
     
+    //Métodos de instância
+    
+    public boolean validaAdministrador() {
+        return this.validaUsername() && this.validaPassword();
+    }
     
     //Métodos complementares comuns
+
     
     public boolean equals(Object o) {
         
