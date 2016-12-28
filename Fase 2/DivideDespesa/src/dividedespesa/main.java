@@ -29,7 +29,7 @@ public class main {
         for(int i = 0; i < 10; i++) {
             facade.addToPrecos(Integer.toString(i*2 + 1));
         }
-        
+        */
         facade.registaApartamento("senhorio", "usernameAdmin",
                                    "senhorio", "senhorio", "passAdmin",
                                    "descApartamento");

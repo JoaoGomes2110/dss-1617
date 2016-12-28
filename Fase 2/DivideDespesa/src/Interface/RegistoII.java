@@ -34,13 +34,13 @@ public class RegistoII extends javax.swing.JDialog implements Observer {
         super(Registo, modal);
         initComponents();
         this.facade = facade;
-        this.facade.addObserver(this);
         this.usernameAdmin = usernameAdmin;
         this.usernameSenhorio = usernameSenhorio;
         this.nomeSenhorio = nomeSenhorio;
         this.passSenhorio = passSenhorio;
         this.passAdmin = passAdmin;
         this.descApartamento = descApartamento;
+        this.facade.addObserver(this);
     }
 
     /**
@@ -180,13 +180,15 @@ public class RegistoII extends javax.swing.JDialog implements Observer {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void terminaQuartosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_terminaQuartosActionPerformed
-        UserSenhorio dialog = new UserSenhorio(new javax.swing.JFrame(),
-                                               true, facade);
+        
         int opcao = JOptionPane.showConfirmDialog(this,"Deseja Terminar?","Confirmaçao",JOptionPane.YES_NO_OPTION);
         if(opcao == 0){
             
-            facade.registarApartamento(usernameSenhorio, usernameAdmin, nomeSenhorio,
+            facade.registaApartamento(usernameSenhorio, usernameAdmin, nomeSenhorio,
                                        passSenhorio, passAdmin, descApartamento);
+            
+            UserSenhorio dialog = new UserSenhorio(new javax.swing.JFrame(),
+                                                   true, facade);
             
             System.gc();
             java.awt.Window win[] = java.awt.Window.getWindows();  

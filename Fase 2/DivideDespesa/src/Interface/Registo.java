@@ -27,7 +27,6 @@ public class Registo extends javax.swing.JDialog {
                    DivideDespesaFacade facade) {
         super(JanelaInicial, modal);
         initComponents();
-        facade = new DivideDespesaFacade();
         this.facade = facade;
         usernameAdmin = "";
         usernameSenhorio = "";
@@ -37,8 +36,6 @@ public class Registo extends javax.swing.JDialog {
         descApartamento = "";
     }
 
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
