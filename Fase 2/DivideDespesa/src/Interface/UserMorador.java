@@ -7,6 +7,7 @@ package Interface;
  * and open the template in the editor.
  */
 
+import dividedespesa.DivideDespesaFacade;
 import javax.swing.JOptionPane;
 /**
  *
@@ -14,12 +15,16 @@ import javax.swing.JOptionPane;
  */
 public class UserMorador extends javax.swing.JDialog {
 
+    private static DivideDespesaFacade facade;
+    
     /**
      * Creates new form UserMorador
      */
-    public UserMorador(java.awt.Frame parent, boolean modal) {
+    public UserMorador(java.awt.Frame parent, boolean modal,
+                       DivideDespesaFacade facade) {
         super(parent, modal);
         initComponents();
+        this.facade = facade;
     }
 
     /**
@@ -173,7 +178,8 @@ public class UserMorador extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                UserMorador dialog = new UserMorador(new javax.swing.JFrame(), true);
+                UserMorador dialog = new UserMorador(new javax.swing.JFrame(),
+                                                     true, facade);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

@@ -56,6 +56,20 @@ public class Quarto {
         return moradores.size();
     }
     
+    public void takeMorador(String user) {
+        Set<String> new_moradores = new HashSet<>();
+        
+        for(String s : moradores) {
+            if (s.equals(user)) {
+                
+            } else {
+                new_moradores.add(s);
+            }
+        }
+        
+        setMoradores(new_moradores);
+    }
+    
 
     
     // Getters e Setters

@@ -20,9 +20,9 @@ public class JanelaInicial extends javax.swing.JFrame  {
     /**
      * Creates new form JanelaInicial
      */
-    public JanelaInicial(DivideDespesaFacade f) {
+    public JanelaInicial(DivideDespesaFacade facade) {
         initComponents();
-        facade = f;
+        this.facade = facade;
     }
 
     /**
@@ -127,7 +127,7 @@ public class JanelaInicial extends javax.swing.JFrame  {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-     Login dialog = new Login(new javax.swing.JFrame(), true); 
+     Login dialog = new Login(new javax.swing.JFrame(), true, facade); 
      dialog.setVisible(true); 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -157,8 +157,7 @@ public class JanelaInicial extends javax.swing.JFrame  {
             java.util.logging.Logger.getLogger(JanelaInicial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
-        System.out.println("CRIOU");
+      
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

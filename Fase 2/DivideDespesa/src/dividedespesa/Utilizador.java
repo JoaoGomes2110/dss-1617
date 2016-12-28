@@ -82,11 +82,20 @@ public class Utilizador {
         return this.password;
     }
     
+    public void setUsername(String usr) {
+        username = usr;
+    }
+    
+    public void setPassword(String pass) {
+        password = pass;
+    }
+    
+    
+    // Métodos complementares comuns
+    
     public boolean equalsUsername(Object o) {        
         return username.equals(o);
     }
-    
-    // Métodos complementares comuns
     
     public Utilizador clone() {
         return new Utilizador(this);

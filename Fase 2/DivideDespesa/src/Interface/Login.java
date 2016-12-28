@@ -17,14 +17,16 @@ import static javax.swing.JOptionPane.YES_NO_OPTION;
  */
 public class Login extends javax.swing.JDialog {
 
-    private DivideDespesaFacade facade;
+    private static DivideDespesaFacade facade;
     
     /**
      * Creates new form Login
      */
-    public Login(java.awt.Frame JanelaInicial, boolean modal) {
+    public Login(java.awt.Frame JanelaInicial, boolean modal,
+                 DivideDespesaFacade facade) {
         super(JanelaInicial, modal);
         initComponents();
+        this.facade = facade;
     }
 
     /**
@@ -41,9 +43,9 @@ public class Login extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jButton2 = new javax.swing.JButton();
+        usernameField = new javax.swing.JTextField();
+        passwordField = new javax.swing.JPasswordField();
+        login = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
@@ -61,11 +63,11 @@ public class Login extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText(" Password");
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton2.setText("Login");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        login.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        login.setText("Login");
+        login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                loginActionPerformed(evt);
             }
         });
 
@@ -90,13 +92,13 @@ public class Login extends javax.swing.JDialog {
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE))
+                            .addComponent(usernameField)
+                            .addComponent(passwordField, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE))
                         .addContainerGap(101, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)
+                        .addComponent(login)
                         .addGap(27, 27, 27))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -105,14 +107,14 @@ public class Login extends javax.swing.JDialog {
                 .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
+                    .addComponent(login)
                     .addComponent(jButton3))
                 .addGap(47, 47, 47))
         );
@@ -140,9 +142,37 @@ public class Login extends javax.swing.JDialog {
         else System.out.print("não");
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
+        String username = usernameField.getText();
+        String password = String.copyValueOf(passwordField.getPassword());
+
+        if (facade.fieldSize(username, password, "aaa")) {
+            String msg = "Todos os campos têm que estar preenchidos.";
+            JOptionPane.showMessageDialog(this, msg);
+        } else {
+            if (facade.isSenhorio(username, password)) {
+                facade.setUtilizador(username, password);
+                UserSenhorio senhorio = new UserSenhorio(new javax.swing.JFrame(),
+                                                       true, facade);
+                senhorio.setVisible(true);
+            }
+            
+            if (facade.isAdministrador(username, password)) {
+                facade.setUtilizador(username, password);
+                UserAdministrador admin = new UserAdministrador(new javax.swing.JFrame(),
+                                                                true, facade);
+                admin.setVisible(true);
+            }
+            
+            if (facade.isMorador(username, password)) {
+                facade.setUtilizador(username, password);
+                
+                UserMorador morador = new UserMorador(new javax.swing.JFrame(),
+                                                      true, facade);
+                morador.setVisible(true);
+            }
+        }
+    }//GEN-LAST:event_loginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -174,7 +204,7 @@ public class Login extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Login dialog = new Login(new javax.swing.JFrame(), true);
+                Login dialog = new Login(new javax.swing.JFrame(), true, facade);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -188,13 +218,13 @@ public class Login extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton login;
+    private javax.swing.JPasswordField passwordField;
+    private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
 }

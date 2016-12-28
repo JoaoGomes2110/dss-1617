@@ -28,6 +28,12 @@ public class Administrador extends Utilizador {
         return this.validaUsername() && this.validaPassword();
     }
     
+    public boolean isAdministrador (Utilizador u) {
+        return this.getUsername().equals(u.getUsername()) &&
+               this.getPassword().equals(u.getPassword());
+    }
+    
+    
     //Métodos complementares comuns
 
     

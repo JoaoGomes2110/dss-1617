@@ -284,8 +284,8 @@ public class Registo extends javax.swing.JDialog {
         descApartamento = descApartamentoField.getText();
         boolean campos, senhorio, admin;
 
-        if (facade.fieldSize(usernameSenhorio, usernameAdmin, nomeSenhorio, 
-                             passSenhorio, passAdmin, descApartamento)) {
+        if (facade.fieldSize(usernameSenhorio, passSenhorio, nomeSenhorio) && 
+            facade.fieldSize(usernameAdmin, passAdmin, "aaa")) {
             campos = false;
             String msgCampos = "Todos os campos têm que estar preenchidos!";
             JOptionPane.showMessageDialog(this, msgCampos);

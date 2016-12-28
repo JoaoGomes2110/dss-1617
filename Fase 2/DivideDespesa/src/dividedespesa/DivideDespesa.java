@@ -10,7 +10,6 @@ import dividedespesa.database.MoradorDAO;
 import dividedespesa.database.QuartoDAO;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -24,8 +23,8 @@ public class DivideDespesa {
     
     // Variáveis de instância
     
-    Apartamento apartamento; // apartamento registado no sistema
-    Utilizador utilizador;   // utilizar com sessão iniciada
+    private Apartamento apartamento; // apartamento registado no sistema
+    private Utilizador utilizador;   // utilizar com sessão iniciada
     private static QuartoDAO quartos_dao;
     private static MoradorDAO morador_dao;
     private static DespesaDAO despesas;
@@ -45,14 +44,8 @@ public class DivideDespesa {
     // Métodos de instância
     
     public void addMorador(String username, String password, String nome,
-                               List<Integer> qrts) {
-        
-        try {
-            apartamento.addMorador(nome, username, password, qrts);
-        } catch (MoradorExistenteException e) {
-            
-        }
-
+                               List<Integer> qrts) throws MoradorExistenteException {
+        apartamento.addMorador(nome, username, password, qrts);
     }
     
     public void autenticarUtilizador(String username, String password) throws SemAutorizacaoException {
@@ -85,7 +78,7 @@ public class DivideDespesa {
     
     public void registaApartamento(String info, Senhorio senhorio,
                                    Administrador admin, Map<Integer, 
-                                   Double> precoQuartos ) {
+                                   Double> precoQuartos) {
         Map<Integer, Quarto> quartos = new HashMap<>();
         
         for (Integer i : precoQuartos.keySet()) {
@@ -105,6 +98,55 @@ public class DivideDespesa {
         apartamento.alteraRendaQuarto(numQuarto, valor);
     }
     
+    public void alterarPasswordMorador(String username, String password) {
+        apartamento.getMoradores().get(username).setPassword(password);
+    }
+    
+    public void alterarQuartosMorador(String username, List<Integer> quartos) {
+        apartamento.getQuartos().forEach((i, q) -> {
+                                          if(quartos.contains(i)) {
+                                              q.addMorador(username);
+                                          } else {
+                                              q.takeMorador(username);
+                                          }
+                                        });
+    }
+    
+    public boolean isMorador(String username, String password) {
+        boolean ret = false;
+        Utilizador login = new Utilizador(username, password);
+        
+        for(Morador m : apartamento.getMoradores().values()) {
+            if(m.isMorador(login)) {
+                ret = true;
+                break;
+            }
+        }
+        
+        return ret;
+    }
+    
+    public boolean isSenhorio(String username, String password) {
+        Utilizador login = new Utilizador(username, password);
+        
+        return apartamento.getSenhorio().isSenhorio(login);
+    }
+    
+    public boolean isAdministrador(String username, String password) {
+        Utilizador login = new Utilizador(username, password);
+        
+        return apartamento.getAdministrador().isAdministrador(login);
+    }
+    
+    
+    public String[] getQuartos() {
+        return apartamento.getQuartosString();
+    }
+    
+    public String[] getMoradores() {
+        return apartamento.getMoradoresString();
+    }
+    
     // Getters e setters
     
     public Apartamento getApartamento() {
@@ -116,11 +158,11 @@ public class DivideDespesa {
     }
     
     public void setApartamento(Apartamento apartamento) {
-        this.apartamento = apartamento.clone();
+        this.apartamento = apartamento;
     }
     
     public void setUtilizador(Utilizador utilizador) {
-        this.utilizador = utilizador.clone();
+        this.utilizador = utilizador;
     }
     
     /**
