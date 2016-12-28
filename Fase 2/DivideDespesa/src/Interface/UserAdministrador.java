@@ -38,35 +38,35 @@ public class UserAdministrador extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        verDespesas = new javax.swing.JButton();
+        adicionarDespesa = new javax.swing.JButton();
+        sair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Administrador", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 3, 18))); // NOI18N
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton1.setText("Ver Despesas");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        verDespesas.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        verDespesas.setText("Ver Despesas");
+        verDespesas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                verDespesasActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton2.setText("Adicionar Despesa");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        adicionarDespesa.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        adicionarDespesa.setText("Adicionar Despesa");
+        adicionarDespesa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                adicionarDespesaActionPerformed(evt);
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton3.setText("Sair");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        sair.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        sair.setText("Sair");
+        sair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                sairActionPerformed(evt);
             }
         });
 
@@ -77,23 +77,23 @@ public class UserAdministrador extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(51, 51, 51)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
+                    .addComponent(adicionarDespesa)
+                    .addComponent(verDespesas))
                 .addContainerGap(86, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3)
+                .addComponent(sair)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addComponent(jButton1)
+                .addComponent(verDespesas)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(adicionarDespesa)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(sair)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -111,24 +111,24 @@ public class UserAdministrador extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairActionPerformed
        int opcao = JOptionPane.showConfirmDialog(this,"Deseja Sair?","Confirmação",JOptionPane.YES_NO_OPTION);
        if(opcao == 0){
            System.out.print("sim");
-           System.exit(1); 
+           this.dispose();
        }
        else System.out.print("não");
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_sairActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void verDespesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verDespesasActionPerformed
         VerDespesas dialog = new VerDespesas(new javax.swing.JFrame(), true, facade);
         dialog.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_verDespesasActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void adicionarDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarDespesaActionPerformed
         AdicionarDespesa dialog = new AdicionarDespesa(new javax.swing.JFrame(),true);
         dialog.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_adicionarDespesaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -174,9 +174,9 @@ public class UserAdministrador extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton adicionarDespesa;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton sair;
+    private javax.swing.JButton verDespesas;
     // End of variables declaration//GEN-END:variables
 }

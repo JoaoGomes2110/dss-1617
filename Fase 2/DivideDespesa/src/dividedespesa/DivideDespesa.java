@@ -139,11 +139,11 @@ public class DivideDespesa {
     }
     
     
-    public String[] getQuartos() {
+    public String[] getQuartosString() {
         return apartamento.getQuartosString();
     }
     
-    public String[] getMoradores() {
+    public String[] getMoradoresString() {
         return apartamento.getMoradoresString();
     }
     

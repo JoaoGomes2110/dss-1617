@@ -145,31 +145,41 @@ public class Login extends javax.swing.JDialog {
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         String username = usernameField.getText();
         String password = String.copyValueOf(passwordField.getPassword());
+        boolean existe = false;
 
         if (facade.fieldSize(username, password, "aaa")) {
             String msg = "Todos os campos têm que estar preenchidos.";
             JOptionPane.showMessageDialog(this, msg);
         } else {
-            if (facade.isSenhorio(username, password)) {
+            
+            if (existe == false && facade.isSenhorio(username, password)) {
+                existe = true;
                 facade.setUtilizador(username, password);
                 UserSenhorio senhorio = new UserSenhorio(new javax.swing.JFrame(),
                                                        true, facade);
                 senhorio.setVisible(true);
             }
             
-            if (facade.isAdministrador(username, password)) {
+            if (existe == false && facade.isAdministrador(username, password)) {
+                existe = true;
                 facade.setUtilizador(username, password);
                 UserAdministrador admin = new UserAdministrador(new javax.swing.JFrame(),
                                                                 true, facade);
                 admin.setVisible(true);
             }
             
-            if (facade.isMorador(username, password)) {
+            if (existe == false && facade.isMorador(username, password)) {
+                existe = true;
                 facade.setUtilizador(username, password);
                 
                 UserMorador morador = new UserMorador(new javax.swing.JFrame(),
                                                       true, facade);
                 morador.setVisible(true);
+            }
+            
+            if (existe == false) {
+               String msg = "Não existe um utilizador " + username;
+                JOptionPane.showMessageDialog(this, msg); 
             }
         }
     }//GEN-LAST:event_loginActionPerformed

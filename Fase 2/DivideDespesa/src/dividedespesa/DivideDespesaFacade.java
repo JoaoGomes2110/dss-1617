@@ -73,12 +73,12 @@ public class DivideDespesaFacade extends Observable {
     }
     
     public String[] getQuartos() {
-        return dd.getQuartos();
+        return dd.getQuartosString();
     }
     
     
     public String[] getMoradores() {
-        return dd.getMoradores();
+        return dd.getMoradoresString();
     }
 
    

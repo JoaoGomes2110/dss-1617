@@ -281,8 +281,9 @@ public class Registo extends javax.swing.JDialog {
         descApartamento = descApartamentoField.getText();
         boolean campos, senhorio, admin;
 
-        if (facade.fieldSize(usernameSenhorio, passSenhorio, nomeSenhorio) && 
-            facade.fieldSize(usernameAdmin, passAdmin, "aaa")) {
+        if (facade.fieldSize(usernameSenhorio, passSenhorio, nomeSenhorio) || 
+            facade.fieldSize(usernameAdmin, passAdmin, "aaa") ||
+            descApartamento.length() == 0) {
             campos = false;
             String msgCampos = "Todos os campos têm que estar preenchidos!";
             JOptionPane.showMessageDialog(this, msgCampos);
@@ -305,6 +306,13 @@ public class Registo extends javax.swing.JDialog {
         } else {
             admin = true;
         }
+        
+        if (usernameAdmin.equals(usernameSenhorio)) {
+            senhorio = false;
+            admin = false;
+            String msgAdmin = "O username do Senhorio e do Administrador têm que ser diferentes.";
+            JOptionPane.showMessageDialog(this, msgAdmin);
+        } 
             
         if (campos && senhorio && admin) {
             RegistoII dialog = new RegistoII(new javax.swing.JFrame(), true, facade,
