@@ -7,6 +7,7 @@ package Interface;
  */
 
 
+import dividedespesa.DivideDespesaFacade;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,12 +16,16 @@ import javax.swing.JOptionPane;
  */
 public class UserSenhorio extends javax.swing.JDialog {
 
+    private static DivideDespesaFacade facade;
+    
     /**
      * Creates new form UserSenhorio
      */
-    public UserSenhorio(java.awt.Frame JanelaInicial, boolean modal) {
+    public UserSenhorio(java.awt.Frame JanelaInicial, boolean modal,
+                        DivideDespesaFacade facade) {
         super(JanelaInicial, modal);
         initComponents();
+        this.facade = facade;
     }
 
     /**
@@ -170,22 +175,24 @@ public class UserSenhorio extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        AdicionarMorador dialog = new AdicionarMorador(new javax.swing.JFrame(),true);
+        AdicionarMorador dialog = new AdicionarMorador(new javax.swing.JFrame(),
+                                                       true, facade);
         dialog.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        VerDespesas dialog = new VerDespesas(new javax.swing.JFrame(),true);
+        VerDespesas dialog = new VerDespesas(new javax.swing.JFrame(), true, facade);
         dialog.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        RemoverMorador dialog = new RemoverMorador(new javax.swing.JFrame(),true);
+        RemoverMorador dialog = new RemoverMorador(new javax.swing.JFrame(), true, facade);
         dialog.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        AlterarDadosMorador dialog = new AlterarDadosMorador(new javax.swing.JFrame(),true);
+        AlterarDadosMorador dialog = new AlterarDadosMorador(new javax.swing.JFrame(),
+                                                             true, facade);
         dialog.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -224,7 +231,8 @@ public class UserSenhorio extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                UserSenhorio dialog = new UserSenhorio(new javax.swing.JFrame(), true);
+                UserSenhorio dialog = new UserSenhorio(new javax.swing.JFrame(),
+                                                       true, facade);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

@@ -1,12 +1,12 @@
-package Interface;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Interface;
 
-
+import dividedespesa.DivideDespesaFacade;
+import java.util.Set;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.YES_NO_OPTION;
 
@@ -15,13 +15,25 @@ import static javax.swing.JOptionPane.YES_NO_OPTION;
  * @author Gomes
  */
 public class RemoverMorador extends javax.swing.JDialog {
-
+    
+    private static DivideDespesaFacade facade;
     /**
      * Creates new form RemoverMorador
      */
-    public RemoverMorador(java.awt.Frame UserSenhorio, boolean modal) {
+    public RemoverMorador(java.awt.Frame UserSenhorio, boolean modal,DivideDespesaFacade facade) {
         super(UserSenhorio, modal);
         initComponents();
+        this.facade = facade;
+        init();
+    }
+    
+    public void init(){
+        Set<String> moradores = this.facade.getSetMoradores();
+        for(String s: moradores){
+            Moradores.addItem(s);
+        }
+        String[] arr = moradores.toArray(new String[0]);
+        Moradores.setSelectedItem(arr[0]);
     }
 
     /**
@@ -35,8 +47,8 @@ public class RemoverMorador extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        Moradores = new javax.swing.JComboBox<>();
+        RemoverButton = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -46,13 +58,18 @@ public class RemoverMorador extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Morador");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton1.setText("Remover");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Moradores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        Moradores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                MoradoresActionPerformed(evt);
+            }
+        });
+
+        RemoverButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        RemoverButton.setText("Remover");
+        RemoverButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RemoverButtonActionPerformed(evt);
             }
         });
 
@@ -72,13 +89,13 @@ public class RemoverMorador extends javax.swing.JDialog {
                 .addGap(33, 33, 33)
                 .addComponent(jLabel1)
                 .addGap(29, 29, 29)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Moradores, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(173, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(RemoverButton)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -87,10 +104,10 @@ public class RemoverMorador extends javax.swing.JDialog {
                 .addContainerGap(55, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Moradores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(60, 60, 60)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(RemoverButton)
                     .addComponent(jButton2))
                 .addContainerGap())
         );
@@ -111,9 +128,9 @@ public class RemoverMorador extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void RemoverButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoverButtonActionPerformed
+        facade.remover((String) Moradores.getSelectedItem());    
+    }//GEN-LAST:event_RemoverButtonActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
        int opcao = JOptionPane.showConfirmDialog(this,"Deseja Cancelar?","Confirmação",YES_NO_OPTION);
@@ -123,6 +140,10 @@ public class RemoverMorador extends javax.swing.JDialog {
        }
        else System.out.print("não");
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void MoradoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MoradoresActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MoradoresActionPerformed
 
     /**
      * @param args the command line arguments
@@ -154,7 +175,7 @@ public class RemoverMorador extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                RemoverMorador dialog = new RemoverMorador(new javax.swing.JFrame(), true);
+                RemoverMorador dialog = new RemoverMorador(new javax.swing.JFrame(), true,facade);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -167,9 +188,9 @@ public class RemoverMorador extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> Moradores;
+    private javax.swing.JButton RemoverButton;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

@@ -34,13 +34,13 @@ public class RegistoII extends javax.swing.JDialog implements Observer {
         super(Registo, modal);
         initComponents();
         this.facade = facade;
+        this.usernameAdmin = usernameAdmin;
+        this.usernameSenhorio = usernameSenhorio;
+        this.nomeSenhorio = nomeSenhorio;
+        this.passSenhorio = passSenhorio;
+        this.passAdmin = passAdmin;
+        this.descApartamento = descApartamento;
         this.facade.addObserver(this);
-        usernameAdmin = "";
-        usernameSenhorio = "";
-        nomeSenhorio = "";
-        passSenhorio = "";
-        passAdmin = "";
-        descApartamento = "";
     }
 
     /**
@@ -180,12 +180,15 @@ public class RegistoII extends javax.swing.JDialog implements Observer {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void terminaQuartosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_terminaQuartosActionPerformed
-        UserSenhorio dialog = new UserSenhorio(new javax.swing.JFrame(),true);
+        
         int opcao = JOptionPane.showConfirmDialog(this,"Deseja Terminar?","Confirmaçao",JOptionPane.YES_NO_OPTION);
         if(opcao == 0){
             
-            facade.registarApartamento(usernameSenhorio, usernameAdmin, nomeSenhorio,
+            facade.registaApartamento(usernameSenhorio, usernameAdmin, nomeSenhorio,
                                        passSenhorio, passAdmin, descApartamento);
+            
+            UserSenhorio dialog = new UserSenhorio(new javax.swing.JFrame(),
+                                                   true, facade);
             
             System.gc();
             java.awt.Window win[] = java.awt.Window.getWindows();  
@@ -199,24 +202,27 @@ public class RegistoII extends javax.swing.JDialog implements Observer {
     private void adicionaQuartoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionaQuartoActionPerformed
         String rendaStr = rendaField.getText();
         
-        boolean show;
-        
         try {
             facade.addToPrecos(rendaStr);
 
         } catch (NumberFormatException e) {
             String msg = "Introduza um valor válido.";
-            show = false;
             JOptionPane.showMessageDialog(this, msg);
         }
     }//GEN-LAST:event_adicionaQuartoActionPerformed
 
     private void numQuartosComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_numQuartosComponentShown
-      //  numQuartos.setText(Integer.toString(precos.size()));
+
     }//GEN-LAST:event_numQuartosComponentShown
 
     private void removeQuartoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeQuartoActionPerformed
-        facade.removeQuarto();
+        try {
+            facade.removeQuarto();
+        } catch (IndexOutOfBoundsException e) {
+            String msg = "Não há quartos para remover.";
+            JOptionPane.showMessageDialog(this, msg);
+        }
+
     }//GEN-LAST:event_removeQuartoActionPerformed
 
     /**

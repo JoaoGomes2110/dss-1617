@@ -1,12 +1,11 @@
-package Interface;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Interface;
 
-
+import dividedespesa.DivideDespesaFacade;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.YES_NO_OPTION;
 
@@ -15,13 +14,16 @@ import static javax.swing.JOptionPane.YES_NO_OPTION;
  * @author Gomes
  */
 public class Carregar extends javax.swing.JDialog {
-
+    
+    private static DivideDespesaFacade facade;
     /**
      * Creates new form Carregar
      */
-    public Carregar(java.awt.Frame Conta, boolean modal) {
+    public Carregar(java.awt.Frame Conta, boolean modal, 
+                    DivideDespesaFacade facade) {
         super(Conta, modal);
         initComponents();
+        this.facade = facade;
     }
 
     /**
@@ -35,8 +37,8 @@ public class Carregar extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        valorField = new javax.swing.JTextField();
+        ContinuarButton = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -46,10 +48,15 @@ public class Carregar extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText(" Valor");
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        valorField.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton1.setText("Confirmar");
+        ContinuarButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        ContinuarButton.setText("Confirmar");
+        ContinuarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ContinuarButtonActionPerformed(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton2.setText("Retroceder");
@@ -67,13 +74,13 @@ public class Carregar extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(ContinuarButton)
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(valorField, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(80, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -82,10 +89,10 @@ public class Carregar extends javax.swing.JDialog {
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(valorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(ContinuarButton)
                     .addComponent(jButton2))
                 .addContainerGap())
         );
@@ -112,6 +119,19 @@ public class Carregar extends javax.swing.JDialog {
         }
         else System.out.print("não");
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void ContinuarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ContinuarButtonActionPerformed
+        String valorStr = valorField.getText();
+        
+        try {
+            double valor = Double.parseDouble(valorStr);
+            facade.carregar(facade.getUsername(),valor);
+
+        } catch (NumberFormatException e) {
+            String msg = "Introduza um valor válido.";
+            JOptionPane.showMessageDialog(this, msg);
+        }
+    }//GEN-LAST:event_ContinuarButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -143,7 +163,8 @@ public class Carregar extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Carregar dialog = new Carregar(new javax.swing.JFrame(), true);
+                Carregar dialog = new Carregar(new javax.swing.JFrame(),
+                                               true, facade);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -156,10 +177,10 @@ public class Carregar extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton ContinuarButton;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField valorField;
     // End of variables declaration//GEN-END:variables
 }

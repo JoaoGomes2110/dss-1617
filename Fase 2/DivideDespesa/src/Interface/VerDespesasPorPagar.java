@@ -1,27 +1,50 @@
-package Interface;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Interface;
 
-
+import dividedespesa.Despesa;
+import dividedespesa.DivideDespesaFacade;
+import java.util.Set;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.YES_NO_OPTION;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Gomes
  */
 public class VerDespesasPorPagar extends javax.swing.JDialog {
-
+    
+    private static DivideDespesaFacade facade;
+    private static String morador;
     /**
      * Creates new form VerDespesasPorPagar
      */
-    public VerDespesasPorPagar(java.awt.Frame VerDespesas, boolean modal) {
+    public VerDespesasPorPagar(java.awt.Frame VerDespesas, boolean modal,DivideDespesaFacade facade,String morador) {
         super(VerDespesas, modal);
         initComponents();
+        this.facade = facade;
+        this.morador = morador;
+        init();
+        DefaultTableModel model = (DefaultTableModel) DespesasPorPagar.getModel();
+        Set<Despesa> despesas = (Set<Despesa>) facade.despesasPorPagar(morador);
+        for(Despesa d: despesas){
+            model.addRow(new Object[]{d.getId(),d.getInfo(),d.getValor(),d.getDataEmissao(),d.getDataLimite(),d.getDataPagamento()});
+        
+    }
+ }
+    public void init(){
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Id");
+        model.addColumn("Info");
+        model.addColumn("Valor");
+        model.addColumn("DataEmissão");
+        model.addColumn("DataLimite");
+        model.addColumn("DataPagamento");
+        DespesasPorPagar.setModel(model);
     }
 
     /**
@@ -35,14 +58,14 @@ public class VerDespesasPorPagar extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        DespesasPorPagar = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ver Despesas por Pagar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 3, 18))); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        DespesasPorPagar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -53,7 +76,7 @@ public class VerDespesasPorPagar extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(DespesasPorPagar);
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton1.setText("Retroceder");
@@ -139,7 +162,7 @@ public class VerDespesasPorPagar extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                VerDespesasPorPagar dialog = new VerDespesasPorPagar(new javax.swing.JFrame(), true);
+                VerDespesasPorPagar dialog = new VerDespesasPorPagar(new javax.swing.JFrame(), true,facade,morador);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -152,9 +175,9 @@ public class VerDespesasPorPagar extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable DespesasPorPagar;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

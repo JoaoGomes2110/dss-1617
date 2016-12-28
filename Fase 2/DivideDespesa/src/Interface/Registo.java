@@ -27,7 +27,6 @@ public class Registo extends javax.swing.JDialog {
                    DivideDespesaFacade facade) {
         super(JanelaInicial, modal);
         initComponents();
-        facade = new DivideDespesaFacade();
         this.facade = facade;
         usernameAdmin = "";
         usernameSenhorio = "";
@@ -37,8 +36,6 @@ public class Registo extends javax.swing.JDialog {
         descApartamento = "";
     }
 
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -284,8 +281,8 @@ public class Registo extends javax.swing.JDialog {
         descApartamento = descApartamentoField.getText();
         boolean campos, senhorio, admin;
 
-        if (facade.fieldSize(usernameSenhorio, usernameAdmin, nomeSenhorio, 
-                             passSenhorio, passAdmin, descApartamento)) {
+        if (facade.fieldSize(usernameSenhorio, passSenhorio, nomeSenhorio) && 
+            facade.fieldSize(usernameAdmin, passAdmin, "aaa")) {
             campos = false;
             String msgCampos = "Todos os campos têm que estar preenchidos!";
             JOptionPane.showMessageDialog(this, msgCampos);

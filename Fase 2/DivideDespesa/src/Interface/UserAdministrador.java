@@ -7,6 +7,7 @@ package Interface;
  */
 
 
+import dividedespesa.DivideDespesaFacade;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,12 +16,16 @@ import javax.swing.JOptionPane;
  */
 public class UserAdministrador extends javax.swing.JDialog {
 
+    private static DivideDespesaFacade facade;
+    
     /**
      * Creates new form UserAdministrador
      */
-    public UserAdministrador(java.awt.Frame parent, boolean modal) {
+    public UserAdministrador(java.awt.Frame parent, boolean modal,
+                             DivideDespesaFacade facade) {
         super(parent, modal);
         initComponents();
+        this.facade = facade;
     }
 
     /**
@@ -116,7 +121,7 @@ public class UserAdministrador extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        VerDespesas dialog = new VerDespesas(new javax.swing.JFrame(),true);
+        VerDespesas dialog = new VerDespesas(new javax.swing.JFrame(), true, facade);
         dialog.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -155,7 +160,8 @@ public class UserAdministrador extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                UserAdministrador dialog = new UserAdministrador(new javax.swing.JFrame(), true);
+                UserAdministrador dialog = new UserAdministrador(new javax.swing.JFrame(),
+                                                                 true, facade);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

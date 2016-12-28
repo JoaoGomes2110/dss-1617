@@ -31,17 +31,20 @@ public class Apartamento {
     
     // Construtores
     
-    public Apartamento (String info, Senhorio senhorio, Administrador administrador,
-                        Map<Integer, Quarto> quartos) {
+    public Apartamento(String info, Senhorio senhorio, Administrador administrador,
+                       Map<Integer, Quarto> quartos) {
         this.info = info;
+        System.out.println("A construir senhorio.");
         this.senhorio = senhorio.clone();
+        
+        System.out.println("Senhorio construido " + this.senhorio.getUsername());
         this.administrador = administrador.clone();
         this.setQuartos(quartos);
         moradores = new HashMap<>();
         moradoresAntigos = new HashMap<>();
     }
     
-    public Apartamento (Apartamento apt) {
+    public Apartamento(Apartamento apt) {
         info = apt.getInfo();
         quartos = apt.getQuartos();
         moradores = apt.getMoradores();
@@ -61,7 +64,7 @@ public class Apartamento {
             moradores.put(username, novo);
         
             for (Integer i : numQuartos) {
-                quartos.get(i).addMorador(username);
+                quartos.get(i - 1).addMorador(username);
             }
         }
     }
@@ -90,13 +93,12 @@ public class Apartamento {
         }    
     }
 
-    public void removerMorador(Morador m) {
-        String aux_user = m.getUsername();
-        
-        if (moradores.containsKey(aux_user)) {
-            Morador aux = moradores.get(aux_user);
-            moradores.remove(aux_user);
-            moradoresAntigos.put(aux_user, aux);
+    public void removerMorador(String username) {
+       
+        if (moradores.containsKey(username)) {
+            Morador aux = moradores.get(username);
+            moradores.remove(aux);
+            moradoresAntigos.put(aux.getUsername(), aux);
         }
     }
     
@@ -117,6 +119,41 @@ public class Apartamento {
     public void alteraRendaQuarto(int numQuarto, double valor) {
         quartos.get(numQuarto).setPreco(valor);
     }
+    
+    public boolean existeUser(String user) {
+        return moradores.containsKey(user) || moradoresAntigos.containsKey(user);
+    }
+    
+    
+    public String[] getQuartosString() {
+        String[] quartosStr = new String[quartos.size()];
+        
+        for(Integer i : quartos.keySet()) {
+            StringBuilder sb = new StringBuilder();
+            double conta = quartos.get(i).getPreco()/(quartos.get(i).getNumMoradores() + 1);
+            
+            sb.append((i + 1) + " - Preço: " + conta + "€");
+
+            quartosStr[i] = sb.toString();
+        }
+        
+        return quartosStr;
+    }
+    
+    public String[] getMoradoresString() {
+        String[] moradoresStr = new String[moradores.size()];
+        int i = 0;
+        
+        for(Morador m : moradores.values()) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(m.getUsername() + " - " + m.getNome());
+            moradoresStr[i] = sb.toString();
+            i++;
+        }
+
+        return moradoresStr;
+    }
+
     
     // Getters e Setters
     
@@ -156,11 +193,11 @@ public class Apartamento {
     
     
     public Senhorio getSenhorio() {
-        return senhorio.clone();
+        return senhorio;
     }
     
     public Administrador getAdministrador() {
-        return administrador.clone();
+        return administrador;
     }
    
     public void setInfo(String info) {

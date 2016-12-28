@@ -46,6 +46,12 @@ public class Senhorio extends Utilizador {
         return ret && this.validaUsername() && this.validaPassword();
     }
     
+    public boolean isSenhorio (Utilizador u) {
+        System.out.println("CHEGOU AO isSenhorio");
+        return this.getUsername().equals(u.getUsername()) &&
+               this.getPassword().equals(u.getPassword());
+    }
+    
     public void adicionarMorador(Morador m, Quarto q) {
         
     }

@@ -7,8 +7,11 @@ package Interface;
  */
 
 
+import dividedespesa.DivideDespesaFacade;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.YES_NO_OPTION;
+import java.util.List;
 
 /**
  *
@@ -16,12 +19,37 @@ import static javax.swing.JOptionPane.YES_NO_OPTION;
  */
 public class AlterarDadosMorador extends javax.swing.JDialog {
 
+    private static DivideDespesaFacade facade;
+    
     /**
      * Creates new form AlterarDadosMorador
      */
-    public AlterarDadosMorador(java.awt.Frame UserSenhorio, boolean modal) {
+    public AlterarDadosMorador(java.awt.Frame UserSenhorio, boolean modal,
+                               DivideDespesaFacade facade) {
         super(UserSenhorio, modal);
+        this.facade = facade;
         initComponents();
+        myInit();
+    }
+    
+    private void myInit() {
+        String[] moradores = facade.getMoradores();
+        String[] quartos = facade.getQuartos();
+        
+        quartosField.setModel(
+            new javax.swing.AbstractListModel<String>() {
+                public int getSize() {
+                    return quartos.length;
+                }
+
+                public String getElementAt(int i) {
+                    return quartos[i];
+                }
+            }
+        );
+        
+        listaMoradoresField.setModel(
+            new javax.swing.DefaultComboBoxModel<>(moradores));
     }
 
     /**
@@ -35,14 +63,14 @@ public class AlterarDadosMorador extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        listaMoradoresField = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        passwordField = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        quartosField = new javax.swing.JList<>();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        confirmar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -51,7 +79,7 @@ public class AlterarDadosMorador extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Morador");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        listaMoradoresField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("Password");
@@ -59,12 +87,12 @@ public class AlterarDadosMorador extends javax.swing.JDialog {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText("Quartos");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        quartosField.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(quartosField);
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton1.setText("Cancelar");
@@ -74,11 +102,11 @@ public class AlterarDadosMorador extends javax.swing.JDialog {
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton2.setText("Confirmar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        confirmar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        confirmar.setText("Confirmar");
+        confirmar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                confirmarActionPerformed(evt);
             }
         });
 
@@ -92,11 +120,11 @@ public class AlterarDadosMorador extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(listaMoradoresField, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPasswordField1))
+                        .addComponent(passwordField))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
@@ -105,7 +133,7 @@ public class AlterarDadosMorador extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(confirmar)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -114,18 +142,18 @@ public class AlterarDadosMorador extends javax.swing.JDialog {
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(listaMoradoresField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
+                    .addComponent(confirmar)
                     .addComponent(jButton1))
                 .addContainerGap())
         );
@@ -153,14 +181,45 @@ public class AlterarDadosMorador extends javax.swing.JDialog {
         else System.out.print("não");
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int opcao = JOptionPane.showConfirmDialog(this,"Deseja confirmar?","Confirmação",YES_NO_OPTION);
-        if(opcao == 0){
-            System.out.print("sim");
-            this.dispose();
+    private void confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarActionPerformed
+        
+        String password = String.valueOf(passwordField.getPassword());
+        String username = facade.parseString(listaMoradoresField.
+                                             getSelectedItem().toString());
+        boolean estado = true;
+        
+        List<String> quartos = new ArrayList<>(quartosField.getSelectedValuesList());
+
+        if (!quartos.isEmpty()) {
+            
+            List<Integer> numQuartos = new ArrayList<>();
+
+            for(String s : quartos) {
+                String aux = facade.parseString(s);
+                numQuartos.add(Integer.valueOf(aux));
+            }
+                        
+            facade.alterarQuartosMorador(username, numQuartos);
+            String msg = "Os quartos foram alterados.";
+            JOptionPane.showMessageDialog(this, msg);
+            estado = false;
+        } 
+
+        
+        if (password.length() > 0) {
+            facade.alterarPasswordMorador(username, password);
+            String msg = "A password foi alterada.";
+            JOptionPane.showMessageDialog(this, msg);
+            estado = false;
         }
-        else System.out.print("não");
-    }//GEN-LAST:event_jButton2ActionPerformed
+        
+        if (estado) {
+            String msg = "Não se alteraram dados.";
+            JOptionPane.showMessageDialog(this, msg);
+        }
+        
+        this.dispose();
+    }//GEN-LAST:event_confirmarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -192,7 +251,8 @@ public class AlterarDadosMorador extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                AlterarDadosMorador dialog = new AlterarDadosMorador(new javax.swing.JFrame(), true);
+                AlterarDadosMorador dialog = new AlterarDadosMorador(new javax.swing.JFrame(),
+                                                                     true, facade);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -205,15 +265,15 @@ public class AlterarDadosMorador extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton confirmar;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<String> listaMoradoresField;
+    private javax.swing.JPasswordField passwordField;
+    private javax.swing.JList<String> quartosField;
     // End of variables declaration//GEN-END:variables
 }

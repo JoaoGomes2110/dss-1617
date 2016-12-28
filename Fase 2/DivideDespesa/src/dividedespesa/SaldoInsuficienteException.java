@@ -9,7 +9,7 @@ package dividedespesa;
  *
  * @author win8
  */
-class SaldoInsuficienteException extends Exception {
+public class SaldoInsuficienteException extends Exception {
 
     public SaldoInsuficienteException() {
        super();

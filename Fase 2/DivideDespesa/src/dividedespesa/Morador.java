@@ -119,6 +119,24 @@ public class Morador extends Utilizador {
         adicionarDespesaPorPagar(info, precoFinal, "RENDA", data, data);
     }
     
+    public boolean validaMorador() {
+        String [] special = {" ", "/", "#", "$", "%", "&", ">", "<", "-", ","};
+        boolean ret = true;
+
+        for(String s : special) {
+            if(nome.contains(s)) {
+                ret = false;
+                break;
+            }
+        }
+        
+        return ret && this.validaUsername() && this.validaPassword();
+    }
+    
+    public boolean isMorador (Utilizador u) {
+        return this.getUsername().equals(u.getUsername()) &&
+               this.getPassword().equals(u.getPassword());
+    }
     
     // Getters e setters
     

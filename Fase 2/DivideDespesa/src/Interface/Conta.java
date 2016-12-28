@@ -1,12 +1,11 @@
-package Interface;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Interface;
 
-
+import dividedespesa.DivideDespesaFacade;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.YES_NO_OPTION;
 
@@ -15,13 +14,15 @@ import static javax.swing.JOptionPane.YES_NO_OPTION;
  * @author Gomes
  */
 public class Conta extends javax.swing.JDialog {
-
+    private static DivideDespesaFacade facade;
     /**
      * Creates new form Saldo
      */
-    public Conta(java.awt.Frame UserMorador, boolean modal) {
+    public Conta(java.awt.Frame UserMorador, boolean modal,
+                 DivideDespesaFacade facade) {
         super(UserMorador, modal);
         initComponents();
+        this.facade = facade;
     }
 
     /**
@@ -35,9 +36,9 @@ public class Conta extends javax.swing.JDialog {
 
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        CarregarButton = new javax.swing.JButton();
+        ConsultarButton = new javax.swing.JButton();
+        RetrocederButton = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -54,27 +55,27 @@ public class Conta extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Conta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 3, 18))); // NOI18N
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton1.setText("Carregar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        CarregarButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        CarregarButton.setText("Carregar");
+        CarregarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                CarregarButtonActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton2.setText("Consultar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        ConsultarButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        ConsultarButton.setText("Consultar");
+        ConsultarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                ConsultarButtonActionPerformed(evt);
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton3.setText("Retroceder");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        RetrocederButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        RetrocederButton.setText("Retroceder");
+        RetrocederButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                RetrocederButtonActionPerformed(evt);
             }
         });
 
@@ -85,23 +86,23 @@ public class Conta extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(63, 63, 63)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
+                    .addComponent(ConsultarButton)
+                    .addComponent(CarregarButton))
                 .addContainerGap(135, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3)
+                .addComponent(RetrocederButton)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(CarregarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ConsultarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
-                .addComponent(jButton3)
+                .addComponent(RetrocederButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -119,24 +120,24 @@ public class Conta extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void RetrocederButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RetrocederButtonActionPerformed
         int opcao = JOptionPane.showConfirmDialog(this,"Deseja retroceder","Confirmação",YES_NO_OPTION);
         if(opcao == 0){
             System.out.print("sim");
             this.dispose();
         }
         else System.out.print("não");
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_RetrocederButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Carregar dialog = new Carregar(new javax.swing.JFrame(),true);
+    private void CarregarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CarregarButtonActionPerformed
+        Carregar dialog = new Carregar(new javax.swing.JFrame(), true, facade);
         dialog.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_CarregarButtonActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Consultar dialog = new Consultar(new javax.swing.JFrame(),true);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void ConsultarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarButtonActionPerformed
+        String msg = ("O seu saldo é " + facade.consultar(facade.getUsername()));
+        JOptionPane.showMessageDialog(this, msg);
+    }//GEN-LAST:event_ConsultarButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -169,7 +170,8 @@ public class Conta extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Conta dialog = new Conta(new javax.swing.JFrame(), true);
+                Conta dialog = new Conta(new javax.swing.JFrame(), true,
+                                         facade);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -182,9 +184,9 @@ public class Conta extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton CarregarButton;
+    private javax.swing.JButton ConsultarButton;
+    private javax.swing.JButton RetrocederButton;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
