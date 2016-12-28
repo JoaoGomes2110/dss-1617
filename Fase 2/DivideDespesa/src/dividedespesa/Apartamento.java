@@ -93,13 +93,12 @@ public class Apartamento {
         }    
     }
 
-    public void removerMorador(Morador m) {
-        String aux_user = m.getUsername();
-        
-        if (moradores.containsKey(aux_user)) {
-            Morador aux = moradores.get(aux_user);
-            moradores.remove(aux_user);
-            moradoresAntigos.put(aux_user, aux);
+    public void removerMorador(String username) {
+       
+        if (moradores.containsKey(username)) {
+            Morador aux = moradores.get(username);
+            moradores.remove(aux);
+            moradoresAntigos.put(aux.getUsername(), aux);
         }
     }
     

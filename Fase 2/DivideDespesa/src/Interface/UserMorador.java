@@ -125,7 +125,8 @@ public class UserMorador extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        PagarDespesa dialog = new PagarDespesa(new javax.swing.JFrame(),true);
+        PagarDespesa dialog = new PagarDespesa(new javax.swing.JFrame(), 
+                                               true, facade);
         dialog.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -139,12 +140,12 @@ public class UserMorador extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        VerDespesas dialog = new VerDespesas(new javax.swing.JFrame(),true);
+        VerDespesas dialog = new VerDespesas(new javax.swing.JFrame(), true, facade);
         dialog.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Conta dialog = new Conta(new javax.swing.JFrame(),true);
+        Conta dialog = new Conta(new javax.swing.JFrame(), true, facade);
         dialog.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 

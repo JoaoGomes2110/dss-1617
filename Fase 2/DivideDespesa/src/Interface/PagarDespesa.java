@@ -7,9 +7,6 @@ package Interface;
 
 import dividedespesa.DivideDespesaFacade;
 import dividedespesa.SaldoInsuficienteException;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.YES_NO_OPTION;
 
@@ -20,20 +17,18 @@ import static javax.swing.JOptionPane.YES_NO_OPTION;
 public class PagarDespesa extends javax.swing.JDialog {
     
     private static DivideDespesaFacade facade;
-    private static String user;
     /**
      * Creates new form PagarDespesa
      */
-    public PagarDespesa(java.awt.Frame UserMorador, boolean modal,DivideDespesaFacade facade,String user) {
+    public PagarDespesa(java.awt.Frame UserMorador, boolean modal,DivideDespesaFacade facade) {
         super(UserMorador, modal);
         initComponents();
         this.facade = facade;
-        this.user = user;
         init();
     }
     
     public void init(){
-        String[] despesas = this.facade.getDadosDespesa(user);
+        String[] despesas = this.facade.getDadosDespesa(facade.getUsername());
         for(int i = 0; i< despesas.length ; i++){
             Despesas.addItem(despesas[i]);
         }
@@ -134,10 +129,10 @@ public class PagarDespesa extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ConfirmarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmarButtonActionPerformed
-        String part = this.facade.parseString(Despesas.getSelectedItem());
+        String part = this.facade.parseString(String.valueOf(Despesas.getSelectedItem()));
         int id = Integer.parseInt(part);
         try {
-            facade.pagar(user,id);
+            facade.pagar(facade.getUsername(),id);
         } catch (SaldoInsuficienteException ex) {
             JOptionPane.showMessageDialog(this,"Saldo insuficiente");
         }
@@ -183,7 +178,8 @@ public class PagarDespesa extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                PagarDespesa dialog = new PagarDespesa(new javax.swing.JFrame(), true,facade,user);
+                PagarDespesa dialog = new PagarDespesa(new javax.swing.JFrame(),
+                                                       true, facade);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

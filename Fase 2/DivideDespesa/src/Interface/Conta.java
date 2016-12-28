@@ -15,15 +15,14 @@ import static javax.swing.JOptionPane.YES_NO_OPTION;
  */
 public class Conta extends javax.swing.JDialog {
     private static DivideDespesaFacade facade;
-    private static String user;
     /**
      * Creates new form Saldo
      */
-    public Conta(java.awt.Frame UserMorador, boolean modal,DivideDespesaFacade facade,String user) {
+    public Conta(java.awt.Frame UserMorador, boolean modal,
+                 DivideDespesaFacade facade) {
         super(UserMorador, modal);
         initComponents();
         this.facade = facade;
-        this.user = user;
     }
 
     /**
@@ -131,12 +130,12 @@ public class Conta extends javax.swing.JDialog {
     }//GEN-LAST:event_RetrocederButtonActionPerformed
 
     private void CarregarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CarregarButtonActionPerformed
-        Carregar dialog = new Carregar(new javax.swing.JFrame(),true,facade,user);
+        Carregar dialog = new Carregar(new javax.swing.JFrame(), true, facade);
         dialog.setVisible(true);
     }//GEN-LAST:event_CarregarButtonActionPerformed
 
     private void ConsultarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarButtonActionPerformed
-        String msg = ("O seu saldo é " + facade.consultar(user));
+        String msg = ("O seu saldo é " + facade.consultar(facade.getUsername()));
         JOptionPane.showMessageDialog(this, msg);
     }//GEN-LAST:event_ConsultarButtonActionPerformed
 
@@ -171,7 +170,8 @@ public class Conta extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Conta dialog = new Conta(new javax.swing.JFrame(), true,facade,user);
+                Conta dialog = new Conta(new javax.swing.JFrame(), true,
+                                         facade);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

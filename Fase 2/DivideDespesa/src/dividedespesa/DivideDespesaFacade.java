@@ -6,9 +6,13 @@
 package dividedespesa;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Observable;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  *
@@ -141,5 +145,65 @@ public class DivideDespesaFacade extends Observable {
         dd.alterarQuartosMorador(username, quartos);
     }
     
+    public Set<String> getSetMoradores(){
+        Map<String,Morador> temp;
+        temp = dd.getApartamento().getMoradores();
+        Set<String> moradores = new TreeSet<>();
+        for (String s : temp.keySet()) {
+            moradores.add(s);
+        }
+        return moradores;
+    }
+   
+    public Collection<Despesa> despesasPagas(String morador){
+            Collection<Despesa> despesas = new TreeSet<>();
+            despesas = dd.verDespesasPagas(morador);
+            return despesas;
+    }
+   
+    public Collection<Despesa> despesasPorPagar(String morador){
+            Collection<Despesa> despesas = new TreeSet<>();
+            despesas = dd.verDespesasPorPagar(morador);
+            return despesas;
+    }
+   
+    public void carregar(String username,Double valor){
+        Map<String,Morador> temp = dd.getApartamento().getMoradores();
+        Morador m = temp.get(username);
+        m.carregarConta(valor);
+    }
+   
+    public void remover(String username){
+          dd.getApartamento().removerMorador(username);
+    }
+   
+    public double consultar(String username){
+           Map<String,Morador> temp = dd.getApartamento().getMoradores();
+           Morador m = temp.get(username);
+           double saldo = m.getContaCorrente().getSaldo();
+           return saldo;
+    }
+   
+    public String[] getDadosDespesa(String user){
+        Collection<Despesa> temp = despesasPorPagar(user);
+        String[] despesas = new String[temp.size()];
+        int i = 0;
+        for(Despesa d: temp){
+            despesas[i] = (d.getId() + "-" + d.getInfo() + "-" + d.getValor());
+            i++;
+        }
+        return despesas;
+    }
+   
+    public void pagar(String user,int id) throws SaldoInsuficienteException{
+            Map<String,Morador> temp = dd.getApartamento().getMoradores();
+            Morador m = temp.get(user);
+            Map<Integer,Despesa> despesas = m.getDespesasPorPagar();
+            Despesa d = despesas.get(id);
+            m.pagarDespesa(d);
+    }
     
+    public String getUsername() {
+        return dd.getUtilizador().getUsername();
+    }
 }

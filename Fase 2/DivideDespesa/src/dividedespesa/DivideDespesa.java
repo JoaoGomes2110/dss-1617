@@ -68,12 +68,12 @@ public class DivideDespesa {
         throw new SemAutorizacaoException();
     }
     
-    public Collection<Despesa> verDespesasPorPagar(Morador m) {
-        return apartamento.getMoradores().get(m.getUsername()).getDespesasPorPagar().values();
+    public Collection<Despesa> verDespesasPorPagar(String username) {
+        return apartamento.getMoradores().get(username).getDespesasPorPagar().values();
     }
-    
-    public Collection<Despesa> verDespesasPagas(Morador m) {
-        return apartamento.getMoradores().get(m.getUsername()).getDespesasPagas().values();
+   
+    public Collection<Despesa> verDespesasPagas(String username) {
+        return apartamento.getMoradores().get(username).getDespesasPagas().values();
     }
     
     public void registaApartamento(String info, Senhorio senhorio,
@@ -146,6 +146,10 @@ public class DivideDespesa {
     public String[] getMoradores() {
         return apartamento.getMoradoresString();
     }
+    
+    
+    
+    
     
     // Getters e setters
     

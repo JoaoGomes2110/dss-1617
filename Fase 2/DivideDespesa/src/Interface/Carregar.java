@@ -16,15 +16,14 @@ import static javax.swing.JOptionPane.YES_NO_OPTION;
 public class Carregar extends javax.swing.JDialog {
     
     private static DivideDespesaFacade facade;
-    private static String user;
     /**
      * Creates new form Carregar
      */
-    public Carregar(java.awt.Frame Conta, boolean modal,DivideDespesaFacade facade,String user) {
+    public Carregar(java.awt.Frame Conta, boolean modal, 
+                    DivideDespesaFacade facade) {
         super(Conta, modal);
         initComponents();
         this.facade = facade;
-        this.user = user;
     }
 
     /**
@@ -126,7 +125,7 @@ public class Carregar extends javax.swing.JDialog {
         
         try {
             double valor = Double.parseDouble(valorStr);
-            facade.carregar(user,valor);
+            facade.carregar(facade.getUsername(),valor);
 
         } catch (NumberFormatException e) {
             String msg = "Introduza um valor válido.";
@@ -164,7 +163,8 @@ public class Carregar extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Carregar dialog = new Carregar(new javax.swing.JFrame(), true,facade,user);
+                Carregar dialog = new Carregar(new javax.swing.JFrame(),
+                                               true, facade);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

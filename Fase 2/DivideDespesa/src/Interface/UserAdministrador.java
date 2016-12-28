@@ -121,7 +121,7 @@ public class UserAdministrador extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        VerDespesas dialog = new VerDespesas(new javax.swing.JFrame(),true);
+        VerDespesas dialog = new VerDespesas(new javax.swing.JFrame(), true, facade);
         dialog.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
