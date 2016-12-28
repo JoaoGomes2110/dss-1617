@@ -1,12 +1,15 @@
-package Interface;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Interface;
 
-
+import dividedespesa.DivideDespesaFacade;
+import dividedespesa.SaldoInsuficienteException;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.YES_NO_OPTION;
 
@@ -15,13 +18,25 @@ import static javax.swing.JOptionPane.YES_NO_OPTION;
  * @author Gomes
  */
 public class PagarDespesa extends javax.swing.JDialog {
-
+    
+    private static DivideDespesaFacade facade;
+    private static String user;
     /**
      * Creates new form PagarDespesa
      */
-    public PagarDespesa(java.awt.Frame UserMorador, boolean modal) {
+    public PagarDespesa(java.awt.Frame UserMorador, boolean modal,DivideDespesaFacade facade,String user) {
         super(UserMorador, modal);
         initComponents();
+        this.facade = facade;
+        this.user = user;
+        init();
+    }
+    
+    public void init(){
+        String[] despesas = this.facade.getDadosDespesa(user);
+        for(int i = 0; i< despesas.length ; i++){
+            Despesas.addItem(despesas[i]);
+        }
     }
 
     /**
@@ -36,8 +51,8 @@ public class PagarDespesa extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        ConfirmarButton = new javax.swing.JButton();
+        Despesas = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -50,15 +65,19 @@ public class PagarDespesa extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("Valor");
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton1.setText("Confirmar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        ConfirmarButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        ConfirmarButton.setText("Confirmar");
+        ConfirmarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                ConfirmarButtonActionPerformed(evt);
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        Despesas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DespesasActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(102, 0, 0));
@@ -76,12 +95,12 @@ public class PagarDespesa extends javax.swing.JDialog {
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Despesas, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addContainerGap(118, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(ConfirmarButton)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -90,13 +109,13 @@ public class PagarDespesa extends javax.swing.JDialog {
                 .addGap(42, 42, 42)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Despesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(ConfirmarButton)
                 .addContainerGap())
         );
 
@@ -114,14 +133,25 @@ public class PagarDespesa extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void ConfirmarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmarButtonActionPerformed
+        String part = this.facade.parseString(Despesas.getSelectedItem());
+        int id = Integer.parseInt(part);
+        try {
+            facade.pagar(user,id);
+        } catch (SaldoInsuficienteException ex) {
+            JOptionPane.showMessageDialog(this,"Saldo insuficiente");
+        }
         int opcao = JOptionPane.showConfirmDialog(this,"Deseja Confirmar?","Confirmação",YES_NO_OPTION);
         if(opcao == 0){
             System.out.println("sim");
             this.dispose();
         }
         else System.out.print("não");
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_ConfirmarButtonActionPerformed
+
+    private void DespesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DespesasActionPerformed
+         
+    }//GEN-LAST:event_DespesasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -153,7 +183,7 @@ public class PagarDespesa extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                PagarDespesa dialog = new PagarDespesa(new javax.swing.JFrame(), true);
+                PagarDespesa dialog = new PagarDespesa(new javax.swing.JFrame(), true,facade,user);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -166,8 +196,8 @@ public class PagarDespesa extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton ConfirmarButton;
+    private javax.swing.JComboBox<String> Despesas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
