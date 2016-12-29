@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Observable;
@@ -70,6 +71,34 @@ public class DivideDespesaFacade extends Observable {
         return ret;
     }
     
+    
+    public String adicionarDespesa(String nome, String valor, String tipo,
+                                   Date data, List<String> moradores) {
+        String ret;
+        
+        if(nome.isEmpty() || valor.isEmpty() || tipo.isEmpty() || moradores.isEmpty()) {
+            ret = "Todos os campos têm que estar preenchidos.";
+        } else {
+            try {                
+                double v = Double.valueOf(valor)/(moradores.size());
+                
+                for(String m : moradores) {
+                    String username = this.parseString(m);
+                    dd.adicionarDespesa(nome, v, tipo, data, username);
+                }
+                
+                ret = "Despesa adicionada.";
+            } catch (SQLException e) {
+                ret = "Não foi possível ligar à Base de Dados.";
+            } catch (NumberFormatException e) {
+                ret = "Introduza um valor válido para a despesa.";
+            }
+            
+        }
+        
+        return ret;
+    }
+    
     public void setUtilizador(String username, String password) {
         Utilizador login = new Utilizador(username, password);
         dd.setUtilizador(login);
@@ -81,7 +110,6 @@ public class DivideDespesaFacade extends Observable {
         try {
             ret = dd.getQuartosString();
         } catch (SQLException e) {
-            System.out.println(e);
             ret = null;
         }
         
@@ -150,12 +178,19 @@ public class DivideDespesaFacade extends Observable {
                                       String passAdmin) {
         boolean ret;
         
+        int i = 0;
+        for(double d : precos) {
+            System.out.println("Quarto " + i + " " + d);
+            i++;
+        }
+        
         try {
             Senhorio senhorio = new Senhorio(nomeSenhorio, usernameSenhorio, passSenhorio);
             Administrador admin = new Administrador(usernameAdmin, passAdmin);
             dd.registaApartamento(senhorio, admin, precos);
             ret = true;
         } catch (SQLException e) {
+            System.out.println(e);
             ret = false;
         }
         
@@ -213,15 +248,15 @@ public class DivideDespesaFacade extends Observable {
     }
     
     public Set<String> getSetMoradores()  {
-        Set ret = null;
+     //   Set ret = null;
         
         try {
-            ret = new HashSet<>(Arrays.asList(dd.getMoradoresString()));
+            return new HashSet<>(Arrays.asList(dd.getMoradoresString()));
         } catch (SQLException e) {
-            
+            return null;
         }
 
-        return ret;
+   //     return ret;
     }
    
     public Object[] despesasPagas(String morador) {
@@ -284,9 +319,10 @@ public class DivideDespesaFacade extends Observable {
     
     public String remover(String username) {
         String ret;
+        String username_parsed = parseString(username);
         
         try {
-            dd.removerUtilizador(username);
+            dd.removerUtilizador(username_parsed);
             ret = "Morador removido.";
         } catch (SQLException ex) {
             ret = "Não foi possível ligar à Base de Dados.";

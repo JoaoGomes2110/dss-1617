@@ -23,86 +23,89 @@ public class DespesaDAO {
     
     public void put(Despesa despesa, String m) throws SQLException {
         Connection c = null;
-        //try{
-            c = Connect.connect();
-            PreparedStatement st = c.prepareStatement("INSERT INTO despesa VALUES(?,?,?,?,?,?,?,?)");
+
+        c = Connect.connect();
+        PreparedStatement st = c.prepareStatement("INSERT INTO despesa VALUES(?,?,?,?,?,?,?,?)");
 
 
-            java.sql.Date dataEmissao = new java.sql.Date(despesa.getDataEmissao().getTime());
-            java.sql.Date dataLimite = new java.sql.Date(despesa.getDataLimite().getTime());
-            java.sql.Date dataPagamento = null;
-            if (despesa.getDataPagamento() != null)
-                dataPagamento = new java.sql.Date(despesa.getDataPagamento().getTime());
+        java.sql.Date dataEmissao = new java.sql.Date(despesa.getDataEmissao().getTime());
+        java.sql.Date dataLimite = new java.sql.Date(despesa.getDataLimite().getTime());
+        java.sql.Date dataPagamento = null;
+        
+        if (despesa.getDataPagamento() != null)
+            dataPagamento = new java.sql.Date(despesa.getDataPagamento().getTime());
 
-            st.setInt(1,despesa.getId());
-            st.setString(2,despesa.getInfo());
-            st.setDouble(3,despesa.getValor());
-            st.setDate(4,dataEmissao);
-            st.setDate(5,dataLimite);
-            st.setDate(6,dataPagamento);        
-            st.setString(7,despesa.getTipoDespesaString()); // possivelmente mal
-            st.setString(8, m);
-            st.executeUpdate();
+        st.setInt(1,despesa.getId());
+        st.setString(2,despesa.getInfo());
+        st.setDouble(3,despesa.getValor());
+        st.setDate(4,dataEmissao);
+        st.setDate(5,dataLimite);
+        st.setDate(6,dataPagamento);        
+        st.setString(7,despesa.getTipoDespesaString()); // possivelmente mal
+        st.setString(8, m);
+        st.executeUpdate();
 
-            c.close();
-        //} catch (Exception e){System.out.println("Erro SQL! " + e.toString());}
+        c.close();
     }
     
     public Despesa get(Object key) throws SQLException {
         Despesa d = null;
         Connection con = null;
-        //try {
-            con = Connect.connect();
-            
-            // OBTEM DADOS DO QUARTO
-            PreparedStatement ps = con.prepareStatement("select * from despesa where id = ?");
-            ps.setInt(1, Integer.parseInt(key.toString()));
-            ResultSet rs = ps.executeQuery();
-            Date dataEmissao, dataLimite, dataPagamento;
-            if(rs.next()){
-                System.out.println("ola");
-                dataEmissao = rs.getDate("data_emissao");
-                dataLimite = rs.getDate("data_limite");
-                dataPagamento = rs.getDate("data_pagamento");
-                d = new Despesa(rs.getInt("id"), rs.getString("info"), rs.getDouble("valor"), rs.getString("tipo"),dataEmissao, dataLimite, dataPagamento);
-            }
-            
-            con.close();
-       // } catch (SQLException e) {}
+
+        con = Connect.connect();
+
+        // OBTEM DADOS DO QUARTO
+        PreparedStatement ps = con.prepareStatement("select * from despesa where id = ?");
+        ps.setInt(1, Integer.parseInt(key.toString()));
+        ResultSet rs = ps.executeQuery();
+        Date dataEmissao, dataLimite, dataPagamento;
+        
+        if(rs.next()){
+            System.out.println("ola");
+            dataEmissao = rs.getDate("data_emissao");
+            dataLimite = rs.getDate("data_limite");
+            dataPagamento = rs.getDate("data_pagamento");
+            d = new Despesa(rs.getInt("id"), rs.getString("info"), rs.getDouble("valor"), rs.getString("tipo"),dataEmissao, dataLimite, dataPagamento);
+        }
+
+        con.close();
+
         return d;
     }
+    
+    
+    
         
     public List<Despesa> userPorPagar(String username) throws SQLException {
         List<Despesa> ret = new ArrayList<>();
         Connection con = null;
         
-        //try {
-            con = Connect.connect();
+        con = Connect.connect();
 
-            // OBTEM DESPESAS
-         
-            PreparedStatement ps_dPorPagar;
-            ResultSet rs_dPorPagar;
-            Date dataEmissao, dataLimite, dataPagamento;
-            Despesa dPorPagar;
+        // OBTEM DESPESAS
 
-            // OBTEM DESPESAS PAGAS  
-            
-            ps_dPorPagar = con.prepareStatement("SELECT * FROM despesa WHERE data_pagamento IS NULL AND morador = ?");
-            
-            ps_dPorPagar.setString(1, username);
-            rs_dPorPagar = ps_dPorPagar.executeQuery();
-            
-            while(rs_dPorPagar.next()){
-                    dataEmissao = rs_dPorPagar.getDate("data_emissao");
-                    dataLimite = rs_dPorPagar.getDate("data_limite");
-                    dataPagamento = rs_dPorPagar.getDate("data_pagamento");
-                    dPorPagar = new Despesa(rs_dPorPagar.getInt("id"), rs_dPorPagar.getString("info"), rs_dPorPagar.getDouble("valor"), rs_dPorPagar.getString("tipo"),dataEmissao, dataLimite, dataPagamento);
-                    ret.add(dPorPagar);
-            }
-            
-            con.close();
-        //} catch (SQLException e) {}
+        PreparedStatement ps_dPorPagar;
+        ResultSet rs_dPorPagar;
+        Date dataEmissao, dataLimite, dataPagamento;
+        Despesa dPorPagar;
+
+        // OBTEM DESPESAS PAGAS  
+
+        ps_dPorPagar = con.prepareStatement("SELECT * FROM despesa WHERE data_pagamento IS NULL AND morador = ?");
+
+        ps_dPorPagar.setString(1, username);
+        rs_dPorPagar = ps_dPorPagar.executeQuery();
+
+        while(rs_dPorPagar.next()){
+                dataEmissao = rs_dPorPagar.getDate("data_emissao");
+                dataLimite = rs_dPorPagar.getDate("data_limite");
+                dataPagamento = rs_dPorPagar.getDate("data_pagamento");
+                dPorPagar = new Despesa(rs_dPorPagar.getInt("id"), rs_dPorPagar.getString("info"), rs_dPorPagar.getDouble("valor"), rs_dPorPagar.getString("tipo"),dataEmissao, dataLimite, dataPagamento);
+                ret.add(dPorPagar);
+        }
+
+        con.close();
+
         return ret;
     }
     
@@ -110,41 +113,41 @@ public class DespesaDAO {
         List<Despesa> ret = new ArrayList<>();
         Connection con = null;
         
-        //try {
-            con = Connect.connect();
 
-            // OBTEM DESPESAS
-         
-            PreparedStatement ps_dPagas;
-            ResultSet rs_dPagas;
-            Date dataEmissao, dataLimite, dataPagamento;
-            Despesa dPagas;
+        con = Connect.connect();
 
-            // OBTEM DESPESAS PAGAS  
+        // OBTEM DESPESAS
+
+        PreparedStatement ps_dPagas;
+        ResultSet rs_dPagas;
+        Date dataEmissao, dataLimite, dataPagamento;
+        Despesa dPagas;
+
+        // OBTEM DESPESAS PAGAS  
+
+        ps_dPagas = con.prepareStatement("SELECT * FROM despesa WHERE data_pagamento IS NOT NULL AND morador = ?");
+
+        ps_dPagas.setString(1, username);
+        rs_dPagas = ps_dPagas.executeQuery();
             
-            ps_dPagas = con.prepareStatement("SELECT * FROM despesa WHERE data_pagamento IS NOT NULL AND morador = ?");
-            
-            ps_dPagas.setString(1, username);
-            rs_dPagas = ps_dPagas.executeQuery();
-            
-            while(rs_dPagas.next()){
-                    dataEmissao = rs_dPagas.getDate("data_emissao");
-                    dataLimite = rs_dPagas.getDate("data_limite");
-                    dataPagamento = rs_dPagas.getDate("data_pagamento");
-                    dPagas = new Despesa(rs_dPagas.getInt("id"), rs_dPagas.getString("info"), rs_dPagas.getDouble("valor"), rs_dPagas.getString("tipo"),dataEmissao, dataLimite, dataPagamento);
-                    ret.add(dPagas);
-            }
-            
-            con.close();
-        //} catch (SQLException e) {}
+        while(rs_dPagas.next()){
+                dataEmissao = rs_dPagas.getDate("data_emissao");
+                dataLimite = rs_dPagas.getDate("data_limite");
+                dataPagamento = rs_dPagas.getDate("data_pagamento");
+                dPagas = new Despesa(rs_dPagas.getInt("id"), rs_dPagas.getString("info"), rs_dPagas.getDouble("valor"), rs_dPagas.getString("tipo"),dataEmissao, dataLimite, dataPagamento);
+                ret.add(dPagas);
+        }
+
+        con.close();
+
         return ret;
     }
     
         
     public int size() throws SQLException {
         int size = -1;
-        //try{
-            Connection con = Connect.connect();
+
+        Connection con = Connect.connect();
             PreparedStatement ps = con.prepareStatement("select count(id) from despesa");
             ResultSet rs = ps.executeQuery();
 
@@ -152,7 +155,6 @@ public class DespesaDAO {
                 size = rs.getInt(1);
 
             con.close();
-        //} catch (Exception e){};
 
         return size;
     }

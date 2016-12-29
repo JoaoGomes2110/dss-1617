@@ -126,7 +126,8 @@ public class UserAdministrador extends javax.swing.JDialog {
     }//GEN-LAST:event_verDespesasActionPerformed
 
     private void adicionarDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarDespesaActionPerformed
-        AdicionarDespesa dialog = new AdicionarDespesa(new javax.swing.JFrame(),true);
+        AdicionarDespesa dialog = new AdicionarDespesa(new javax.swing.JFrame(),
+                                                       true, facade);
         dialog.setVisible(true);
     }//GEN-LAST:event_adicionarDespesaActionPerformed
 

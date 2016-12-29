@@ -20,7 +20,8 @@ public class RemoverMorador extends javax.swing.JDialog {
     /**
      * Creates new form RemoverMorador
      */
-    public RemoverMorador(java.awt.Frame UserSenhorio, boolean modal,DivideDespesaFacade facade) {
+    public RemoverMorador(java.awt.Frame UserSenhorio, boolean modal, 
+                          DivideDespesaFacade facade) {
         super(UserSenhorio, modal);
         initComponents();
         this.facade = facade;
@@ -30,12 +31,21 @@ public class RemoverMorador extends javax.swing.JDialog {
     public void myInit(){
         Set<String> moradores = this.facade.getSetMoradores();
         
-        for(String s: moradores){
-            moradoresList.addItem(s);
-        }
         
-        String[] arr = moradores.toArray(new String[0]);
-        moradoresList.setSelectedItem(arr[0]);
+        if (moradores != null) {
+            
+            for(String s: moradores){
+                moradoresList.addItem(s);
+            }
+            
+            String[] arr = moradores.toArray(new String[0]);
+            
+            moradoresList.setSelectedItem(arr[0]);
+            
+        } else {
+            String msg = "Não foi possível ligar à Base de Dados.";
+            JOptionPane.showMessageDialog(this, msg);
+        }
     }
 
     /**
@@ -132,6 +142,7 @@ public class RemoverMorador extends javax.swing.JDialog {
 
     private void removerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerButtonActionPerformed
         String morador = String.valueOf(moradoresList.getSelectedItem());
+        
         int opcao = JOptionPane.showConfirmDialog(this,"Deseja remover o morador?",
                                                   "Confirmação", 
                                                   JOptionPane.YES_NO_OPTION);
@@ -184,7 +195,8 @@ public class RemoverMorador extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                RemoverMorador dialog = new RemoverMorador(new javax.swing.JFrame(), true,facade);
+                RemoverMorador dialog = new RemoverMorador(new javax.swing.JFrame(),
+                                                           true, facade);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

@@ -52,7 +52,13 @@ public class DivideDespesa {
         }
     }
     
-    public void adicionarDespesa(String username, Despesa d) throws SQLException {
+    public void adicionarDespesa(String nome, double valor, String tipo,
+                                 Date data, String username) throws SQLException, NumberFormatException {
+        
+        int id = despesasDAO.size() + 1;
+
+        Despesa d = new Despesa(id, nome, valor, tipo, data, data, null);   
+        
         despesasDAO.put(d, username);
     }    
     
@@ -140,6 +146,7 @@ public class DivideDespesa {
             ret = "Valor da despesa superior ao saldo atual.";
         } else {
             updateSaldo(username, saldo - valor);
+
             ret = "Despesa paga.";
         }
 

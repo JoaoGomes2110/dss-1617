@@ -6,10 +6,7 @@
 package Interface;
 
 import dividedespesa.DivideDespesaFacade;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.YES_NO_OPTION;
 
@@ -26,7 +23,8 @@ public class VerDespesas extends javax.swing.JDialog {
     /**
      * Creates new form VerDespesas
      */
-    public VerDespesas(java.awt.Frame parent, boolean modal,DivideDespesaFacade facade) {
+    public VerDespesas(java.awt.Frame parent, boolean modal,
+                       DivideDespesaFacade facade) {
         super(parent, modal);
         initComponents();
         this.facade = facade;
@@ -37,7 +35,7 @@ public class VerDespesas extends javax.swing.JDialog {
     public void myInit(){
         Set<String> moradores = this.facade.getSetMoradores();
         
-        if (moradores == null) {
+        if (moradores != null) {
             
             for(String s: moradores){
                 moradoresList.addItem(s);

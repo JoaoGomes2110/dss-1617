@@ -69,12 +69,12 @@ public class Despesa {
         TipoDespesa tipo;
         
         switch (t) {
-            case "recorrente":  tipo = TipoDespesa.RECORRENTE;
-                                break;
-            case "extra":       tipo = TipoDespesa.EXTRAORDINARIA;
-                                break;
-            default :           tipo = TipoDespesa.RENDA;
-                                break;
+            case "Recorrente":      tipo = TipoDespesa.RECORRENTE;
+                                    break;
+            case "Extraordinária":  tipo = TipoDespesa.EXTRAORDINARIA;
+                                    break;
+            default :               tipo = TipoDespesa.RENDA;
+                                    break;
         }
         
         return tipo;

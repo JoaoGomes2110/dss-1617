@@ -34,14 +34,9 @@ public class VerDespesasPagas extends javax.swing.JDialog {
         DefaultTableModel model = (DefaultTableModel) DespesasPagas.getModel();
         
         Object[] o = facade.despesasPagas(morador);
-        
-        if (o != null) {
-            model.addRow(o);
-        } else {
-            String msg = "Não foi possível ligar à Base de Dados.";
-            JOptionPane.showMessageDialog(this, msg);
-            this.dispose();
-        }
+
+        model.addRow(o);
+
     }
     
     public void myInit(){
