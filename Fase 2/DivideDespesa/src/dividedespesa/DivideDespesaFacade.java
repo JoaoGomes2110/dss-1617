@@ -226,28 +226,33 @@ public class DivideDespesaFacade extends Observable {
         return ret;
     }
    
-    public Collection<Despesa> despesasPagas(String morador) {
+    public Object[] despesasPagas(String morador) {
         Collection<Despesa> despesas = null;
-        
+        Object[] o = null; 
         try {
             despesas = dd.verDespesasPagas(morador);
+            for(Despesa d: despesas){
+                o = new Object[]{d.getId(),d.getInfo(),d.getValor(),d.getDataEmissao(),d.getDataLimite(),d.getDataPagamento()};
+            }
         } catch (SQLException e) {
             
         }
         
-        return despesas;
+        return o;
     }
    
-    public Collection<Despesa> despesasPorPagar(String morador) {
+    public Object[] despesasPorPagar(String morador) {
         Collection<Despesa> despesas = null;
-        
+        Object[] o = null;
         try {
             despesas = dd.verDespesasPorPagar(morador);
+            for(Despesa d: despesas){
+                o = new Object[]{d.getId(),d.getInfo(),d.getValor(),d.getDataEmissao(),d.getDataLimite(),d.getDataPagamento()};
+            }
         } catch (SQLException ex) {
         
         }
-        
-        return despesas;
+        return o;
     }
    
     public String alterarRenda(String numQuarto, String valorRenda) {
@@ -318,7 +323,7 @@ public class DivideDespesaFacade extends Observable {
     public String[] getDadosDespesa(String user) {
         String[] despesas = null;
         
-        Collection<Despesa> temp = despesasPorPagar(user);
+        Collection<Despesa> temp = dd.verDespesasPorPagar(user);
         
         if(temp != null) {
             despesas = new String[temp.size()];
