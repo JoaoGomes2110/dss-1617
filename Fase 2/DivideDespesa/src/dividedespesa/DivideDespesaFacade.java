@@ -6,8 +6,10 @@
 package dividedespesa;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
@@ -109,20 +111,12 @@ public class DivideDespesaFacade extends Observable {
     
     public void registaApartamento(String usernameSenhorio, String usernameAdmin,
                                     String nomeSenhorio, String passSenhorio,
-                                    String passAdmin, String descApartamento) {
+                                    String passAdmin) {
         
         Senhorio senhorio = new Senhorio(nomeSenhorio, usernameSenhorio, passSenhorio);
         Administrador admin = new Administrador(usernameAdmin, passAdmin);
-        HashMap<Integer, Double> precosQuartos = new HashMap<>();
-        int i = 0;
         
-        for(Double d : precos) {
-            precosQuartos.put(i, d);
-            i++;
-        }
-        
-        
-        dd.registaApartamento(descApartamento, senhorio, admin, precosQuartos);
+        dd.registaApartamento(senhorio, admin, precos);
     }
     
     public boolean isSenhorio(String username, String password) {
@@ -146,42 +140,31 @@ public class DivideDespesaFacade extends Observable {
     }
     
     public Set<String> getSetMoradores(){
-        Map<String,Morador> temp;
-        temp = dd.getApartamento().getMoradores();
-        Set<String> moradores = new TreeSet<>();
-        for (String s : temp.keySet()) {
-            moradores.add(s);
-        }
-        return moradores;
+        return new HashSet<>(Arrays.asList(dd.getMoradoresString()));
     }
    
     public Collection<Despesa> despesasPagas(String morador){
-            Collection<Despesa> despesas = new TreeSet<>();
-            despesas = dd.verDespesasPagas(morador);
-            return despesas;
+        Collection<Despesa> despesas = new TreeSet<>();
+        despesas = dd.verDespesasPagas(morador);
+        return despesas;
     }
    
     public Collection<Despesa> despesasPorPagar(String morador){
-            Collection<Despesa> despesas = new TreeSet<>();
-            despesas = dd.verDespesasPorPagar(morador);
-            return despesas;
-    }
-   
-    public void carregar(String username,Double valor){
-        Map<String,Morador> temp = dd.getApartamento().getMoradores();
-        Morador m = temp.get(username);
-        m.carregarConta(valor);
+        Collection<Despesa> despesas = new TreeSet<>();
+        despesas = dd.verDespesasPorPagar(morador);
+        return despesas;
     }
    
     public void remover(String username){
-          dd.getApartamento().removerMorador(username);
+        dd.removerUtilizador(username);
     }
-   
+    
+    public void carregar(String username, Double valor){
+        dd.updateSaldo(username, valor);
+    }
+        
     public double consultar(String username){
-           Map<String,Morador> temp = dd.getApartamento().getMoradores();
-           Morador m = temp.get(username);
-           double saldo = m.getContaCorrente().getSaldo();
-           return saldo;
+        return dd.consultaSaldo(username);
     }
    
     public String[] getDadosDespesa(String user){
@@ -189,18 +172,17 @@ public class DivideDespesaFacade extends Observable {
         String[] despesas = new String[temp.size()];
         int i = 0;
         for(Despesa d: temp){
-            despesas[i] = (d.getId() + "-" + d.getInfo() + "-" + d.getValor());
+            StringBuilder sb = new StringBuilder();
+            sb.append(d.getId()).append("-").append(d.getInfo()).append("-").
+               append(d.getValor());
+            despesas[i] = sb.toString();
             i++;
         }
         return despesas;
     }
    
-    public void pagar(String user,int id) throws SaldoInsuficienteException{
-            Map<String,Morador> temp = dd.getApartamento().getMoradores();
-            Morador m = temp.get(user);
-            Map<Integer,Despesa> despesas = m.getDespesasPorPagar();
-            Despesa d = despesas.get(id);
-            m.pagarDespesa(d);
+    public boolean pagar(String user,int idDespesa){
+        return dd.pagaDespesa(user, idDespesa);
     }
     
     public String getUsername() {

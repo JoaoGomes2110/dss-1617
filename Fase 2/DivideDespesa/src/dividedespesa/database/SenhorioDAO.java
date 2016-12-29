@@ -17,16 +17,18 @@ import java.sql.SQLException;
  */
 public class SenhorioDAO {
     
-    public void toDB(Senhorio senhorio) throws SQLException{
-        Connection c = Connect.connect();
-        PreparedStatement st = c.prepareStatement("INSERT INTO senhorio VALUES(?,?,?)");
-        
-        st.setString(1,senhorio.getUsername());
-        st.setString(2,senhorio.getPassword());
-        st.setString(2,senhorio.getNome());
-                
-        st.executeUpdate();
-        c.close();
+    public void toDB(Senhorio senhorio) {
+        try{
+            Connection c = Connect.connect();
+            PreparedStatement st = c.prepareStatement("INSERT INTO senhorio VALUES(?,?,?)");
+
+            st.setString(1,senhorio.getUsername());
+            st.setString(2,senhorio.getPassword());
+            st.setString(2,senhorio.getNome());
+
+            st.executeUpdate();
+            c.close();
+        } catch (SQLException e) {System.out.println("Erro SQL! " + e.toString());}
     }
     
      public Senhorio get(Object key) {
@@ -48,5 +50,26 @@ public class SenhorioDAO {
         return c;
     }
     
+     public boolean exists(String username, String password) {
+        boolean exists = false;
+        Connection con = null;
+        try {
+            con = Connect.connect();
+            
+            // OBTEM DADOS DO QUARTO
+            PreparedStatement ps = con.prepareStatement("select * from senhorio where username = ? and password = ?");
+            ps.setString(1, username);
+            ps.setString(2, password);
+            
+            
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next())
+                exists = true;
+            
+            con.close();
+        } catch (SQLException e) {}
+        return exists;
+    }
     
 }

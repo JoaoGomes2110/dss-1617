@@ -14,8 +14,11 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  *
@@ -23,31 +26,79 @@ import java.util.Map;
  */
 public class MoradorDAO {
     
-    public void put(Morador morador, Quarto quarto) throws SQLException{
-        Connection c = Connect.connect();
-        PreparedStatement st = c.prepareStatement("INSERT INTO morador VALUES(?,?,?,?,?,?)");
-        
-        java.sql.Date dataEntrada = new java.sql.Date(morador.getDataEntrada().getTime());
-        java.sql.Date dataSaida = null;
-        if (morador.getDataSaida() != null)
-            dataSaida = new java.sql.Date(morador.getDataSaida().getTime());
-        
-        st.setString(1,morador.getUsername());
-        st.setString(2,morador.getPassword());
-        st.setString(3,morador.getNome());
-        st.setDate(4,dataEntrada);
-        st.setDate(5,dataSaida); 
-        st.setDouble(6,morador.getContaCorrente().getSaldo());
-        
-        st.executeUpdate();
-        
-        st = c.prepareStatement("INSERT INTO moradorquarto VALUES(?,?)");
-        st.setInt(1,quarto.getNumQuarto());
-        st.setString(2, morador.getUsername());
-        st.executeUpdate();
-        
-        c.close();
+    public void put(Morador morador, List<Integer> quartos){
+        Connection c = null;
+        try{   
+            c = Connect.connect();
+            PreparedStatement st = c.prepareStatement("INSERT INTO morador VALUES(?,?,?,?,?,?)");
+
+            java.sql.Date dataEntrada = new java.sql.Date(morador.getDataEntrada().getTime());
+            java.sql.Date dataSaida = null;
+            if (morador.getDataSaida() != null)
+                dataSaida = new java.sql.Date(morador.getDataSaida().getTime());
+
+            st.setString(1,morador.getUsername());
+            st.setString(2,morador.getPassword());
+            st.setString(3,morador.getNome());
+            st.setDate(4,dataEntrada);
+            st.setDate(5,dataSaida); 
+            st.setDouble(6,morador.getContaCorrente().getSaldo());
+
+            st.executeUpdate();
+
+            for(Integer q: quartos){
+                st = c.prepareStatement("INSERT INTO moradorquarto VALUES(?,?)");
+                st.setInt(1,q);
+                st.setString(2, morador.getUsername());
+                st.executeUpdate();
+            }
+
+            c.close();
+         } catch (Exception e){System.out.println("Erro SQL! " + e.toString());}
     }
+    
+    public void updateMoradorQuarto (Morador morador, List<Integer> quartos){
+        Connection c = null;
+        try{   
+            c = Connect.connect();
+            PreparedStatement st = c.prepareStatement("DELETE FROM moradorquarto WHERE username = ?");
+            st.setString(1, morador.getUsername());
+            st.executeUpdate();
+            c.close();
+            
+            put(morador, quartos);
+         } catch (Exception e){System.out.println("Erro SQL! " + e.toString());}
+    }
+    
+
+    public Map<String, Double> getUsernamesPrecos(){
+        
+        Map<String, Double> usernames = new TreeMap<>();
+        Connection c = null;
+        
+        try{
+            c = Connect.connect();
+            PreparedStatement st = c.prepareStatement("SELECT morador, preco FROM moradorquarto AS MQ" +
+                                                                "INNER JOIN quarto AS Q" +
+                                                      "ON Q.id = MQ.quarto");
+            ResultSet rs = st.executeQuery();
+            
+            while(rs.next()){
+                String username = rs.getString("username");
+                
+                if (usernames.containsKey(username)){
+                    double tmp = usernames.get(username);
+                    usernames.put(username, tmp + rs.getDouble("preco"));
+                } else {
+                    usernames.put(username, rs.getDouble("preco"));
+                }
+            }
+            
+        } catch (Exception e){System.out.println("Erro SQL! " + e.toString());}
+        return usernames;
+    }
+    
+    
     
     public int size() {
         int size = -1;
@@ -63,6 +114,28 @@ public class MoradorDAO {
         } catch (Exception e){};
 
         return size;
+    }
+    
+    public boolean containsKey (String username)  {
+        boolean exists = false;
+        Connection con = null;
+        
+        try {
+            con = Connect.connect();
+
+            // OBTEM UTILIZADOR
+            
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM morador WHERE username = ?");
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next()){
+                exists = true;
+            }
+            
+            con.close();
+        } catch (SQLException e) {System.out.println("Erro SQL! " + e.toString());}
+        return exists;
     }
     
     public Morador get(String username) {
@@ -130,27 +203,83 @@ public class MoradorDAO {
         return m;
     }
     
-    public void updateSaldo (String username, Morador m) throws SQLException{
-        //ainda nao suportado
+
+    public boolean exists(String username, String password) {
+        boolean exists = false;
+        Connection con = null;
+        try {
+            con = Connect.connect();
+            
+            // OBTEM DADOS DO QUARTO
+            PreparedStatement ps = con.prepareStatement("select * from morador where username = ? and password = ?");
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next())
+                exists = true;
+            
+            con.close();
+        } catch (SQLException e) {}
+        return exists;
     }
     
-    public void updateSaida (String username, Date saida) throws SQLException{
-        Connection con = Connect.connect();
-        
-        PreparedStatement ps = con.prepareStatement("UPDATE morador SET data_saida = ? WHERE username = ?");
-        ps.setDate(1,saida);
-        ps.setString(2,username);
-        ps.executeUpdate();
-        con.close();
+    public void updateSaida (String username, java.util.Date saida){
+        try{
+            Connection con = Connect.connect();
+
+            PreparedStatement ps = con.prepareStatement("UPDATE morador SET data_saida = ? WHERE username = ?");
+            ps.setDate(1, new java.sql.Date(saida.getTime()));
+            ps.setString(2,username);
+            ps.executeUpdate();
+            con.close();
+        } catch (SQLException e) {System.out.println("Erro SQL! " + e.toString());}
     } 
     
-    public void updateSaldo (String username, double saldo) throws SQLException{
-        Connection con = Connect.connect();
-        
-        PreparedStatement ps = con.prepareStatement("UPDATE morador SET saldo = ? WHERE username = ?");
-        ps.setDouble(1,saldo);
-        ps.setString(2,username);
-        ps.executeUpdate();
-        con.close();
+    public void updateSaldo (String username, double saldo){
+        try{
+            Connection con = Connect.connect();
+
+            PreparedStatement ps = con.prepareStatement("UPDATE morador SET saldo = ? WHERE username = ?");
+            ps.setDouble(1,saldo);
+            ps.setString(2,username);
+            ps.executeUpdate();
+            con.close();
+        } catch (SQLException e) {System.out.println("Erro SQL! " + e.toString());}
     }
+
+    public void updatePassword(String username, String password) {
+        try{
+            Connection con = Connect.connect();
+
+            PreparedStatement ps = con.prepareStatement("UPDATE morador SET password = ? WHERE username = ?");
+            ps.setString(1,password);
+            ps.setString(2,username);
+            ps.executeUpdate();
+            con.close();
+        } catch (SQLException e) {System.out.println("Erro SQL! " + e.toString());}
+    }
+    
+    public String[] getAll(){
+        String[] ret = new String[this.size()];
+        Connection con = null;
+        int i=0;
+                
+        try {
+            con = Connect.connect();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM morador");
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                StringBuilder sb = new StringBuilder();
+                sb.append(rs.getString("username")).append(" - ").append(rs.getString("nome"));
+                ret[i] = sb.toString();
+                i++;
+            }
+        } catch (SQLException e) {System.out.println("Erro SQL! " + e.toString());}
+        
+        return ret;
+        
+    }
+  
 }

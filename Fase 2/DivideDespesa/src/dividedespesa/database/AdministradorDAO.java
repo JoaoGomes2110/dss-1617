@@ -17,15 +17,17 @@ import java.sql.SQLException;
  */
 public class AdministradorDAO {
  
-    public void toDB(Administrador administrador) throws SQLException{
-        Connection c = Connect.connect();
-        PreparedStatement st = c.prepareStatement("INSERT INTO administrador VALUES(?,?,?)");
-        
-        st.setString(1,administrador.getUsername());
-        st.setString(2,administrador.getPassword());
-                
-        st.executeUpdate();
-        c.close();
+    public void toDB(Administrador administrador){
+        try{
+            Connection c = Connect.connect();
+            PreparedStatement st = c.prepareStatement("INSERT INTO administrador VALUES(?,?,?)");
+
+            st.setString(1,administrador.getUsername());
+            st.setString(2,administrador.getPassword());
+
+            st.executeUpdate();
+            c.close();
+        } catch (SQLException e) {System.out.println("Erro SQL! " + e.toString());}
     }
     
      public Administrador get(Object key) {
@@ -45,6 +47,26 @@ public class AdministradorDAO {
             con.close();
         } catch (SQLException e) {}
         return c;
+    }
+     public boolean exists(String username, String password) {
+        boolean exists = false;
+        Connection con = null;
+        try {
+            con = Connect.connect();
+            
+            // OBTEM DADOS DO QUARTO
+            PreparedStatement ps = con.prepareStatement("select * from administrador where username = ? and password = ?");
+            ps.setString(1, username);
+            ps.setString(2, password);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next())
+                exists = true;
+            
+            con.close();
+        } catch (SQLException e) {}
+        return exists;
     }
     
 }

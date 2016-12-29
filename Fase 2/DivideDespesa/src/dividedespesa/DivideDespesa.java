@@ -5,11 +5,10 @@
  */
 package dividedespesa;
 
-import dividedespesa.database.DespesaDAO;
-import dividedespesa.database.MoradorDAO;
-import dividedespesa.database.QuartoDAO;
+import dividedespesa.database.*;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -22,152 +21,138 @@ import java.util.Map;
 public class DivideDespesa {
     
     // Variáveis de instância
-    
-    private Apartamento apartamento; // apartamento registado no sistema
-    private Utilizador utilizador;   // utilizar com sessão iniciada
-    private static QuartoDAO quartos_dao;
-    private static MoradorDAO morador_dao;
-    private static DespesaDAO despesas;
+    private Utilizador utilizador;
+    private static AdministradorDAO adminDAO;
+    private static SenhorioDAO senhorioDAO;
+    private static QuartoDAO quartosDAO;
+    private static MoradorDAO moradoresDAO;
+    private static DespesaDAO despesasDAO;
     
     // Construtores
     
     public DivideDespesa() {
-        apartamento = null;
-        utilizador = new Utilizador("root", "root");
+        utilizador = null;
+        adminDAO = new AdministradorDAO();
+        senhorioDAO = new SenhorioDAO();
+        quartosDAO = new QuartoDAO();
+        moradoresDAO = new MoradorDAO();
+        despesasDAO = new DespesaDAO();
+        
     }
     
     public DivideDespesa(DivideDespesa dd) {
-        apartamento = dd.getApartamento();
-        utilizador = dd.getUtilizador();
+        //apartamento = dd.getApartamento();
+        //utilizador = dd.getUtilizador();
     }
     
     // Métodos de instância
     
     public void addMorador(String username, String password, String nome,
                                List<Integer> qrts) throws MoradorExistenteException {
-        apartamento.addMorador(nome, username, password, qrts);
+        if (moradoresDAO.containsKey(username)) {
+            throw new MoradorExistenteException();
+        } else {
+            Morador novo = new Morador(username, password, nome);
+            moradoresDAO.put(novo, qrts);
+        }
     }
     
-    public void autenticarUtilizador(String username, String password) throws SemAutorizacaoException {
-        Utilizador u = new Utilizador(username, password);
-        
-        if (u.login(apartamento.getSenhorio())) {
-            utilizador = u;
-        } else {
-            if (u.login(apartamento.getAdministrador())) {
-                utilizador = u;
-            } else {
-                if (apartamento.getMoradores().containsKey(username)) {
-                    if (apartamento.getMoradores().get(username).getPassword().equals(password)) {
-                       utilizador = u; 
-                    }
-                }
-            }
-        }
-        
-        throw new SemAutorizacaoException();
-    }
+    public void adicionarDespesa(String username, Despesa d) {
+        despesasDAO.put(d, username);
+    }    
     
     public Collection<Despesa> verDespesasPorPagar(String username) {
-        return apartamento.getMoradores().get(username).getDespesasPorPagar().values();
+        return despesasDAO.userPorPagar(username);
     }
-   
+    
     public Collection<Despesa> verDespesasPagas(String username) {
-        return apartamento.getMoradores().get(username).getDespesasPagas().values();
+        return despesasDAO.userPagas(username);
     }
-    
-    public void registaApartamento(String info, Senhorio senhorio,
-                                   Administrador admin, Map<Integer, 
-                                   Double> precoQuartos) {
-        Map<Integer, Quarto> quartos = new HashMap<>();
+
+    public void cobrarRendaDAO() {
+        Date date = new Date();
         
-        for (Integer i : precoQuartos.keySet()) {
-            Quarto novo = new Quarto(i, precoQuartos.get(i), new HashSet<>());
-                                   
-            quartos.put(i, novo);
+        Map<String,Double> moradoresPreco = moradoresDAO.getUsernamesPrecos();
+        
+        moradoresPreco.keySet().stream().forEach((user) -> {
+            this.adicionarDespesa(user,
+                                  new Despesa(despesasDAO.size(), "Renda", moradoresPreco.get(user), "Renda", new Date(), new Date(), null)); //TENHO DE ALTERAR
+        });
         }
-        
-        apartamento = new Apartamento(info, senhorio, admin, quartos);
-    }
-    
-    public void cobrarRenda() {
-        apartamento.cobrarRenda();
-    }
     
     public void alteraRendaQuarto(int numQuarto, double valor) {
-        apartamento.alteraRendaQuarto(numQuarto, valor);
+        quartosDAO.updateRenda(numQuarto, valor);
     }
     
     public void alterarPasswordMorador(String username, String password) {
-        apartamento.getMoradores().get(username).setPassword(password);
+       moradoresDAO.updatePassword(username,password);
     }
     
     public void alterarQuartosMorador(String username, List<Integer> quartos) {
-        apartamento.getQuartos().forEach((i, q) -> {
-                                          if(quartos.contains(i)) {
-                                              q.addMorador(username);
-                                          } else {
-                                              q.takeMorador(username);
-                                          }
-                                        });
+         moradoresDAO.updateMoradorQuarto(moradoresDAO.get(username), quartos); 
     }
     
     public boolean isMorador(String username, String password) {
-        boolean ret = false;
-        Utilizador login = new Utilizador(username, password);
-        
-        for(Morador m : apartamento.getMoradores().values()) {
-            if(m.isMorador(login)) {
-                ret = true;
-                break;
-            }
-        }
-        
-        return ret;
+        return moradoresDAO.exists(username,password);
     }
     
-    public boolean isSenhorio(String username, String password) {
-        Utilizador login = new Utilizador(username, password);
-        
-        return apartamento.getSenhorio().isSenhorio(login);
+    public boolean isSenhorio(String username, String password) {      
+        return senhorioDAO.exists(username,password);
     }
     
     public boolean isAdministrador(String username, String password) {
-        Utilizador login = new Utilizador(username, password);
-        
-        return apartamento.getAdministrador().isAdministrador(login);
+        return adminDAO.exists(username,password);
     }
     
     
     public String[] getQuartosString() {
-        return apartamento.getQuartosString();
+        return quartosDAO.getAll();
     }
     
     public String[] getMoradoresString() {
-        return apartamento.getMoradoresString();
+        return moradoresDAO.getAll();
     }
     
-    
-    
-    
-    
-    // Getters e setters
-    
-    public Apartamento getApartamento() {
-        return apartamento.clone(); 
-    }
-  
-    public Utilizador getUtilizador() {
-        return utilizador.clone();
+    public double consultaSaldo(String username){
+        return moradoresDAO.get(username).getContaCorrente().getSaldo();
     }
     
-    public void setApartamento(Apartamento apartamento) {
-        this.apartamento = apartamento;
+    public void updateSaldo (String username, double valor) {
+        moradoresDAO.updateSaldo(username, valor + consultaSaldo(username));
     }
     
+    public void removerUtilizador(String username){
+        moradoresDAO.updateSaida(username, new Date());
+    }
+
     public void setUtilizador(Utilizador utilizador) {
         this.utilizador = utilizador;
     }
+
+    public Utilizador getUtilizador() {
+        return utilizador;
+    }
+    
+    public boolean pagaDespesa(String username, int idDespesa){
+        double saldo = consultaSaldo(username),
+               valor = despesasDAO.get(idDespesa).getValor();
+        
+        if(saldo < valor)
+            return false;
+        
+        updateSaldo(username,saldo-valor);
+        return true;
+    }
+    
+    void registaApartamento(Senhorio senhorio, Administrador admin, List<Double> precosQuartos) {
+        senhorioDAO.toDB(senhorio);
+        adminDAO.toDB(admin);
+        for(int i=0;i<precosQuartos.size();i++)
+            quartosDAO.toDB(i,precosQuartos.get(i));
+        
+        
+    }
+    
     
     /**
      * @param args the command line arguments
@@ -176,9 +161,6 @@ public class DivideDespesa {
 
   
     public static void main(String[] args) throws SQLException {
-       despesas = new DespesaDAO();
-       morador_dao = new MoradorDAO();
-       quartos_dao = new QuartoDAO();
        
        /*
        Quarto q = new Quarto(1,50, new HashSet<>());
@@ -193,10 +175,11 @@ public class DivideDespesa {
        morador_dao.updateSaldo(m.getUsername(), 6999);
        */
        
-       System.out.println(quartos_dao.get(1).getPreco());
-
-       
        //System.out.println(m.toString());
      
     }
+
+
+    
 }
+

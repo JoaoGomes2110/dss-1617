@@ -21,15 +21,17 @@ import java.util.Set;
  */
 public class QuartoDAO {
     
-    public void toDB(Quarto quarto) throws SQLException{
-        Connection c = Connect.connect();
-        PreparedStatement st = c.prepareStatement("INSERT INTO quarto VALUES(?,?)");
-        
-        st.setInt(1,quarto.getNumQuarto());
-        st.setDouble(2,quarto.getPreco());
-                
-        st.executeUpdate();
-        c.close();
+    public void toDB(int id, double preco){
+        try{
+            Connection c = Connect.connect();
+            PreparedStatement st = c.prepareStatement("INSERT INTO quarto VALUES(?,?)");
+
+            st.setInt(1,id);
+            st.setDouble(2,preco);
+
+            st.executeUpdate();
+            c.close();
+        } catch (SQLException e) {System.out.println("Erro SQL! " + e.toString());}
     }
     
     public int size() {
@@ -87,6 +89,39 @@ public class QuartoDAO {
         return false;
     }
 
+    public void updateRenda(int key, double preco) {
+        try{
+            Connection con = Connect.connect();
+
+            PreparedStatement ps = con.prepareStatement("UPDATE quarto SET preco = ? WHERE id = ?");
+            ps.setDouble(1,preco);
+            ps.setInt(2,key);
+            ps.executeUpdate();
+            con.close();
+        } catch (SQLException e) {System.out.println("Erro SQL! " + e.toString());}
+        
+    }
+    
+    public int getNumMorador(int key) {
+        Quarto c = null;
+        Connection con = null;
+        int numMoradores = 0;
+        try {
+            con = Connect.connect();
+            
+            //OBTEM DADOS DO MORADOR QUE ESTA NAQUELE QUARTO
+            PreparedStatement ps = con.prepareStatement("SELECT COUNT * FROM moradorquarto WHERE quarto = ?");
+            ps.setInt(1, key);
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next())
+                numMoradores = rs.getInt(1); 
+            
+            con.close();
+        } catch (SQLException e) {}
+        return numMoradores;
+    }
+    
     public Quarto get(int key) {
         Quarto c = null;
         Connection con = null;
@@ -119,15 +154,30 @@ public class QuartoDAO {
         return c;
     }
 
-    public Quarto put(Integer key, Quarto value) {
+        
+    public String[] getAll(){
+        String[] ret = new String[this.size()];
+        Connection con = null;
+        int i=0;
+                
         try {
-            this.toDB(value);
-        } catch (SQLException ex) {
-            return null;
-        }
-        return value;
+            con = Connect.connect();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM quarto");
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                double preco = rs.getDouble("preco") / (this.getNumMorador(rs.getInt("id")) + 1);
+                StringBuilder sb = new StringBuilder();
+                sb.append(rs.getInt("id")).append(" - ").append(preco);
+                ret[i] = sb.toString();
+                i++;
+            }
+        } catch (SQLException e) {System.out.println("Erro SQL! " + e.toString());}
+        
+        return ret;
+        
     }
-
+    
     public Quarto remove(Object key) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 
@@ -148,6 +198,8 @@ public class QuartoDAO {
     public Collection<Quarto> values() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
+    
+    
 
 }
