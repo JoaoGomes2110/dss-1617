@@ -336,19 +336,7 @@ public class DivideDespesaFacade extends Observable {
         
         return despesas;
     }
-    
-    public String getValorDespesa(String username, String id) {
-        String ret ="";
-        /*try {
-            ret = dd.getValorDespesa(username, Integer.valueOf(id));
-        } catch (SQLException e) {
-            ret = null;
-        }*/
-        //REIS, adiciona um método ao DivideDespesa que devolva o valor da despesa
-        //a partir do username e do id dela
-        
-        return ret;
-    }
+
    
     public String pagar(String user, String despesaInfo) {
         String ret;
