@@ -36,8 +36,12 @@ public class AdicionarMorador extends javax.swing.JDialog {
         String[] quartos = facade.getQuartos();
         
         listaQuartosField.setModel(new javax.swing.AbstractListModel<String>() {
-            public int getSize() { return quartos.length; }
-            public String getElementAt(int i) { return quartos[i]; }
+            public int getSize() {
+                return quartos.length;
+            }
+            public String getElementAt(int i) {
+                return quartos[i];
+            }
         });
     }
 
@@ -220,7 +224,6 @@ public class AdicionarMorador extends javax.swing.JDialog {
                 String msg = facade.addMorador(nomeMorador, usernameMorador, passMorador, numQuartos);
 
                 JOptionPane.showMessageDialog(this, msg);                
-            
             }
         }
     }//GEN-LAST:event_adicionaMoradorActionPerformed

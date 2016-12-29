@@ -108,7 +108,7 @@ public class QuartoDAO {
             con = Connect.connect();
             
             //OBTEM DADOS DO MORADOR QUE ESTA NAQUELE QUARTO
-            PreparedStatement ps = con.prepareStatement("SELECT COUNT * FROM moradorquarto WHERE quarto = ?");
+            PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM moradorquarto WHERE quarto = ?");
             ps.setInt(1, key);
             ResultSet rs = ps.executeQuery();
 
@@ -123,32 +123,29 @@ public class QuartoDAO {
     public Quarto get(int key) throws SQLException {
         Quarto c = null;
         Connection con = null;
-        //try {
-            con = Connect.connect();
-            
-            //OBTEM DADOS DO MORADOR QUE ESTA NAQUELE QUARTO
-            PreparedStatement ps_quarto = con.prepareStatement("SELECT morador FROM moradorquarto WHERE quarto = ?");
-            ps_quarto.setInt(1, key);
-            ResultSet rs_quarto = ps_quarto.executeQuery();
-            Set<String> listamorador = new HashSet<>();
-            
 
-            while(rs_quarto.next())
-                listamorador.add(rs_quarto.getString("morador"));
+        con = Connect.connect();
+            
+        //OBTEM DADOS DO MORADOR QUE ESTA NAQUELE QUARTO
+        PreparedStatement ps_quarto = con.prepareStatement("SELECT morador FROM moradorquarto WHERE quarto = ?");
+        ps_quarto.setInt(1, key);
+        ResultSet rs_quarto = ps_quarto.executeQuery();
+        Set<String> listamorador = new HashSet<>();
             
 
-                
-            PreparedStatement ps = con.prepareStatement("select * from quarto where id = ?");
-            ps.setInt(1,key);
-            ResultSet rs = ps.executeQuery();
+        while(rs_quarto.next())
+            listamorador.add(rs_quarto.getString("morador"));
 
+        PreparedStatement ps = con.prepareStatement("select * from quarto where id = ?");
+        ps.setInt(1,key);
+        ResultSet rs = ps.executeQuery();
 
-            if (rs.next())
-                return new Quarto(rs.getInt("id"),rs.getInt("preco"),listamorador);
+        if (rs.next())
+            return new Quarto(rs.getInt("id"),rs.getInt("preco"),listamorador);
 
             
-            con.close();
-        //} catch (SQLException e) {}
+        con.close();
+            
         return c;
     }
 
@@ -157,16 +154,23 @@ public class QuartoDAO {
         String[] ret = new String[this.size()];
         Connection con = null;
         int i=0;
-                
+               
         //try {
             con = Connect.connect();
             PreparedStatement ps = con.prepareStatement("SELECT * FROM quarto");
             ResultSet rs = ps.executeQuery();
             
             while(rs.next()){
-                double preco = rs.getDouble("preco") / (this.getNumMorador(rs.getInt("id")) + 1);
+                
+                double preco = rs.getDouble("preco");
+                
+                preco = preco / (this.getNumMorador(rs.getInt("id")) + 1);
                 StringBuilder sb = new StringBuilder();
+                System.out.println("Chegou");
+                 
                 sb.append(rs.getInt("id")).append(" - ").append(preco);
+                
+                
                 ret[i] = sb.toString();
                 i++;
             }

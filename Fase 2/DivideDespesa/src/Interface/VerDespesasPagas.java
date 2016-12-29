@@ -19,21 +19,32 @@ import javax.swing.table.DefaultTableModel;
 public class VerDespesasPagas extends javax.swing.JDialog {
     private static DivideDespesaFacade facade;
     private static String morador;
+    
     /**
      * Creates new form VerDespesasPagas
      */
+    
     public VerDespesasPagas(java.awt.Frame VerDespesas, boolean modal, 
                             DivideDespesaFacade facade, String morador) {
         super(VerDespesas, modal);
         initComponents();
         this.facade = facade;
         this.morador = morador;
-        init();
+        myInit();
         DefaultTableModel model = (DefaultTableModel) DespesasPagas.getModel();
-        model.addRow(facade.despesasPagas(morador));
         
- }
-    public void init(){
+        Object[] o = facade.despesasPagas(morador);
+        
+        if (o != null) {
+            model.addRow(o);
+        } else {
+            String msg = "Não foi possível ligar à Base de Dados.";
+            JOptionPane.showMessageDialog(this, msg);
+            this.dispose();
+        }
+    }
+    
+    public void myInit(){
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Id");
         model.addColumn("Info");

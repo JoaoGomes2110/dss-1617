@@ -5,12 +5,8 @@
  */
 package dividedespesa;
 
-import Interface.AdicionarMorador;
-import Interface.AlterarDadosMorador;
 import Interface.JanelaInicial;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.SwingUtilities;
+
 
 
 /**

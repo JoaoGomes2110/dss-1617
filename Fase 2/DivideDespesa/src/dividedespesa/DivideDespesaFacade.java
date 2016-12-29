@@ -13,9 +13,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Observable;
 import java.util.Set;
-import java.util.TreeSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -84,6 +81,7 @@ public class DivideDespesaFacade extends Observable {
         try {
             ret = dd.getQuartosString();
         } catch (SQLException e) {
+            System.out.println(e);
             ret = null;
         }
         
@@ -232,11 +230,13 @@ public class DivideDespesaFacade extends Observable {
         
         try {
             despesas = dd.verDespesasPagas(morador);
+            
             for(Despesa d: despesas){
                 o = new Object[]{d.getId(),d.getInfo(),d.getValor(),d.getDataEmissao(),d.getDataLimite(),d.getDataPagamento()};
             }
-        } catch (SQLException e) {
             
+        } catch (SQLException e) {
+            o = null;
         }
         
         return o;
@@ -245,14 +245,16 @@ public class DivideDespesaFacade extends Observable {
     public Object[] despesasPorPagar(String morador) {
         Collection<Despesa> despesas = null;
         Object[] o = null;
+        
         try {
             despesas = dd.verDespesasPorPagar(morador);
             for(Despesa d: despesas){
                 o = new Object[]{d.getId(),d.getInfo(),d.getValor(),d.getDataEmissao(),d.getDataLimite(),d.getDataPagamento()};
             }
         } catch (SQLException ex) {
-        
+            o = null;
         }
+        
         return o;
     }
    
