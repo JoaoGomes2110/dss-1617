@@ -163,6 +163,8 @@ public class UserSenhorio extends javax.swing.JDialog {
 
     private void cobrarRendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cobrarRendaActionPerformed
        
+        String msg = facade.cobrarRenda(); 
+        JOptionPane.showMessageDialog(this, msg);
     }//GEN-LAST:event_cobrarRendaActionPerformed
 
     private void sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairActionPerformed

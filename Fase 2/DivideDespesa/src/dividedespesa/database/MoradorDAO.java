@@ -64,34 +64,7 @@ public class MoradorDAO {
 
         put(morador, quartos);
     }
-    
-
-    public Map<String, Double> getUsernamesPrecos()  throws SQLException{
         
-        Map<String, Double> usernames = new TreeMap<>();
-        Connection c = null;
-        
-        c = Connect.connect();
-        PreparedStatement st = c.prepareStatement("SELECT morador, preco FROM moradorquarto AS MQ" +
-                                                            "INNER JOIN quarto AS Q" +
-                                                  "ON Q.id = MQ.quarto");
-        ResultSet rs = st.executeQuery();
-
-        while(rs.next()){
-            String username = rs.getString("username");
-
-            if (usernames.containsKey(username)){
-                double tmp = usernames.get(username);
-                usernames.put(username, tmp + rs.getDouble("preco"));
-            } else {
-                usernames.put(username, rs.getDouble("preco"));
-            }
-        }
-
-        return usernames;
-    }
-    
-    
     
     public int size()  throws SQLException {
         int size = -1;

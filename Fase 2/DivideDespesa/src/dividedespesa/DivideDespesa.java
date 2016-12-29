@@ -7,9 +7,11 @@ package dividedespesa;
 
 import dividedespesa.database.*;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -69,18 +71,49 @@ public class DivideDespesa {
     public Collection<Despesa> verDespesasPagas(String username) throws SQLException {
         return despesasDAO.userPagas(username);
     }
-    
-/*  É PRECISO ALTERAR*/
-    /*public void cobrarRendaDAO() throws SQLException {
-        Date date = new Date();
 
-        Map<String,Double> moradoresPreco = moradoresDAO.getUsernamesPrecos();
+    
+    
+    public void cobrarRenda() throws SQLException {
+        String tipo = "Renda";
+        Map<String, Double> usernameRendas = quartosDAO.getUsernamesPrecos();
+        
+        for(String username : usernameRendas.keySet()) {
+            if (jaCobrouRenda(username)) {
+                adicionarDespesa("Renda mensal", usernameRendas.get(username),
+                                 "RENDA", new Date(), username);
+            }
+        }
+    }
+    
+    
+    public boolean jaCobrouRenda(String username) throws SQLException {
+        Date date = despesasDAO.ultimaRenda(username);
+        boolean cobrar = false;
+        
+        if (date != null) {
+            Calendar ultima = Calendar.getInstance();
+            ultima.setTime(date);//data da última renda cobrada
+            ultima.add(Calendar.MONTH, 1);
+            
+            Calendar agora = Calendar.getInstance(); //Data atual
+            
+            if (ultima.before(agora)) { // a renda deste mês ainda não foi cobrada
+                cobrar = true;
+            }
+        } else {
+            cobrar = true;
+        }
+        
+
+        return cobrar;
+        /*
         
         moradoresPreco.keySet().stream().forEach((user) -> {
             this.adicionarDespesa(user,
-                                  new Despesa(despesasDAO.size(), "Renda", moradoresPreco.get(user), "Renda", new Date(), new Date(), null)); //TENHO DE ALTERAR
-        });
-    }*/
+                                  new Despesa(despesasDAO.size(), "Renda", moradoresPreco.get(user), "Renda", new Date(), new Date(), null));
+        });*/
+    }
     
     public void alteraRendaQuarto(int numQuarto, double valor) throws SQLException {
         quartosDAO.updateRenda(numQuarto, valor);
@@ -146,7 +179,7 @@ public class DivideDespesa {
             ret = "Valor da despesa superior ao saldo atual.";
         } else {
             updateSaldo(username, saldo - valor);
-
+            despesasDAO.updateDespesa(idDespesa, new Date());
             ret = "Despesa paga.";
         }
 

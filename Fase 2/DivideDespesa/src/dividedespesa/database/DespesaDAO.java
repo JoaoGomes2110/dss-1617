@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class DespesaDAO {
     
-    public void put(Despesa despesa, String m) throws SQLException {
+    public void put(Despesa despesa, String username) throws SQLException {
         Connection c = null;
 
         c = Connect.connect();
@@ -41,8 +41,8 @@ public class DespesaDAO {
         st.setDate(4,dataEmissao);
         st.setDate(5,dataLimite);
         st.setDate(6,dataPagamento);        
-        st.setString(7,despesa.getTipoDespesaString()); // possivelmente mal
-        st.setString(8, m);
+        st.setString(7,despesa.getTipoDespesaString());
+        st.setString(8, username);
         st.executeUpdate();
 
         c.close();
@@ -74,8 +74,39 @@ public class DespesaDAO {
     }
     
     
+    public void updateDespesa(int idDespesa, java.util.Date data)  throws SQLException {
+               
+        Connection con = Connect.connect();
+ 
+        PreparedStatement ps = con.prepareStatement("UPDATE despesa SET data_pagamento = ? WHERE id = ?");
+        java.sql.Date d_pagamento = new java.sql.Date(data.getTime());
+        ps.setDate(1, d_pagamento);
+        ps.setInt(2, idDespesa);
+ 
+        ps.executeUpdate();
+        con.close();
+    }
     
+
+    public Date ultimaRenda(String username) throws SQLException {
+        Connection con = Connect.connect();
+ 
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM despesa WHERE morador = ? AND tipo = 'RENDA' AND data_emissao IS NOT NULL ORDER BY data_emissao DESC");
+        ps.setString(1, username);
+ 
+        ResultSet rs = ps.executeQuery();
         
+        Date date = null;
+        if (rs.next()) {
+            date = rs.getDate("data_emissao");
+        }
+        
+        con.close();
+        
+        return date;
+    }
+    
+    
     public List<Despesa> userPorPagar(String username) throws SQLException {
         List<Despesa> ret = new ArrayList<>();
         Connection con = null;

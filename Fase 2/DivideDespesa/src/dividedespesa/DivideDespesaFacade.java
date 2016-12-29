@@ -402,6 +402,20 @@ public class DivideDespesaFacade extends Observable {
         return ret;
     }
     
+    public String cobrarRenda() {
+        String ret;
+        
+        try {
+            dd.cobrarRenda();
+            ret = "A renda do mês foi cobrada.";
+        } catch (SQLException e) {
+            System.out.println(e);
+            ret = "Não foi possível ligar à Base de Dados.";
+        }
+        
+        return ret;
+    }
+    
     public String getUsername() {
         
         String ret;
