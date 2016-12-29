@@ -168,7 +168,9 @@ public class Login extends javax.swing.JDialog {
                 admin.setVisible(true);
             }
             
-            if (existe == false && facade.isMorador(username, password)) {
+            String isMorador = facade.isMorador(username, password);
+            
+            if (existe == false && isMorador.equals("morador")) {
                 existe = true;
                 facade.setUtilizador(username, password);
                 
@@ -177,10 +179,10 @@ public class Login extends javax.swing.JDialog {
                 morador.setVisible(true);
             }
             
-            if (existe == false) {
-               String msg = "Não existe um utilizador " + username;
-                JOptionPane.showMessageDialog(this, msg); 
+            if (existe == false) {;
+                JOptionPane.showMessageDialog(this, isMorador); 
             }
+            
         }
     }//GEN-LAST:event_loginActionPerformed
 

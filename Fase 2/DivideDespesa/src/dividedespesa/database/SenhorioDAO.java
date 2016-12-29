@@ -17,18 +17,20 @@ import java.sql.SQLException;
  */
 public class SenhorioDAO {
     
-    public void toDB(Senhorio senhorio) {
-        try{
+    public void toDB(Senhorio senhorio) throws SQLException {
+        //try{
             Connection c = Connect.connect();
             PreparedStatement st = c.prepareStatement("INSERT INTO senhorio VALUES(?,?,?)");
 
             st.setString(1,senhorio.getUsername());
             st.setString(2,senhorio.getPassword());
-            st.setString(2,senhorio.getNome());
+            st.setString(3,senhorio.getNome());
 
             st.executeUpdate();
             c.close();
-        } catch (SQLException e) {System.out.println("Erro SQL! " + e.toString());}
+       // } catch (SQLException e) {
+            //System.out.println("Erro SQL! " + e.toString());
+        //}
     }
     
      public Senhorio get(Object key) {

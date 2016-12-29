@@ -6,31 +6,41 @@
 package Interface;
 
 import dividedespesa.DivideDespesaFacade;
-import dividedespesa.SaldoInsuficienteException;
 import javax.swing.JOptionPane;
-import static javax.swing.JOptionPane.YES_NO_OPTION;
-
 /**
  *
  * @author Gomes
  */
-public class PagarDespesa extends javax.swing.JDialog {
+public class PagarDespesa extends javax.swing.JDialog{
     
     private static DivideDespesaFacade facade;
     /**
      * Creates new form PagarDespesa
      */
-    public PagarDespesa(java.awt.Frame UserMorador, boolean modal,DivideDespesaFacade facade) {
+    public PagarDespesa(java.awt.Frame UserMorador, boolean modal, DivideDespesaFacade facade) {
         super(UserMorador, modal);
         initComponents();
         this.facade = facade;
-        init();
+        myInit();
     }
     
-    public void init(){
-        String[] despesas = this.facade.getDadosDespesa(facade.getUsername());
-        for(int i = 0; i< despesas.length ; i++){
-            Despesas.addItem(despesas[i]);
+    public void myInit(){
+        String username = this.facade.getUsername();
+        
+        if(username != null) {
+            String[] despesas = this.facade.getDadosDespesa(username);
+            
+            if (despesas != null) {
+                for(int i = 0; i< despesas.length ; i++){
+                    despesasList.addItem(despesas[i]);
+                }
+            } else {
+                String msg = "Não foi possível ligar à Base de Dados.";
+                JOptionPane.showMessageDialog(this, msg);
+            }
+        } else {
+            String msg = "Aceder ao utilizador.";
+            JOptionPane.showMessageDialog(this, msg);
         }
     }
 
@@ -45,39 +55,29 @@ public class PagarDespesa extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        ConfirmarButton = new javax.swing.JButton();
-        Despesas = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
+        confirmarButton = new javax.swing.JButton();
+        despesasList = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pagar Despesa", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 3, 18))); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Nome");
+        jLabel1.setText("Despesa ");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setText("Valor");
-
-        ConfirmarButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        ConfirmarButton.setText("Confirmar");
-        ConfirmarButton.addActionListener(new java.awt.event.ActionListener() {
+        confirmarButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        confirmarButton.setText("Confirmar");
+        confirmarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ConfirmarButtonActionPerformed(evt);
+                confirmarButtonActionPerformed(evt);
             }
         });
 
-        Despesas.addActionListener(new java.awt.event.ActionListener() {
+        despesasList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DespesasActionPerformed(evt);
+                despesasListActionPerformed(evt);
             }
         });
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(102, 0, 0));
-        jLabel3.setText("        0");
-        jLabel3.setToolTipText("");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -85,17 +85,13 @@ public class PagarDespesa extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Despesas, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addComponent(jLabel1)
+                .addGap(52, 52, 52)
+                .addComponent(despesasList, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(84, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(ConfirmarButton)
+                .addComponent(confirmarButton)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -104,14 +100,10 @@ public class PagarDespesa extends javax.swing.JDialog {
                 .addGap(42, 42, 42)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(Despesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                .addComponent(ConfirmarButton)
-                .addContainerGap())
+                    .addComponent(despesasList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(confirmarButton)
+                .addContainerGap(83, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -128,25 +120,25 @@ public class PagarDespesa extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ConfirmarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmarButtonActionPerformed
-        String part = this.facade.parseString(String.valueOf(Despesas.getSelectedItem()));
-        int id = Integer.parseInt(part);
-        try {
-            facade.pagar(facade.getUsername(),id);
-        } catch (SaldoInsuficienteException ex) {
-            JOptionPane.showMessageDialog(this,"Saldo insuficiente");
+    private void confirmarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarButtonActionPerformed
+        String despesa = String.valueOf(despesasList.getSelectedItem());
+        String username = facade.getUsername();
+        String msg;
+        
+        if (username != null) {
+            msg = facade.pagar(username, despesa);
+        } else {
+            msg = "Não foi possível aceder ao utilizador.";
         }
-        int opcao = JOptionPane.showConfirmDialog(this,"Deseja Confirmar?","Confirmação",YES_NO_OPTION);
-        if(opcao == 0){
-            System.out.println("sim");
-            this.dispose();
-        }
-        else System.out.print("não");
-    }//GEN-LAST:event_ConfirmarButtonActionPerformed
+        
+        JOptionPane.showMessageDialog(this, msg);
 
-    private void DespesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DespesasActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_confirmarButtonActionPerformed
+
+    private void despesasListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_despesasListActionPerformed
          
-    }//GEN-LAST:event_DespesasActionPerformed
+    }//GEN-LAST:event_despesasListActionPerformed
 
     /**
      * @param args the command line arguments
@@ -191,12 +183,13 @@ public class PagarDespesa extends javax.swing.JDialog {
         });
     }
 
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ConfirmarButton;
-    private javax.swing.JComboBox<String> Despesas;
+    private javax.swing.JButton confirmarButton;
+    private javax.swing.JComboBox<String> despesasList;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+
+
 }

@@ -9,10 +9,7 @@ import dividedespesa.database.*;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -21,6 +18,7 @@ import java.util.Map;
 public class DivideDespesa {
     
     // Variáveis de instância
+    
     private Utilizador utilizador;
     private static AdministradorDAO adminDAO;
     private static SenhorioDAO senhorioDAO;
@@ -39,16 +37,13 @@ public class DivideDespesa {
         despesasDAO = new DespesaDAO();
         
     }
-    
-    public DivideDespesa(DivideDespesa dd) {
-        //apartamento = dd.getApartamento();
-        //utilizador = dd.getUtilizador();
-    }
+
     
     // Métodos de instância
     
     public void addMorador(String username, String password, String nome,
-                               List<Integer> qrts) throws MoradorExistenteException {
+                               List<Integer> qrts) throws MoradorExistenteException, SQLException {
+        
         if (moradoresDAO.containsKey(username)) {
             throw new MoradorExistenteException();
         } else {
@@ -57,42 +52,43 @@ public class DivideDespesa {
         }
     }
     
-    public void adicionarDespesa(String username, Despesa d) {
+    public void adicionarDespesa(String username, Despesa d) throws SQLException {
         despesasDAO.put(d, username);
     }    
     
-    public Collection<Despesa> verDespesasPorPagar(String username) {
+    public Collection<Despesa> verDespesasPorPagar(String username) throws SQLException {
         return despesasDAO.userPorPagar(username);
     }
     
-    public Collection<Despesa> verDespesasPagas(String username) {
+    public Collection<Despesa> verDespesasPagas(String username) throws SQLException {
         return despesasDAO.userPagas(username);
     }
-
-    public void cobrarRendaDAO() {
+    
+/*  É PRECISO ALTERAR*/
+    /*public void cobrarRendaDAO() throws SQLException {
         Date date = new Date();
-        
+
         Map<String,Double> moradoresPreco = moradoresDAO.getUsernamesPrecos();
         
         moradoresPreco.keySet().stream().forEach((user) -> {
             this.adicionarDespesa(user,
                                   new Despesa(despesasDAO.size(), "Renda", moradoresPreco.get(user), "Renda", new Date(), new Date(), null)); //TENHO DE ALTERAR
         });
-        }
+    }*/
     
-    public void alteraRendaQuarto(int numQuarto, double valor) {
+    public void alteraRendaQuarto(int numQuarto, double valor) throws SQLException {
         quartosDAO.updateRenda(numQuarto, valor);
     }
     
-    public void alterarPasswordMorador(String username, String password) {
+    public void alterarPasswordMorador(String username, String password) throws SQLException {
        moradoresDAO.updatePassword(username,password);
     }
     
-    public void alterarQuartosMorador(String username, List<Integer> quartos) {
+    public void alterarQuartosMorador(String username, List<Integer> quartos) throws SQLException {
          moradoresDAO.updateMoradorQuarto(moradoresDAO.get(username), quartos); 
     }
     
-    public boolean isMorador(String username, String password) {
+    public boolean isMorador(String username, String password) throws SQLException {
         return moradoresDAO.exists(username,password);
     }
     
@@ -105,23 +101,23 @@ public class DivideDespesa {
     }
     
     
-    public String[] getQuartosString() {
+    public String[] getQuartosString() throws SQLException {
         return quartosDAO.getAll();
     }
     
-    public String[] getMoradoresString() {
+    public String[] getMoradoresString() throws SQLException {
         return moradoresDAO.getAll();
     }
     
-    public double consultaSaldo(String username){
+    public double consultaSaldo(String username) throws SQLException {
         return moradoresDAO.get(username).getContaCorrente().getSaldo();
     }
     
-    public void updateSaldo (String username, double valor) {
+    public void updateSaldo (String username, double valor) throws SQLException {
         moradoresDAO.updateSaldo(username, valor + consultaSaldo(username));
     }
     
-    public void removerUtilizador(String username){
+    public void removerUtilizador(String username) throws SQLException {
         moradoresDAO.updateSaida(username, new Date());
     }
 
@@ -133,24 +129,36 @@ public class DivideDespesa {
         return utilizador;
     }
     
-    public boolean pagaDespesa(String username, int idDespesa){
+    public String pagaDespesa(String username, int idDespesa)  throws SQLException {
+        
         double saldo = consultaSaldo(username),
                valor = despesasDAO.get(idDespesa).getValor();
         
-        if(saldo < valor)
-            return false;
+        String ret;
         
-        updateSaldo(username,saldo-valor);
-        return true;
+        if(saldo < valor) {
+            ret = "Valor da despesa superior ao saldo atual.";
+        } else {
+            updateSaldo(username, saldo - valor);
+            ret = "Despesa paga.";
+        }
+
+        return ret;
     }
     
-    void registaApartamento(Senhorio senhorio, Administrador admin, List<Double> precosQuartos) {
+    void registaApartamento(Senhorio senhorio, Administrador admin,
+                            List<Double> precosQuartos) throws SQLException {
+        
         senhorioDAO.toDB(senhorio);
+                
         adminDAO.toDB(admin);
-        for(int i=0;i<precosQuartos.size();i++)
-            quartosDAO.toDB(i,precosQuartos.get(i));
         
+        int i = 0;
         
+        for(Double d : precosQuartos) {
+            quartosDAO.toDB(i, precosQuartos.get(i));
+            i++;
+        }
     }
     
     
@@ -162,24 +170,8 @@ public class DivideDespesa {
   
     public static void main(String[] args) throws SQLException {
        
-       /*
-       Quarto q = new Quarto(1,50, new HashSet<>());
-       quartos_dao.put(q.getNumQuarto(),q);
-       
-       Morador m = new Morador("gomes","gay","paneleiro");
-       morador_dao.put(m, q);
-       
-       Despesa d = new Despesa(1,"gay porn",69,"extra", new Date(), new Date(), new Date());
-       despesas.put(d, m.getUsername());
-       
-       morador_dao.updateSaldo(m.getUsername(), 6999);
-       */
-       
-       //System.out.println(m.toString());
+
      
     }
-
-
-    
 }
 

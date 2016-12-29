@@ -6,20 +6,14 @@
 package dividedespesa.database;
 
 import dividedespesa.Despesa;
-import dividedespesa.Morador;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
+
 
 /**
  *
@@ -27,9 +21,9 @@ import java.util.Set;
  */
 public class DespesaDAO {
     
-    public void put(Despesa despesa, String m){
+    public void put(Despesa despesa, String m) throws SQLException {
         Connection c = null;
-        try{
+        //try{
             c = Connect.connect();
             PreparedStatement st = c.prepareStatement("INSERT INTO despesa VALUES(?,?,?,?,?,?,?,?)");
 
@@ -51,13 +45,13 @@ public class DespesaDAO {
             st.executeUpdate();
 
             c.close();
-        } catch (Exception e){System.out.println("Erro SQL! " + e.toString());}
+        //} catch (Exception e){System.out.println("Erro SQL! " + e.toString());}
     }
     
-    public Despesa get(Object key) {
+    public Despesa get(Object key) throws SQLException {
         Despesa d = null;
         Connection con = null;
-        try {
+        //try {
             con = Connect.connect();
             
             // OBTEM DADOS DO QUARTO
@@ -74,15 +68,15 @@ public class DespesaDAO {
             }
             
             con.close();
-        } catch (SQLException e) {}
+       // } catch (SQLException e) {}
         return d;
     }
         
-    public List<Despesa> userPorPagar(String username) {
+    public List<Despesa> userPorPagar(String username) throws SQLException {
         List<Despesa> ret = new ArrayList<>();
         Connection con = null;
         
-        try {
+        //try {
             con = Connect.connect();
 
             // OBTEM DESPESAS
@@ -108,15 +102,15 @@ public class DespesaDAO {
             }
             
             con.close();
-        } catch (SQLException e) {}
+        //} catch (SQLException e) {}
         return ret;
     }
     
-    public List<Despesa> userPagas(String username) {
+    public List<Despesa> userPagas(String username) throws SQLException {
         List<Despesa> ret = new ArrayList<>();
         Connection con = null;
         
-        try {
+        //try {
             con = Connect.connect();
 
             // OBTEM DESPESAS
@@ -142,14 +136,14 @@ public class DespesaDAO {
             }
             
             con.close();
-        } catch (SQLException e) {}
+        //} catch (SQLException e) {}
         return ret;
     }
     
         
-    public int size() {
+    public int size() throws SQLException {
         int size = -1;
-        try{
+        //try{
             Connection con = Connect.connect();
             PreparedStatement ps = con.prepareStatement("select count(id) from despesa");
             ResultSet rs = ps.executeQuery();
@@ -158,8 +152,8 @@ public class DespesaDAO {
                 size = rs.getInt(1);
 
             con.close();
-        } catch (Exception e){};
+        //} catch (Exception e){};
 
         return size;
-}
+    }
 }

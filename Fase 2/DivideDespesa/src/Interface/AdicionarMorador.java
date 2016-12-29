@@ -28,9 +28,6 @@ public class AdicionarMorador extends javax.swing.JDialog {
                             DivideDespesaFacade facade) {
         super(parent, modal);
         this.facade = facade;
-      //  nomeMorador = "";
-        //usernameMorador = "";
-        //passMorador = "";
         initComponents();
         myInit();
     }
@@ -202,8 +199,6 @@ public class AdicionarMorador extends javax.swing.JDialog {
         String passMorador = String.valueOf(passwordMoradorField.getPassword());
         List<String> quartos = new ArrayList<>(listaQuartosField.getSelectedValuesList());
 
-        boolean  existe;
-        
         if (facade.fieldSize(usernameMorador, passMorador, nomeMorador) ||
             quartos.isEmpty()) {
             String msg = "Todos os campos têm que estar preenchidos!";
@@ -222,14 +217,10 @@ public class AdicionarMorador extends javax.swing.JDialog {
                     numQuartos.add(Integer.valueOf(aux));
                 }
 
-                existe = facade.addMorador(nomeMorador, usernameMorador, passMorador, numQuartos);
+                String msg = facade.addMorador(nomeMorador, usernameMorador, passMorador, numQuartos);
 
-                if(existe) {
-                    String msg = "Já existe um morador com esse username.";
-                    JOptionPane.showMessageDialog(this, msg);
-                }
-                
-                this.dispose();
+                JOptionPane.showMessageDialog(this, msg);                
+            
             }
         }
     }//GEN-LAST:event_adicionaMoradorActionPerformed

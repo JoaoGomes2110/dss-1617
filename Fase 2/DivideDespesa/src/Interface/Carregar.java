@@ -123,14 +123,8 @@ public class Carregar extends javax.swing.JDialog {
     private void ContinuarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ContinuarButtonActionPerformed
         String valorStr = valorField.getText();
         
-        try {
-            double valor = Double.parseDouble(valorStr);
-            facade.carregar(facade.getUsername(),valor);
-
-        } catch (NumberFormatException e) {
-            String msg = "Introduza um valor válido.";
-            JOptionPane.showMessageDialog(this, msg);
-        }
+        String msg = facade.carregar(facade.getUsername(), valorStr);
+        JOptionPane.showMessageDialog(this, msg);
     }//GEN-LAST:event_ContinuarButtonActionPerformed
 
     /**

@@ -22,6 +22,7 @@ import static javax.swing.JOptionPane.YES_NO_OPTION;
 public class VerDespesas extends javax.swing.JDialog {
       
     private static DivideDespesaFacade facade;
+    private boolean goNext;
     /**
      * Creates new form VerDespesas
      */
@@ -29,16 +30,29 @@ public class VerDespesas extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.facade = facade;
-        init();
+        goNext = false;
+        myInit();
     }
     
-    public void init(){
+    public void myInit(){
         Set<String> moradores = this.facade.getSetMoradores();
-        for(String s: moradores){
-            Moradores.addItem(s);
+        
+        if (moradores == null) {
+            
+            for(String s: moradores){
+                moradoresList.addItem(s);
+            }
+            
+            String[] arr = moradores.toArray(new String[0]);
+            moradoresList.setSelectedItem(arr[0]);
+            
+            goNext = true;
+        } else {
+            String msg = "Não foi possível ligar à Base de Dados.";
+            JOptionPane.showMessageDialog(this, msg);
+            goNext = false;
         }
-        String[] arr = moradores.toArray(new String[0]);
-        Moradores.setSelectedItem(arr[0]);
+        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -51,11 +65,11 @@ public class VerDespesas extends javax.swing.JDialog {
 
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        Moradores = new javax.swing.JComboBox<>();
+        moradoresList = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         Cancelar = new javax.swing.JButton();
-        Ver = new javax.swing.JButton();
-        TipoDespesas = new javax.swing.JComboBox<>();
+        verButton = new javax.swing.JButton();
+        tipoDespesas = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -64,9 +78,9 @@ public class VerDespesas extends javax.swing.JDialog {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText(" Morador");
 
-        Moradores.addActionListener(new java.awt.event.ActionListener() {
+        moradoresList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MoradoresActionPerformed(evt);
+                moradoresListActionPerformed(evt);
             }
         });
 
@@ -81,19 +95,19 @@ public class VerDespesas extends javax.swing.JDialog {
             }
         });
 
-        Ver.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        Ver.setText("Ver");
-        Ver.addActionListener(new java.awt.event.ActionListener() {
+        verButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        verButton.setText("Ver");
+        verButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                VerActionPerformed(evt);
+                verButtonActionPerformed(evt);
             }
         });
 
-        TipoDespesas.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        TipoDespesas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ver Despesas Por Pagar", "Ver Despesas Pagas" }));
-        TipoDespesas.addActionListener(new java.awt.event.ActionListener() {
+        tipoDespesas.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tipoDespesas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ver Despesas Por Pagar", "Ver Despesas Pagas" }));
+        tipoDespesas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TipoDespesasActionPerformed(evt);
+                tipoDespesasActionPerformed(evt);
             }
         });
 
@@ -107,7 +121,7 @@ public class VerDespesas extends javax.swing.JDialog {
                         .addContainerGap()
                         .addComponent(Cancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Ver))
+                        .addComponent(verButton))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -115,8 +129,8 @@ public class VerDespesas extends javax.swing.JDialog {
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(36, 36, 36)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Moradores, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(TipoDespesas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(moradoresList, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tipoDespesas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 89, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -126,19 +140,19 @@ public class VerDespesas extends javax.swing.JDialog {
                 .addGap(39, 39, 39)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Moradores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(moradoresList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TipoDespesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tipoDespesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Cancelar)
-                    .addComponent(Ver))
+                    .addComponent(verButton))
                 .addGap(17, 17, 17))
         );
 
-        Moradores.getAccessibleContext().setAccessibleName("");
+        moradoresList.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -154,18 +168,25 @@ public class VerDespesas extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void VerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerActionPerformed
-         String s = String.valueOf(TipoDespesas.getSelectedItem());
-         String m = String.valueOf(Moradores.getSelectedItem());
-         if(s.equals("Ver Despesas Por Pagar")){
-             VerDespesasPorPagar dialog1 = new VerDespesasPorPagar(new javax.swing.JFrame(),true,facade,m);
-             dialog1.setVisible(true);
+    private void verButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verButtonActionPerformed
+
+         if(goNext) {
+            String tipo = String.valueOf(tipoDespesas.getSelectedItem());
+            String morador = String.valueOf(moradoresList.getSelectedItem()); 
+            
+            
+            if(tipo.equals("Ver Despesas Por Pagar")){
+                VerDespesasPorPagar dialog1 = new VerDespesasPorPagar(new javax.swing.JFrame(),
+                                                   true, facade, morador);
+                dialog1.setVisible(true);
+            }
+            if(tipo.equals("Ver Despesas Pagas")){
+                VerDespesasPagas dialog2 = new VerDespesasPagas(new javax.swing.JFrame(),
+                                               true, facade, morador);
+                dialog2.setVisible(true);
+            }             
          }
-         if(s.equals("Ver Despesas Pagas")){
-             VerDespesasPagas dialog2 = new VerDespesasPagas(new javax.swing.JFrame(),true,facade,m);
-             dialog2.setVisible(true);
-         }
-    }//GEN-LAST:event_VerActionPerformed
+    }//GEN-LAST:event_verButtonActionPerformed
 
     private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
         int opcao = JOptionPane.showConfirmDialog(this,"Deseja Cancelar?","Confirmaçao",YES_NO_OPTION);
@@ -176,13 +197,13 @@ public class VerDespesas extends javax.swing.JDialog {
         else System.out.print("não");
     }//GEN-LAST:event_CancelarActionPerformed
 
-    private void TipoDespesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TipoDespesasActionPerformed
+    private void tipoDespesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoDespesasActionPerformed
             
-    }//GEN-LAST:event_TipoDespesasActionPerformed
+    }//GEN-LAST:event_tipoDespesasActionPerformed
 
-    private void MoradoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MoradoresActionPerformed
+    private void moradoresListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moradoresListActionPerformed
 
-    }//GEN-LAST:event_MoradoresActionPerformed
+    }//GEN-LAST:event_moradoresListActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,12 +249,12 @@ public class VerDespesas extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Cancelar;
-    private javax.swing.JComboBox<String> Moradores;
-    private javax.swing.JComboBox<String> TipoDespesas;
-    private javax.swing.JButton Ver;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JComboBox<String> moradoresList;
+    private javax.swing.JComboBox<String> tipoDespesas;
+    private javax.swing.JButton verButton;
     // End of variables declaration//GEN-END:variables
 
 }

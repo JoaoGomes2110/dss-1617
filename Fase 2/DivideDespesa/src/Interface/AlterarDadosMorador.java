@@ -32,25 +32,6 @@ public class AlterarDadosMorador extends javax.swing.JDialog {
         myInit();
     }
     
-    private void myInit() {
-        String[] moradores = facade.getMoradores();
-        String[] quartos = facade.getQuartos();
-        
-        quartosField.setModel(
-            new javax.swing.AbstractListModel<String>() {
-                public int getSize() {
-                    return quartos.length;
-                }
-
-                public String getElementAt(int i) {
-                    return quartos[i];
-                }
-            }
-        );
-        
-        listaMoradoresField.setModel(
-            new javax.swing.DefaultComboBoxModel<>(moradores));
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -172,6 +153,31 @@ public class AlterarDadosMorador extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void myInit() {
+        String[] moradores = facade.getMoradores();
+        String[] quartos = facade.getQuartos();
+        
+        if (moradores == null || quartos == null) {
+            String msg = "Não foi possível ligar à Base de Dados.";
+            JOptionPane.showMessageDialog(this, msg);
+            this.dispose();
+        } else {
+            quartosField.setModel(
+                new javax.swing.AbstractListModel<String>() {
+                    public int getSize() {
+                        return quartos.length;
+                    }
+
+                    public String getElementAt(int i) {
+                        return quartos[i];
+                    }
+                }
+            );
+        
+            listaMoradoresField.setModel(new javax.swing.DefaultComboBoxModel<>(moradores));
+        }
+    }
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int opcao = JOptionPane.showConfirmDialog(this,"Deseja Cancelar?","Confirmação",YES_NO_OPTION);
         if(opcao == 0){
@@ -199,18 +205,28 @@ public class AlterarDadosMorador extends javax.swing.JDialog {
                 numQuartos.add(Integer.valueOf(aux));
             }
                         
-            facade.alterarQuartosMorador(username, numQuartos);
-            String msg = "Os quartos foram alterados.";
-            JOptionPane.showMessageDialog(this, msg);
-            estado = false;
+            if (facade.alterarQuartosMorador(username, numQuartos)) {
+                String msg = "Os quartos foram alterados.";
+                JOptionPane.showMessageDialog(this, msg);
+                estado = false;   
+            } else {
+                String msg = "Não foi possível ligar à Base de Dados.";
+                JOptionPane.showMessageDialog(this, msg);
+                estado = true; 
+            }
         } 
 
         
         if (password.length() > 0) {
-            facade.alterarPasswordMorador(username, password);
-            String msg = "A password foi alterada.";
-            JOptionPane.showMessageDialog(this, msg);
-            estado = false;
+            if (facade.alterarPasswordMorador(username, password)) {
+                String msg = "A password foi alterada.";
+                JOptionPane.showMessageDialog(this, msg);
+                estado = false;
+            } else {
+                String msg = "Não foi possível ligar à Base de Dados.";
+                JOptionPane.showMessageDialog(this, msg);
+                estado = true; 
+            }
         }
         
         if (estado) {

@@ -21,8 +21,8 @@ import java.util.Set;
  */
 public class QuartoDAO {
     
-    public void toDB(int id, double preco){
-        try{
+    public void toDB(int id, double preco) throws SQLException {
+        //try{
             Connection c = Connect.connect();
             PreparedStatement st = c.prepareStatement("INSERT INTO quarto VALUES(?,?)");
 
@@ -31,12 +31,14 @@ public class QuartoDAO {
 
             st.executeUpdate();
             c.close();
-        } catch (SQLException e) {System.out.println("Erro SQL! " + e.toString());}
+        /*} catch (SQLException e) {
+            System.out.println("Erro SQL! " + e.toString());
+        }*/
     }
     
-    public int size() {
+    public int size() throws SQLException {
         int size = -1;
-        try{
+        //try{
             Connection con = Connect.connect();
             PreparedStatement ps = con.prepareStatement("select count(id) from quarto");
             ResultSet rs = ps.executeQuery();
@@ -45,14 +47,14 @@ public class QuartoDAO {
                 size = rs.getInt(1);
 
             con.close();
-        } catch (Exception e){};
+        //} catch (Exception e){};
 
         return size;
     }
 
-    public boolean isEmpty() {
+    public boolean isEmpty() throws SQLException {
         boolean empty = true;
-        try{
+        //try{
             Connection con = Connect.connect();
             PreparedStatement ps = con.prepareStatement("select count(id) from quarto");
             ResultSet rs = ps.executeQuery();
@@ -61,15 +63,15 @@ public class QuartoDAO {
                 empty = false;
 
             con.close();
-        } catch (Exception e){};
+        //} catch (Exception e){};
 
         return empty;
     }
 
-    public boolean containsKey(Object key) {
+    public boolean containsKey(Object key) throws SQLException {
         boolean r = false;
         Connection con = null;
-        try {
+        //try {
             con = Connect.connect();
             PreparedStatement ps = con.prepareStatement("select * from quarto where id = ?");
             ps.setInt(1, Integer.parseInt(key.toString()));
@@ -79,18 +81,14 @@ public class QuartoDAO {
             }
      
             con.close();
-        } catch (SQLException e) {}
+        //} catch (SQLException e) {}
         return r;
     }
 
 
-    public boolean containsValue(Object value) {
-        //return containsKey()
-        return false;
-    }
 
-    public void updateRenda(int key, double preco) {
-        try{
+    public void updateRenda(int key, double preco) throws SQLException {
+        //try{
             Connection con = Connect.connect();
 
             PreparedStatement ps = con.prepareStatement("UPDATE quarto SET preco = ? WHERE id = ?");
@@ -98,15 +96,15 @@ public class QuartoDAO {
             ps.setInt(2,key);
             ps.executeUpdate();
             con.close();
-        } catch (SQLException e) {System.out.println("Erro SQL! " + e.toString());}
+        //} catch (SQLException e) {System.out.println("Erro SQL! " + e.toString());}
         
     }
     
-    public int getNumMorador(int key) {
+    public int getNumMorador(int key) throws SQLException {
         Quarto c = null;
         Connection con = null;
         int numMoradores = 0;
-        try {
+        //try {
             con = Connect.connect();
             
             //OBTEM DADOS DO MORADOR QUE ESTA NAQUELE QUARTO
@@ -118,14 +116,14 @@ public class QuartoDAO {
                 numMoradores = rs.getInt(1); 
             
             con.close();
-        } catch (SQLException e) {}
+        //} catch (SQLException e) {}
         return numMoradores;
     }
     
-    public Quarto get(int key) {
+    public Quarto get(int key) throws SQLException {
         Quarto c = null;
         Connection con = null;
-        try {
+        //try {
             con = Connect.connect();
             
             //OBTEM DADOS DO MORADOR QUE ESTA NAQUELE QUARTO
@@ -150,17 +148,17 @@ public class QuartoDAO {
 
             
             con.close();
-        } catch (SQLException e) {}
+        //} catch (SQLException e) {}
         return c;
     }
 
         
-    public String[] getAll(){
+    public String[] getAll() throws SQLException {
         String[] ret = new String[this.size()];
         Connection con = null;
         int i=0;
                 
-        try {
+        //try {
             con = Connect.connect();
             PreparedStatement ps = con.prepareStatement("SELECT * FROM quarto");
             ResultSet rs = ps.executeQuery();
@@ -172,34 +170,9 @@ public class QuartoDAO {
                 ret[i] = sb.toString();
                 i++;
             }
-        } catch (SQLException e) {System.out.println("Erro SQL! " + e.toString());}
+        //} catch (SQLException e) {System.out.println("Erro SQL! " + e.toString());}
         
         return ret;
         
     }
-    
-    public Quarto remove(Object key) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-
-    }
-
-    public void putAll(Map<? extends Integer, ? extends Quarto> m) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public void clear() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public Set<Integer> keySet() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public Collection<Quarto> values() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    
-    
-
 }

@@ -8,11 +8,8 @@ package Interface;
 import dividedespesa.Despesa;
 import dividedespesa.DivideDespesaFacade;
 import java.util.Set;
-import java.util.TreeSet;
-import java.util.Vector;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.YES_NO_OPTION;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**

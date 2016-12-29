@@ -38,71 +38,71 @@ public class UserSenhorio extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        adicionarMorador = new javax.swing.JButton();
+        verDespesas = new javax.swing.JButton();
+        removerMorador = new javax.swing.JButton();
+        alterarDadosMorador = new javax.swing.JButton();
+        alterarRenda = new javax.swing.JButton();
+        sair = new javax.swing.JButton();
+        cobrarRenda = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Senhorio", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 3, 18))); // NOI18N
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton1.setText("Adicionar Morador");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        adicionarMorador.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        adicionarMorador.setText("Adicionar Morador");
+        adicionarMorador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                adicionarMoradorActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton2.setText("Ver Despesas");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        verDespesas.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        verDespesas.setText("Ver Despesas");
+        verDespesas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                verDespesasActionPerformed(evt);
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton3.setText("Remover Morador");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        removerMorador.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        removerMorador.setText("Remover Morador");
+        removerMorador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                removerMoradorActionPerformed(evt);
             }
         });
 
-        jButton4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton4.setText("Alterar Dados Morador");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        alterarDadosMorador.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        alterarDadosMorador.setText("Alterar Dados Morador");
+        alterarDadosMorador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                alterarDadosMoradorActionPerformed(evt);
             }
         });
 
-        jButton5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton5.setText("Alterar Renda");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        alterarRenda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        alterarRenda.setText("Alterar Renda");
+        alterarRenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                alterarRendaActionPerformed(evt);
             }
         });
 
-        jButton6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton6.setText("Sair");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        sair.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        sair.setText("Sair");
+        sair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                sairActionPerformed(evt);
             }
         });
 
-        jButton7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton7.setText("Cobrar Renda ");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        cobrarRenda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        cobrarRenda.setText("Cobrar Renda ");
+        cobrarRenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                cobrarRendaActionPerformed(evt);
             }
         });
 
@@ -114,16 +114,16 @@ public class UserSenhorio extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton6))
+                        .addComponent(sair))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2)
-                            .addComponent(jButton1)
-                            .addComponent(jButton3)
-                            .addComponent(jButton4)
-                            .addComponent(jButton5)
-                            .addComponent(jButton7))
+                            .addComponent(verDespesas)
+                            .addComponent(adicionarMorador)
+                            .addComponent(removerMorador)
+                            .addComponent(alterarDadosMorador)
+                            .addComponent(alterarRenda)
+                            .addComponent(cobrarRenda))
                         .addGap(0, 149, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -131,19 +131,19 @@ public class UserSenhorio extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
+                .addComponent(adicionarMorador)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(verDespesas)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(removerMorador)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
+                .addComponent(alterarDadosMorador)
                 .addGap(18, 18, 18)
-                .addComponent(jButton5)
+                .addComponent(alterarRenda)
                 .addGap(18, 18, 18)
-                .addComponent(jButton7)
+                .addComponent(cobrarRenda)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton6)
+                .addComponent(sair)
                 .addContainerGap())
         );
 
@@ -161,45 +161,45 @@ public class UserSenhorio extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void cobrarRendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cobrarRendaActionPerformed
        
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }//GEN-LAST:event_cobrarRendaActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairActionPerformed
        int opcao = JOptionPane.showConfirmDialog(this,"Deseja Sair?","Confirmação",JOptionPane.YES_NO_OPTION);
        if(opcao == 0){
            System.out.print("sim");
            this.dispose();
        }
        else System.out.print("não");
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_sairActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void adicionarMoradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarMoradorActionPerformed
         AdicionarMorador dialog = new AdicionarMorador(new javax.swing.JFrame(),
                                                        true, facade);
         dialog.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_adicionarMoradorActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void verDespesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verDespesasActionPerformed
         VerDespesas dialog = new VerDespesas(new javax.swing.JFrame(), true, facade);
         dialog.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_verDespesasActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void removerMoradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerMoradorActionPerformed
         RemoverMorador dialog = new RemoverMorador(new javax.swing.JFrame(), true, facade);
         dialog.setVisible(true);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_removerMoradorActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void alterarDadosMoradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarDadosMoradorActionPerformed
         AlterarDadosMorador dialog = new AlterarDadosMorador(new javax.swing.JFrame(),
                                                              true, facade);
         dialog.setVisible(true);
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_alterarDadosMoradorActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        AlterarRenda dialog = new AlterarRenda(new javax.swing.JFrame(),true);
+    private void alterarRendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarRendaActionPerformed
+        AlterarRenda dialog = new AlterarRenda(new javax.swing.JFrame(),true, facade);
         dialog.setVisible(true);
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_alterarRendaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -245,13 +245,13 @@ public class UserSenhorio extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
+    private javax.swing.JButton adicionarMorador;
+    private javax.swing.JButton alterarDadosMorador;
+    private javax.swing.JButton alterarRenda;
+    private javax.swing.JButton cobrarRenda;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton removerMorador;
+    private javax.swing.JButton sair;
+    private javax.swing.JButton verDespesas;
     // End of variables declaration//GEN-END:variables
 }

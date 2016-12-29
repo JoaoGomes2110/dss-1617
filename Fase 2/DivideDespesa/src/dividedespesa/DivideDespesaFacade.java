@@ -5,16 +5,17 @@
  */
 package dividedespesa;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Observable;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -56,14 +57,17 @@ public class DivideDespesaFacade extends Observable {
                 nome.length() == 0);
     }
     
-    public boolean addMorador(String nome, String username, String password, 
-                           List<Integer> numQuartos) {
-        boolean ret = false;
+    public String addMorador(String nome, String username, String password, 
+                              List<Integer> numQuartos) {
+        String ret;
         
         try {
             dd.addMorador(username, password, nome, numQuartos);
-        } catch (MoradorExistenteException e) {
-            ret = true;
+            ret = "Morador adicionado.";
+        } catch (SQLException e) {
+            ret = "Não foi possível ligar à Base de Dados.";
+        } catch (MoradorExistenteException ex) {
+            ret = "O morador já existe no apartamento.";
         }
         
         return ret;
@@ -75,12 +79,28 @@ public class DivideDespesaFacade extends Observable {
     }
     
     public String[] getQuartos() {
-        return dd.getQuartosString();
+        String[] ret;
+        
+        try {
+            ret = dd.getQuartosString();
+        } catch (SQLException e) {
+            ret = null;
+        }
+        
+        return ret;
     }
     
     
     public String[] getMoradores() {
-        return dd.getMoradoresString();
+        String[] ret;
+        
+        try {
+            ret = dd.getMoradoresString();
+        } catch (SQLException e) {
+            ret = null;
+        }
+        
+        return ret;
     }
 
    
@@ -90,17 +110,35 @@ public class DivideDespesaFacade extends Observable {
     }
     
     
-    public void addToPrecos(String str) {
-        double preco = Double.valueOf(str);
-        this.precos.add(preco);
-        this.setChanged();
-        this.notifyObservers();
+    public boolean addToPrecos(String str) {
+        boolean ret;
+        
+        try {
+            double preco = Double.valueOf(str);
+            this.precos.add(preco);
+            this.setChanged();
+            this.notifyObservers();
+            ret = true;
+        } catch (NumberFormatException e) {
+            ret = false;
+        }
+        
+        return ret;
     }
     
-    public void removeQuarto() {
-        this.precos.remove(precos.size() - 1);
-        this.setChanged();
-        this.notifyObservers();
+    public boolean removeQuarto() {
+        boolean ret;
+        
+        try {
+            this.precos.remove(precos.size() - 1);
+            this.setChanged();
+            this.notifyObservers();
+            ret = true;
+        } catch (IndexOutOfBoundsException e) {
+            ret = false;
+        }
+        
+        return ret;
     }
     
     
@@ -109,14 +147,21 @@ public class DivideDespesaFacade extends Observable {
     }
     
     
-    public void registaApartamento(String usernameSenhorio, String usernameAdmin,
-                                    String nomeSenhorio, String passSenhorio,
-                                    String passAdmin) {
+    public boolean registaApartamento(String nomeSenhorio, String usernameSenhorio, 
+                                      String passSenhorio, String usernameAdmin,
+                                      String passAdmin) {
+        boolean ret;
         
-        Senhorio senhorio = new Senhorio(nomeSenhorio, usernameSenhorio, passSenhorio);
-        Administrador admin = new Administrador(usernameAdmin, passAdmin);
+        try {
+            Senhorio senhorio = new Senhorio(nomeSenhorio, usernameSenhorio, passSenhorio);
+            Administrador admin = new Administrador(usernameAdmin, passAdmin);
+            dd.registaApartamento(senhorio, admin, precos);
+            ret = true;
+        } catch (SQLException e) {
+            ret = false;
+        }
         
-        dd.registaApartamento(senhorio, admin, precos);
+        return ret;
     }
     
     public boolean isSenhorio(String username, String password) {
@@ -127,65 +172,210 @@ public class DivideDespesaFacade extends Observable {
         return dd.isAdministrador(username, password);
     }
     
-    public boolean isMorador(String username, String password) {
-        return dd.isMorador(username, password);
+    public String isMorador(String username, String password) {
+        String ret;
+        
+        try {
+            if(dd.isMorador(username, password)) {
+                ret = "morador";
+            } else {
+                ret = "Login inválido.";
+            }
+        } catch (SQLException ex) {
+            ret = "Não foi possível ligar à Base de Dados.";
+        }
+
+        return ret;
     }
     
-    public void alterarPasswordMorador(String username, String password) {
-        dd.alterarPasswordMorador(username, password);
+    public boolean alterarPasswordMorador(String username, String password) {
+        boolean ret;
+        
+        try {
+            dd.alterarPasswordMorador(username, password);
+            ret = true;
+        } catch (SQLException ex) {
+            ret = false;
+        }
+
+        return ret;
     }
     
-    public void alterarQuartosMorador(String username, List<Integer> quartos) {
-        dd.alterarQuartosMorador(username, quartos);
+    public boolean alterarQuartosMorador(String username, List<Integer> quartos) {
+        boolean ret;
+        
+        try {
+            dd.alterarQuartosMorador(username, quartos);
+            ret = true;
+        } catch (SQLException ex) {
+            ret = false;
+        }
+
+        return ret;
     }
     
-    public Set<String> getSetMoradores(){
-        return new HashSet<>(Arrays.asList(dd.getMoradoresString()));
+    public Set<String> getSetMoradores()  {
+        Set ret = null;
+        
+        try {
+            ret = new HashSet<>(Arrays.asList(dd.getMoradoresString()));
+        } catch (SQLException e) {
+            
+        }
+
+        return ret;
     }
    
-    public Collection<Despesa> despesasPagas(String morador){
-        Collection<Despesa> despesas = new TreeSet<>();
-        despesas = dd.verDespesasPagas(morador);
+    public Collection<Despesa> despesasPagas(String morador) {
+        Collection<Despesa> despesas = null;
+        
+        try {
+            despesas = dd.verDespesasPagas(morador);
+        } catch (SQLException e) {
+            
+        }
+        
         return despesas;
     }
    
-    public Collection<Despesa> despesasPorPagar(String morador){
-        Collection<Despesa> despesas = new TreeSet<>();
-        despesas = dd.verDespesasPorPagar(morador);
+    public Collection<Despesa> despesasPorPagar(String morador) {
+        Collection<Despesa> despesas = null;
+        
+        try {
+            despesas = dd.verDespesasPorPagar(morador);
+        } catch (SQLException ex) {
+        
+        }
+        
         return despesas;
     }
    
-    public void remover(String username){
-        dd.removerUtilizador(username);
+    public String alterarRenda(String numQuarto, String valorRenda) {
+        int quarto = Integer.valueOf(parseString(numQuarto));
+        double renda = 0;
+        String ret = "";
+        
+        if (numQuarto.isEmpty() || valorRenda.isEmpty()) {
+            ret = "Todos os campos tÊm que estar preenchidos.";
+        } else {
+            try {
+                renda = Double.valueOf(valorRenda);
+                dd.alteraRendaQuarto(quarto, renda);  
+            } catch (NumberFormatException e) {
+                ret = "Introduza um valor de renda válido.";
+            } catch (SQLException e) {
+                ret = "Não foi possível ligar à Base de Dados.";
+            }
+            
+            ret = "Valor da renda alterado.";
+        }
+        
+        return ret;
     }
     
-    public void carregar(String username, Double valor){
-        dd.updateSaldo(username, valor);
+    
+    public String remover(String username) {
+        String ret;
+        
+        try {
+            dd.removerUtilizador(username);
+            ret = "Morador removido.";
+        } catch (SQLException ex) {
+            ret = "Não foi possível ligar à Base de Dados.";
+        }
+        
+        return ret;
+    }
+    
+    public String carregar(String username, String valorStr) {
+        String ret;
+        
+        try {
+            double valor = Double.parseDouble(valorStr);
+            dd.updateSaldo(username, valor);
+            ret = "A conta foi carregada.";
+        } catch (NumberFormatException e) {
+            ret = "Introduza um valor a carregar válido.";
+        } catch (SQLException ex) {
+            ret = "Não foi possível ligar à Base de Dados.";
+        }
+        
+        return ret;
     }
         
-    public double consultar(String username){
-        return dd.consultaSaldo(username);
+    public String consultar(String username) {
+        String ret;
+        
+        try {
+            ret = Double.toString(dd.consultaSaldo(username));
+        } catch (SQLException ex) {
+            ret = "Não foi possível ligar à Base de Dados.";
+        }
+        
+        return ret;
     }
    
-    public String[] getDadosDespesa(String user){
+    public String[] getDadosDespesa(String user) {
+        String[] despesas = null;
+        
         Collection<Despesa> temp = despesasPorPagar(user);
-        String[] despesas = new String[temp.size()];
-        int i = 0;
-        for(Despesa d: temp){
-            StringBuilder sb = new StringBuilder();
-            sb.append(d.getId()).append("-").append(d.getInfo()).append("-").
-               append(d.getValor());
-            despesas[i] = sb.toString();
-            i++;
+        
+        if(temp != null) {
+            despesas = new String[temp.size()];
+
+            int i = 0;
+
+            for(Despesa d: temp){
+                StringBuilder sb = new StringBuilder();
+                sb.append(d.getId()).append(" - ").append(d.getInfo()).append(" - ").
+                          append(d.getValor());
+                despesas[i] = sb.toString();
+                i++;
+            }
         }
+        
         return despesas;
     }
+    
+    public String getValorDespesa(String username, String id) {
+        String ret ="";
+        /*try {
+            ret = dd.getValorDespesa(username, Integer.valueOf(id));
+        } catch (SQLException e) {
+            ret = null;
+        }*/
+        //REIS, adiciona um método ao DivideDespesa que devolva o valor da despesa
+        //a partir do username e do id dela
+        
+        return ret;
+    }
    
-    public boolean pagar(String user,int idDespesa){
-        return dd.pagaDespesa(user, idDespesa);
+    public String pagar(String user, String despesaInfo) {
+        String ret;
+        int id;
+        
+        try {
+            id = Integer.valueOf(this.parseString(despesaInfo));
+            ret = dd.pagaDespesa(user, id);
+        } catch (SQLException e) {
+            ret = "Não foi possível ligar à Base de Dados.";
+        } catch (NumberFormatException e) {
+            ret = "Valor da despesa inválido.";
+        }
+        
+        return ret;
     }
     
     public String getUsername() {
-        return dd.getUtilizador().getUsername();
+        
+        String ret;
+        
+        try {
+            ret = dd.getUtilizador().getUsername();
+        } catch (Exception e) {
+            ret = null;
+        }
+
+        return ret;
     }
 }

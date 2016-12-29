@@ -22,10 +22,13 @@ public class Connect{
      */
     public static Connection connect() throws SQLException{
         Connection connect = null;  
+        
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connect = (Connection ) DriverManager.getConnection("jdbc:mysql://localhost/divide_despesas", "root", "password");
-        } catch (ClassNotFoundException ex) {System.out.println("Base de dados inexistente");}
+            connect = (Connection ) DriverManager.getConnection("jdbc:mysql://localhost/divide_despesas", "root", "qweqwe");
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Base de dados inexistente");
+        }
         
         return connect;
       }

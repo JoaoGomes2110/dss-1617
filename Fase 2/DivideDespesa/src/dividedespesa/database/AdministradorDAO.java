@@ -17,17 +17,19 @@ import java.sql.SQLException;
  */
 public class AdministradorDAO {
  
-    public void toDB(Administrador administrador){
-        try{
+    public void toDB(Administrador administrador) throws SQLException {
+        //try{
             Connection c = Connect.connect();
-            PreparedStatement st = c.prepareStatement("INSERT INTO administrador VALUES(?,?,?)");
+            PreparedStatement st = c.prepareStatement("INSERT INTO administrador VALUES(?,?)");
 
             st.setString(1,administrador.getUsername());
             st.setString(2,administrador.getPassword());
 
             st.executeUpdate();
             c.close();
-        } catch (SQLException e) {System.out.println("Erro SQL! " + e.toString());}
+        /*} catch (SQLException e) {
+            System.out.println("Erro SQL! " + e.toString());
+        }*/
     }
     
      public Administrador get(Object key) {

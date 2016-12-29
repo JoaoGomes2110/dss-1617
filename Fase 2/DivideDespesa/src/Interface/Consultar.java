@@ -7,6 +7,7 @@ package Interface;
  */
 
 
+import dividedespesa.DivideDespesaFacade;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.YES_NO_OPTION;
 
@@ -16,12 +17,16 @@ import static javax.swing.JOptionPane.YES_NO_OPTION;
  */
 public class Consultar extends javax.swing.JDialog {
 
+    private static DivideDespesaFacade facade;
+    
     /**
      * Creates new form Consultar
      */
-    public Consultar(java.awt.Frame Conta, boolean modal) {
+    public Consultar(java.awt.Frame Conta, boolean modal, DivideDespesaFacade facade) {
         super(Conta, modal);
+        this.facade = facade;
         initComponents();
+        myInit();
     }
 
     /**
@@ -34,7 +39,7 @@ public class Consultar extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        saldoField = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
@@ -42,9 +47,9 @@ public class Consultar extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Consultar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 3, 18))); // NOI18N
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("       0    ");
-        jLabel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        saldoField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        saldoField.setText("       0    ");
+        saldoField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton1.setText("Retroceder");
@@ -65,7 +70,7 @@ public class Consultar extends javax.swing.JDialog {
                 .addGap(27, 27, 27)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel1)
+                .addComponent(saldoField)
                 .addGap(0, 133, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -77,9 +82,9 @@ public class Consultar extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(saldoField)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
@@ -98,6 +103,18 @@ public class Consultar extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void myInit() {
+        String username = facade.getUsername();
+        if (username != null) {
+            saldoField.setText(facade.consultar(username));
+        } else {
+            saldoField.setText("0");
+            String msg = "Não foi possível aceder ao utilizador.";
+            JOptionPane.showMessageDialog(this, msg);
+        }
+        
+    }
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int opcao = JOptionPane.showConfirmDialog(this,"Deseja retroceder","Confirmação",YES_NO_OPTION);
         if(opcao == 0){
@@ -137,7 +154,8 @@ public class Consultar extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Consultar dialog = new Consultar(new javax.swing.JFrame(), true);
+                Consultar dialog = new Consultar(new javax.swing.JFrame(), true,
+                                                 facade);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -151,8 +169,8 @@ public class Consultar extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel saldoField;
     // End of variables declaration//GEN-END:variables
 }
