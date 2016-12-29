@@ -229,6 +229,7 @@ public class DivideDespesaFacade extends Observable {
     public Object[] despesasPagas(String morador) {
         Collection<Despesa> despesas = null;
         Object[] o = null; 
+        
         try {
             despesas = dd.verDespesasPagas(morador);
             for(Despesa d: despesas){
@@ -323,20 +324,24 @@ public class DivideDespesaFacade extends Observable {
     public String[] getDadosDespesa(String user) {
         String[] despesas = null;
         
-        Collection<Despesa> temp = dd.verDespesasPorPagar(user);
+        try {
+            Collection<Despesa> temp = dd.verDespesasPorPagar(user);
         
-        if(temp != null) {
-            despesas = new String[temp.size()];
+            if(temp != null) {
+                despesas = new String[temp.size()];
 
-            int i = 0;
+                int i = 0;
 
-            for(Despesa d: temp){
-                StringBuilder sb = new StringBuilder();
-                sb.append(d.getId()).append(" - ").append(d.getInfo()).append(" - ").
-                          append(d.getValor());
-                despesas[i] = sb.toString();
-                i++;
+                for(Despesa d: temp){
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(d.getId()).append(" - ").append(d.getInfo()).append(" - ").
+                              append(d.getValor());
+                    despesas[i] = sb.toString();
+                    i++;
+                }
             }
+        } catch (SQLException e) {
+            
         }
         
         return despesas;

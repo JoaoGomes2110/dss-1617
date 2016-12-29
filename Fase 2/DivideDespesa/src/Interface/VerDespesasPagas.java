@@ -22,7 +22,8 @@ public class VerDespesasPagas extends javax.swing.JDialog {
     /**
      * Creates new form VerDespesasPagas
      */
-    public VerDespesasPagas(java.awt.Frame VerDespesas, boolean modal,DivideDespesaFacade facade,String morador) {
+    public VerDespesasPagas(java.awt.Frame VerDespesas, boolean modal, 
+                            DivideDespesaFacade facade, String morador) {
         super(VerDespesas, modal);
         initComponents();
         this.facade = facade;

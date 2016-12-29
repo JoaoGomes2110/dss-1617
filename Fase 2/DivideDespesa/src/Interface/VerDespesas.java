@@ -171,9 +171,9 @@ public class VerDespesas extends javax.swing.JDialog {
     private void verButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verButtonActionPerformed
 
          if(goNext) {
+             
             String tipo = String.valueOf(tipoDespesas.getSelectedItem());
             String morador = String.valueOf(moradoresList.getSelectedItem()); 
-            
             
             if(tipo.equals("Ver Despesas Por Pagar")){
                 VerDespesasPorPagar dialog1 = new VerDespesasPorPagar(new javax.swing.JFrame(),
