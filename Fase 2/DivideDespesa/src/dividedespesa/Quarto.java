@@ -16,9 +16,10 @@ public class Quarto {
     
     private int idQuarto;   // id do quarto
     private double preco;   // preço do quarto
-
-
+    
+    
     // Construtores
+    
     /**
      * Construtor por parâmetros.
      * 

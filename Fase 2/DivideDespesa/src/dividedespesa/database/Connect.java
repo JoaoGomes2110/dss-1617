@@ -11,14 +11,14 @@ import com.mysql.jdbc.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class Connect{
+public class Connect {
         
     /**
      * Estabelece connecção com a base de dados e devolve ponto de acesso.
      * @return Connection correspondente à ligação à base de dados.
      * @throws SQLException 
      */
-    public static Connection connect() throws SQLException{
+    public static Connection connect() throws SQLException {
         Connection connect = null; 
         
         try{

@@ -466,7 +466,6 @@ public class DivideDespesaFacade extends Observable {
             dd.alterarQuartosMorador(username, quartos);
             ret = true;
         } catch (SQLException e) {
-            System.out.println(e);
             ret = false;
         }
 

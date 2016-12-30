@@ -74,7 +74,6 @@ public class Senhorio extends Utilizador {
      *          false caso contrário
      */
     public boolean isSenhorio (Utilizador u) {
-        System.out.println("CHEGOU AO isSenhorio");
         return this.getUsername().equals(u.getUsername()) &&
                this.getPassword().equals(u.getPassword());
     }
