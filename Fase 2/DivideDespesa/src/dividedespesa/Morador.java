@@ -120,7 +120,7 @@ public class Morador extends Utilizador {
     }
     
     public boolean validaMorador() {
-        String [] special = {" ", "/", "#", "$", "%", "&", ">", "<", "-", ","};
+        String [] special = { "/", "#", "$", "%", "&", ">", "<", "-", ","};
         boolean ret = true;
 
         for(String s : special) {

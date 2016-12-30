@@ -207,7 +207,7 @@ public class AdicionarMorador extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, msg);
         } else {
             
-            int opcao = JOptionPane.showConfirmDialog(this,"Deseja Adicionar?","Confirmação",YES_NO_OPTION);
+            int opcao = JOptionPane.showConfirmDialog(this, "Deseja Adicionar?","Confirmação",YES_NO_OPTION);
 
             if(opcao == 0){
                 
@@ -215,7 +215,6 @@ public class AdicionarMorador extends javax.swing.JDialog {
 
                 for(String s : quartos) {
                     String aux = facade.parseString(s);
-                    System.out.println("Numero quarto = " + aux);
                     numQuartos.add(Integer.valueOf(aux));
                 }
 

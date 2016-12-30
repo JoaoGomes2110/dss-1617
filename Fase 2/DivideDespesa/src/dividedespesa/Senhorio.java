@@ -33,7 +33,7 @@ public class Senhorio extends Utilizador {
     // Métodos de instância
 
     public boolean validaSenhorio() {
-        String [] special = {" ", "/", "#", "$", "%", "&", ">", "<", "-", ","};
+        String [] special = {"/", "#", "$", "%", "&", ">", "<", "-", ","};
         boolean ret = true;
 
         for(String s : special) {
