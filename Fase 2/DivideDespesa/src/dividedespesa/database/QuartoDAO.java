@@ -85,7 +85,7 @@ public class QuartoDAO {
 
     public void updateRenda(int key, double preco) throws SQLException {
         Connection con = Connect.connect();
-
+        
         PreparedStatement ps = con.prepareStatement("UPDATE quarto SET preco = ? WHERE id = ?");
         ps.setDouble(1,preco);
         ps.setInt(2,key);

@@ -56,12 +56,18 @@ public class MoradorDAO {
     public void updateMoradorQuarto (Morador morador, List<Integer> quartos) throws SQLException {
         Connection c = null;
         c = Connect.connect();
-        PreparedStatement st = c.prepareStatement("DELETE FROM moradorquarto WHERE username = ?");
+        PreparedStatement st = c.prepareStatement("DELETE FROM moradorquarto WHERE morador = ?");
         st.setString(1, morador.getUsername());
         st.executeUpdate();
+        
+        for(Integer q: quartos){
+            st = c.prepareStatement("INSERT INTO moradorquarto VALUES(?,?)");
+            st.setInt(1, q);
+            st.setString(2, morador.getUsername());
+            st.executeUpdate();
+        }
+        
         c.close();
-
-        put(morador, quartos);
     }
         
     
@@ -134,9 +140,9 @@ public class MoradorDAO {
 
         // OBTEM DESPESAS POR PAGAR
 
-        ps_dPorPagar = con.prepareStatement("SELECT *" +
-                                                "FROM despesa" +
-                                            "WHERE data_pagamento IS NULL AND morador = ?");
+        ps_dPorPagar = con.prepareStatement("SELECT * " +
+                                                " FROM despesa" +
+                                            " WHERE data_pagamento IS NULL AND morador = ?");
         ps_dPorPagar.setString(1, username);
         rs_dPorPagar = ps_dPagas.executeQuery();
 
@@ -189,8 +195,6 @@ public class MoradorDAO {
     public void updateSaida (String username, java.util.Date saida) throws SQLException {
                 
         Connection con = Connect.connect();
-
-        System.out.println("Entrou no updateSaida");
 
         PreparedStatement ps = con.prepareStatement("UPDATE morador SET data_saida = ? WHERE username = ?");
         java.sql.Date d_saida = new java.sql.Date(saida.getTime());

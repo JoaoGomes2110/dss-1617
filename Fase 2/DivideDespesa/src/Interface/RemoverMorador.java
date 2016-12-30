@@ -31,7 +31,6 @@ public class RemoverMorador extends javax.swing.JDialog {
     public void myInit(){
         Set<String> moradores = this.facade.getSetMoradores();
         
-        
         if (moradores != null) {
             
             for(String s: moradores){
@@ -45,7 +44,7 @@ public class RemoverMorador extends javax.swing.JDialog {
         } else {
             String msg = "Não foi possível ligar à Base de Dados.";
             JOptionPane.showMessageDialog(this, msg);
-            
+            this.dispose();
         }
     }
 

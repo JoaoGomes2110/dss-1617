@@ -181,6 +181,7 @@ public class Login extends javax.swing.JDialog {
                 UserMorador morador = new UserMorador(new javax.swing.JFrame(),
                                                       true, facade);
                 morador.setVisible(true);
+                this.dispose();
             }
             
             if (existe == false) {;

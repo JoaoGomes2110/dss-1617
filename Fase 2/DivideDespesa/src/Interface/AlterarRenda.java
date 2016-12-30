@@ -169,6 +169,7 @@ public class AlterarRenda extends javax.swing.JDialog {
         if(opcao == 0){
             String msg = facade.alterarRenda(quarto, renda);
             JOptionPane.showMessageDialog(this, msg);
+            this.dispose();
         }
     }//GEN-LAST:event_confirmarButtonActionPerformed
 

@@ -254,7 +254,8 @@ public class DivideDespesaFacade extends Observable {
         try {
             dd.alterarQuartosMorador(username, quartos);
             ret = true;
-        } catch (SQLException ex) {
+        } catch (SQLException e) {
+            System.out.println(e);
             ret = false;
         }
 
@@ -305,18 +306,17 @@ public class DivideDespesaFacade extends Observable {
         String ret = "";
         
         if (numQuarto.isEmpty() || valorRenda.isEmpty()) {
-            ret = "Todos os campos tÊm que estar preenchidos.";
+            ret = "Todos os campos têm que estar preenchidos.";
         } else {
             try {
                 renda = Double.valueOf(valorRenda);
                 dd.alteraRendaQuarto(quarto, renda);  
+                ret = " Valor da renda alterado.";
             } catch (NumberFormatException e) {
                 ret = "Introduza um valor de renda válido.";
             } catch (SQLException e) {
                 ret = "Não foi possível ligar à Base de Dados.";
-            }
-            
-            ret = "Valor da renda alterado.";
+            } 
         }
         
         return ret;

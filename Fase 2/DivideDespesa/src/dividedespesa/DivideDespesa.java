@@ -109,7 +109,6 @@ public class DivideDespesa {
     
     
     public void cobrarRenda(Date dataLimite) throws SQLException {
-        String tipo = "Renda";
         Map<String, Double> usernameRendas = quartosDAO.getUsernamesPrecos();
         
         for(String username : usernameRendas.keySet()) {
@@ -138,7 +137,6 @@ public class DivideDespesa {
         } else {
             cobrar = true;
         }
-        
 
         return cobrar;
     }

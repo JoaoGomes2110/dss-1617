@@ -158,7 +158,7 @@ public class AlterarDadosMorador extends javax.swing.JDialog {
         String[] moradores = facade.getMoradores();
         String[] quartos = facade.getQuartos();
         
-        if (moradores == null || quartos == null) {
+        if (moradores == null && quartos == null) {
             String msg = "Não foi possível ligar à Base de Dados.";
             JOptionPane.showMessageDialog(this, msg);
             this.dispose();
