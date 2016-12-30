@@ -2,7 +2,6 @@ package Interface;
 
 
 import dividedespesa.DivideDespesaFacade;
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -14,10 +13,7 @@ import javax.swing.JOptionPane;
  * and open the template in the editor.
  */
 
-/**
- *
- * @author Gomes
- */
+
 public class RegistoII extends javax.swing.JDialog implements Observer {
 
     private static DivideDespesaFacade facade;
@@ -180,11 +176,10 @@ public class RegistoII extends javax.swing.JDialog implements Observer {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int opcao = JOptionPane.showConfirmDialog(this,"Deseja retroceder?","Confirmaçao",JOptionPane.YES_NO_OPTION);
+        
         if(opcao == 0){
-            System.out.print("sim");
             this.dispose();
         }
-        else System.out.print("não");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void terminaQuartosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_terminaQuartosActionPerformed

@@ -12,10 +12,6 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Gomes
- */
 public class AdicionarDespesa extends javax.swing.JDialog {
 
     private static DivideDespesaFacade facade;
@@ -211,11 +207,10 @@ public class AdicionarDespesa extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        int opcao = JOptionPane.showConfirmDialog(this,"Deseja Cancelar?","Confirmação",JOptionPane.YES_NO_OPTION);
+       
        if(opcao == 0){
-           System.out.print("sim");
            this.dispose();
-       }
-       else System.out.print("não");        
+       }    
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void confirmarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarButtonActionPerformed

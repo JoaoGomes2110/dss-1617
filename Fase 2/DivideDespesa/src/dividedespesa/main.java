@@ -1,17 +1,17 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * @brief Classe principal do projeto DivideDespesa que constrói a
+ *        Facade e chama a interface de utilizador.
+ *
+ * @author Carlos Pereira   - A61887
+ * @author João Barreira    - A73831
+ * @author João Gomes       - A74033
+ * @author João Reis        - A75372
  */
+
 package dividedespesa;
 
 import Interface.JanelaInicial;
 
-
-/**
- *
- * @author Carlos Pereira
- */
 public class main {
     
     static DivideDespesaFacade facade;

@@ -11,11 +11,6 @@ import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.YES_NO_OPTION;
 
 
-
-/**
- *
- * @author Gomes
- */
 public class VerDespesas extends javax.swing.JDialog {
       
     private static DivideDespesaFacade facade;
@@ -190,11 +185,10 @@ public class VerDespesas extends javax.swing.JDialog {
 
     private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
         int opcao = JOptionPane.showConfirmDialog(this,"Deseja Cancelar?","Confirmaçao",YES_NO_OPTION);
+
         if(opcao == 0){
-            System.out  .print("sim");
             this.dispose();
         }
-        else System.out.print("não");
     }//GEN-LAST:event_CancelarActionPerformed
 
     private void tipoDespesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoDespesasActionPerformed

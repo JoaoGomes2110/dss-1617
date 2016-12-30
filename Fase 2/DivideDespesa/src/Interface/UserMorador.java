@@ -9,10 +9,7 @@ package Interface;
 
 import dividedespesa.DivideDespesaFacade;
 import javax.swing.JOptionPane;
-/**
- *
- * @author Gomes
- */
+
 public class UserMorador extends javax.swing.JDialog {
 
     private static DivideDespesaFacade facade;

@@ -11,10 +11,6 @@ import dividedespesa.DivideDespesaFacade;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.YES_NO_OPTION;
 
-/**
- *
- * @author Gomes
- */
 public class Consultar extends javax.swing.JDialog {
 
     private static DivideDespesaFacade facade;

@@ -5,9 +5,7 @@
  */
 package Interface;
 
-import dividedespesa.Despesa;
 import dividedespesa.DivideDespesaFacade;
-import java.util.Set;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.YES_NO_OPTION;
 import javax.swing.table.DefaultTableModel;
@@ -127,11 +125,10 @@ public class VerDespesasPagas extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        int opcao = JOptionPane.showConfirmDialog(this,"Deseja retroceder?","Confirmação",YES_NO_OPTION);
+       
        if(opcao == 0){
-           System.out.print("sim");
            this.dispose();
        }
-       else System.out.print("não");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

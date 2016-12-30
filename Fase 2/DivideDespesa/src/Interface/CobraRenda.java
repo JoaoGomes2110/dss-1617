@@ -9,10 +9,7 @@ import dividedespesa.DivideDespesaFacade;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author João
- */
+
 public class CobraRenda extends javax.swing.JDialog {
 
     private static DivideDespesaFacade facade;
