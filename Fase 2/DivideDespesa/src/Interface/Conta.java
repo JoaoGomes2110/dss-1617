@@ -122,11 +122,10 @@ public class Conta extends javax.swing.JDialog {
 
     private void RetrocederButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RetrocederButtonActionPerformed
         int opcao = JOptionPane.showConfirmDialog(this,"Deseja retroceder","Confirmação",YES_NO_OPTION);
+        
         if(opcao == 0){
-            System.out.print("sim");
             this.dispose();
         }
-        else System.out.print("não");
     }//GEN-LAST:event_RetrocederButtonActionPerformed
 
     private void CarregarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CarregarButtonActionPerformed
@@ -137,6 +136,7 @@ public class Conta extends javax.swing.JDialog {
     private void ConsultarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarButtonActionPerformed
         String msg = ("O seu saldo é " + facade.consultar(facade.getUsername()));
         JOptionPane.showMessageDialog(this, msg);
+        this.dispose();
     }//GEN-LAST:event_ConsultarButtonActionPerformed
 
     /**

@@ -139,11 +139,11 @@ public class Login extends javax.swing.JDialog {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         int opcao = JOptionPane.showConfirmDialog(this,"Deseja Cancelar?","Confirmação",YES_NO_OPTION);
+        
         if(opcao == 0){
-            System.out.print("sim");
             this.dispose();
         }
-        else System.out.print("não");
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
@@ -162,6 +162,7 @@ public class Login extends javax.swing.JDialog {
                 UserSenhorio senhorio = new UserSenhorio(new javax.swing.JFrame(),
                                                        true, facade);
                 senhorio.setVisible(true);
+                this.dispose();
             }
             
             if (existe == false && facade.isAdministrador(username, password)) {
@@ -170,6 +171,7 @@ public class Login extends javax.swing.JDialog {
                 UserAdministrador admin = new UserAdministrador(new javax.swing.JFrame(),
                                                                 true, facade);
                 admin.setVisible(true);
+                this.dispose();
             }
             
             String isMorador = facade.isMorador(username, password);
@@ -187,7 +189,7 @@ public class Login extends javax.swing.JDialog {
             if (existe == false) {;
                 JOptionPane.showMessageDialog(this, isMorador); 
             }
-            
+
         }
     }//GEN-LAST:event_loginActionPerformed
 

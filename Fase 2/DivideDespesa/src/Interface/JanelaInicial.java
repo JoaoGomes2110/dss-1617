@@ -119,7 +119,7 @@ public class JanelaInicial extends javax.swing.JFrame  {
         if (!existeApt) {
             Registo dialog = new Registo(new javax.swing.JFrame(), true, facade);
             dialog.setVisible(true);
-            this.dispose();
+
         } else {
             String msg = "Não é possível registar pois já existe um apartamento no sistema.";
             JOptionPane.showMessageDialog(this, msg);
@@ -135,15 +135,15 @@ public class JanelaInicial extends javax.swing.JFrame  {
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
       
-    if (existeApt) {
-        Login dialog = new Login(new javax.swing.JFrame(), true, facade); 
-        dialog.setVisible(true);
-        this.dispose();
-        
-    } else {
-        String msg = "Não é possível fazer o login pois não existe nenhum apartamento no sistema.";
-        JOptionPane.showMessageDialog(this, msg);
-    }
+        if (existeApt) {
+            Login dialog = new Login(new javax.swing.JFrame(), true, facade); 
+            dialog.setVisible(true);
+
+
+        } else {
+            String msg = "Não é possível fazer o login pois não existe nenhum apartamento no sistema.";
+            JOptionPane.showMessageDialog(this, msg);
+        }
      
     }//GEN-LAST:event_loginActionPerformed
 

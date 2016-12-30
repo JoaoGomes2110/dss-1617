@@ -227,6 +227,7 @@ public class AdicionarDespesa extends javax.swing.JDialog {
        
        String msg = facade.adicionarDespesa(nome, valor, tipo, dataLimite, moradores);
        JOptionPane.showMessageDialog(this, msg);
+       this.dispose();
     }//GEN-LAST:event_confirmarButtonActionPerformed
 
     private void tipoDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoDespesaActionPerformed
