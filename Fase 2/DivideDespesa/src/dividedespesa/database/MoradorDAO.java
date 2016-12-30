@@ -7,8 +7,8 @@
 
 package dividedespesa.database;
 
-import dividedespesa.Conta;
-import dividedespesa.Morador;
+import dividedespesa.BusinessLayer.Conta;
+import dividedespesa.BusinessLayer.Morador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -190,7 +190,6 @@ public class MoradorDAO {
         PreparedStatement ps = con.prepareStatement("UPDATE morador SET data_saida = ? WHERE username = ?");
         java.sql.Date d_saida = new java.sql.Date(saida.getTime());
         ps.setDate(1, d_saida);
-
 
         ps.setString(2, username);
         ps.executeUpdate();

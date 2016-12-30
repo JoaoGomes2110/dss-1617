@@ -7,7 +7,7 @@
 
 package dividedespesa.database;
 
-import dividedespesa.Senhorio;
+import dividedespesa.BusinessLayer.Senhorio;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

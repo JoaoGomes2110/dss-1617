@@ -1,3 +1,4 @@
+
 /*
  * @author Carlos Pereira   - A61887
  * @author João Barreira    - A73831
@@ -8,7 +9,7 @@
 package dividedespesa.database;
 
 import com.mysql.jdbc.Connection;
-import dividedespesa.Administrador;
+import dividedespesa.BusinessLayer.Administrador;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,6 +18,7 @@ public class AdministradorDAO {
  
     /**
      * Coloca um administrador na base de dados.
+     * 
      * @param administrador Administrador
      * @throws SQLException  Atira a exceção caso exista erros SQL
      */
@@ -33,6 +35,7 @@ public class AdministradorDAO {
     
     /**
      * Constroi um Administrador dado o seu username
+     * 
      * @param key Username
      * @return Administrador
      * @throws java.sql.SQLException Atira exceção caso existam problemas SQL
@@ -54,6 +57,7 @@ public class AdministradorDAO {
     }
      /**
       * Verifica se o username e password do administrador estão correctos.
+      * 
       * @param username Username
       * @param password Password
       * @return boolean a indicar se estão correctos.

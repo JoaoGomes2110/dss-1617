@@ -7,7 +7,7 @@
 
 package dividedespesa.database;
 
-import dividedespesa.Despesa;
+import dividedespesa.BusinessLayer.Despesa;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;

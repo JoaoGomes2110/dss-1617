@@ -14,8 +14,9 @@ import java.sql.SQLException;
 public class Connect {
         
     /**
-     * Estabelece connecção com a base de dados e devolve ponto de acesso.
-     * @return Connection correspondente à ligação à base de dados.
+     * Estabelece conexão com a base de dados e devolve ponto de acesso.
+     * 
+     * @return Conexão correspondente à ligação à base de dados.
      * @throws SQLException 
      */
     public static Connection connect() throws SQLException {
@@ -24,8 +25,8 @@ public class Connect {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             connect = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/divide_despesas", "root", "qweqwe");
-        } catch (ClassNotFoundException ex) {
-            System.out.println(ex);
+        } catch (ClassNotFoundException e) {
+            throw new SQLException();
         }
         
         return connect;
@@ -33,8 +34,9 @@ public class Connect {
       
     
     /**
-     * Recebe uma coneção à base de dados e fecha-a.
-     * @param c Conecção
+     * Recebe uma conexão à base de dados e fecha-a.
+     *
+     * @param c Conexão
      * @throws SQLException 
      */
     public static void close(java.sql.Connection c) throws SQLException {

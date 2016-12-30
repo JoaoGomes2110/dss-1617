@@ -7,7 +7,7 @@
 
 package dividedespesa.database;
 
-import dividedespesa.Quarto;
+import dividedespesa.BusinessLayer.Quarto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
