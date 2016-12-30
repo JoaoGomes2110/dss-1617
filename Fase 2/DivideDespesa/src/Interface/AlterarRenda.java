@@ -40,9 +40,8 @@ public class AlterarRenda extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        listaQuartosField = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        listaQuartosField = new javax.swing.JList<>();
         jLabel2 = new javax.swing.JLabel();
         rendaField = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -52,15 +51,14 @@ public class AlterarRenda extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Alterar Renda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 18))); // NOI18N
 
+        listaQuartosField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listaQuartosFieldActionPerformed(evt);
+            }
+        });
+
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Quartos");
-
-        listaQuartosField.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(listaQuartosField);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Nova renda:");
@@ -86,9 +84,8 @@ public class AlterarRenda extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(39, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
@@ -103,19 +100,23 @@ public class AlterarRenda extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(confirmarButton)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(36, Short.MAX_VALUE)
+                .addComponent(listaQuartosField, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(listaQuartosField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(106, 106, 106)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rendaField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(confirmarButton))
@@ -144,17 +145,9 @@ public class AlterarRenda extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, msg);
             this.dispose();
         } else {
-            listaQuartosField.setModel(
-                new javax.swing.AbstractListModel<String>() {
-                    public int getSize() {
-                        return quartos.length;
-                    }
-
-                    public String getElementAt(int i) {
-                        return quartos[i];
-                    }
-                }
-            );
+            for(int i = 0; i < quartos.length; i++) {
+                listaQuartosField.addItem(quartos[i]);
+            }
         }
     }
     
@@ -169,7 +162,7 @@ public class AlterarRenda extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void confirmarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarButtonActionPerformed
-        String quarto = listaQuartosField.getSelectedValue();
+        String quarto = String.valueOf(listaQuartosField.getSelectedItem());
         String renda = rendaField.getText();
         int opcao = JOptionPane.showConfirmDialog(this,"Deseja Confirmar?","Confirmação",YES_NO_OPTION);
         
@@ -178,6 +171,10 @@ public class AlterarRenda extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, msg);
         }
     }//GEN-LAST:event_confirmarButtonActionPerformed
+
+    private void listaQuartosFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaQuartosFieldActionPerformed
+
+    }//GEN-LAST:event_listaQuartosFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -231,8 +228,7 @@ public class AlterarRenda extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JList<String> listaQuartosField;
+    private javax.swing.JComboBox<String> listaQuartosField;
     private javax.swing.JTextField rendaField;
     // End of variables declaration//GEN-END:variables
 }

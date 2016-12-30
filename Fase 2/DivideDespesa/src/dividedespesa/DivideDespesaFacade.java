@@ -103,6 +103,18 @@ public class DivideDespesaFacade extends Observable {
         return ret;
     }
     
+    public boolean existeApt() {
+        boolean ret;
+        
+        try {
+            ret = dd.existeApt();
+        } catch (SQLException e) {
+            ret = false;
+        }
+
+        return ret;
+    }
+    
     public void setUtilizador(String username, String password) {
         Utilizador login = new Utilizador(username, password);
         dd.setUtilizador(login);

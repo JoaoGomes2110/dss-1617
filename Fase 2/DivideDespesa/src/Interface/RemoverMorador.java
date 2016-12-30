@@ -45,6 +45,7 @@ public class RemoverMorador extends javax.swing.JDialog {
         } else {
             String msg = "Não foi possível ligar à Base de Dados.";
             JOptionPane.showMessageDialog(this, msg);
+            
         }
     }
 
@@ -145,6 +146,7 @@ public class RemoverMorador extends javax.swing.JDialog {
         if(opcao == 0){
             String msg = facade.remover(morador);  
             JOptionPane.showMessageDialog(this, msg);
+            this.dispose();
         }
     }//GEN-LAST:event_removerButtonActionPerformed
 

@@ -122,6 +122,7 @@ public class Carregar extends javax.swing.JDialog {
         
         String msg = facade.carregar(facade.getUsername(), valorStr);
         JOptionPane.showMessageDialog(this, msg);
+        this.dispose();
     }//GEN-LAST:event_ContinuarButtonActionPerformed
 
     /**

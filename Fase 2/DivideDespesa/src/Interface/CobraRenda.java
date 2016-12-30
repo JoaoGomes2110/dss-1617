@@ -115,6 +115,7 @@ public class CobraRenda extends javax.swing.JDialog {
         Date dataLimite = dataLimiteField.getCalendar().getTime();
         String msg = facade.cobrarRenda(dataLimite);
         JOptionPane.showMessageDialog(this, msg);
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

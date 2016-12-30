@@ -16,13 +16,15 @@ import javax.swing.JOptionPane;
  */
 public class JanelaInicial extends javax.swing.JFrame  {
 
-    private static DivideDespesaFacade facade;    
+    private static DivideDespesaFacade facade; 
+    private boolean existeApt;
     /**
      * Creates new form JanelaInicial
      */
     public JanelaInicial(DivideDespesaFacade facade) {
         initComponents();
         this.facade = facade;
+        this.existeApt = facade.existeApt();
     }
 
     /**
@@ -113,22 +115,33 @@ public class JanelaInicial extends javax.swing.JFrame  {
     }// </editor-fold>//GEN-END:initComponents
 
     private void registarAptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registarAptActionPerformed
-        Registo dialog = new Registo(new javax.swing.JFrame(), true, facade);
-        dialog.setVisible(true);
+        
+        if (!existeApt) {
+            Registo dialog = new Registo(new javax.swing.JFrame(), true, facade);
+            dialog.setVisible(true);
+        } else {
+            String msg = "Não é possível registar pois já existe um apartamento no sistema.";
+            JOptionPane.showMessageDialog(this, msg);
+        }
     }//GEN-LAST:event_registarAptActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        int opcao = JOptionPane.showConfirmDialog(this,"Deseja Sair?","Confirmação",JOptionPane.YES_NO_OPTION);
        if(opcao == 0){
-           System.out.print("sim");
            System.exit(1); 
        }
-       else System.out.print("não");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-     Login dialog = new Login(new javax.swing.JFrame(), true, facade); 
-     dialog.setVisible(true); 
+      
+    if (existeApt) {
+        Login dialog = new Login(new javax.swing.JFrame(), true, facade); 
+        dialog.setVisible(true);
+    } else {
+        String msg = "Não é possível fazer o login pois não existe nenhum apartamento no sistema.";
+        JOptionPane.showMessageDialog(this, msg);
+    }
+     
     }//GEN-LAST:event_loginActionPerformed
 
     /**

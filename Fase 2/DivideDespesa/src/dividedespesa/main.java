@@ -8,7 +8,6 @@ package dividedespesa;
 import Interface.JanelaInicial;
 
 
-
 /**
  *
  * @author Carlos Pereira
@@ -19,7 +18,6 @@ public class main {
     
     public static void main(String[] args) {
         facade = new DivideDespesaFacade();
-
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             @Override

@@ -178,10 +178,11 @@ public class QuartoDAO {
         
         c = Connect.connect();
         
-        
-        PreparedStatement st = c.prepareStatement("SELECT morador, preco, Q.id FROM moradorquarto AS MQ " +
-                                                            "INNER JOIN quarto AS Q" +
-                                                  " ON Q.id = MQ.quarto");
+        String statement = "SELECT morador, preco, Q.id, data_saida FROM moradorquarto " + 
+                           "AS MQ  INNER JOIN quarto AS Q ON Q.id = MQ.quarto " +
+                           "INNER JOIN morador AS M ON MQ.morador = M.username " +
+                           "WHERE data_saida IS NULL";
+        PreparedStatement st = c.prepareStatement(statement);
         ResultSet rs = st.executeQuery();
 
         while(rs.next()){

@@ -70,7 +70,7 @@
                       <Component id="valorField" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="ContinuarButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="11" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="jButton2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>

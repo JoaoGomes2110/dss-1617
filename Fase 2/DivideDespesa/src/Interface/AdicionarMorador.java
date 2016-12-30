@@ -219,8 +219,8 @@ public class AdicionarMorador extends javax.swing.JDialog {
                 }
 
                 String msg = facade.addMorador(nomeMorador, usernameMorador, passMorador, numQuartos);
-
-                JOptionPane.showMessageDialog(this, msg);                
+                JOptionPane.showMessageDialog(this, msg);         
+                this.dispose();
             }
         }
     }//GEN-LAST:event_adicionaMoradorActionPerformed

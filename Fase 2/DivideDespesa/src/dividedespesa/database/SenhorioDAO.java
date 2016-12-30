@@ -71,7 +71,23 @@ public class SenhorioDAO {
             
             con.close();
         } catch (SQLException e) {}
+        
         return exists;
     }
-    
+     
+    public boolean existeDB() throws SQLException{
+        boolean ret = false;
+       
+        Connection con = Connect.connect();
+        PreparedStatement ps = con.prepareStatement("select username from senhorio");
+       
+        ResultSet rs = ps.executeQuery();
+       
+        if(rs.next())
+            ret = true;
+       
+        con.close();
+        
+        return ret;
+    }
 }

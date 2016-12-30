@@ -151,6 +151,10 @@ public class DivideDespesa {
        moradoresDAO.updatePassword(username,password);
     }
     
+    public boolean existeApt() throws SQLException {
+       return senhorioDAO.existeDB();
+    }
+    
     public void alterarQuartosMorador(String username, List<Integer> quartos) throws SQLException {
          moradoresDAO.updateMoradorQuarto(moradoresDAO.get(username), quartos); 
     }
@@ -181,7 +185,7 @@ public class DivideDespesa {
     }
     
     public void updateSaldo (String username, double valor) throws SQLException {
-        moradoresDAO.updateSaldo(username, valor + consultaSaldo(username));
+        moradoresDAO.updateSaldo(username, valor );
     }
     
     public void removerUtilizador(String username) throws SQLException {
@@ -227,19 +231,6 @@ public class DivideDespesa {
             quartosDAO.toDB(i, d);
             i++;
         }
-    }
-    
-    
-    /**
-     * @param args the command line arguments
-     * @throws java.sql.SQLException
-     */
-
-  
-    public static void main(String[] args) throws SQLException {
-       
-
-     
     }
 }
 
