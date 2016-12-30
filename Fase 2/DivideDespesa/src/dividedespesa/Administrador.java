@@ -1,62 +1,61 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * @brief Classe Administrador. Contém métodos para criar e validar um objecto
+ *        desta classe.
+ *
+ * @author Carlos Pereira   - A61887
+ * @author João Barreira    - A73831
+ * @author João Gomes       - A74033
+ * @author João Reis        - A75372
  */
+
 package dividedespesa;
 
-/**
- *
- * @author Carlos Pereira, João Gomes, João Pires Barreira, João Reis
- */
 public class Administrador extends Utilizador {
-    
     
     //Construtores
     
+    /**
+     * Construtor por parâmetros.
+     * 
+     * @param username  Username do administrador
+     * @param password  Password do administrador
+     */
     public Administrador(String username, String password) {
         super(username, password);
     }
     
+    /**
+     * Construtor a partir do mesmo objeto.
+     * 
+     * @param admin Administrador
+     */
     public Administrador(Administrador admin) {
         super(admin.getUsername(), admin.getPassword());
     }
     
+    
     //Métodos de instância
     
+    /**
+     * Valida o username e a password de um administrador.
+     * 
+     * @return true se forem válidos
+     *         false caso contrário
+     */
     public boolean validaAdministrador() {
         return this.validaUsername() && this.validaPassword();
     }
     
+    /**
+     * Verifica se o username e a password de um utilizador recebido
+     * são iguais aos do administrador.
+     * 
+     * @param u Utilizador a verificar
+     * @return  true se for administrador
+     *          false caso contrário
+     */
     public boolean isAdministrador (Utilizador u) {
         return this.getUsername().equals(u.getUsername()) &&
                this.getPassword().equals(u.getPassword());
     }
-    
-    
-    //Métodos complementares comuns
-
-    
-    public boolean equals(Object o) {
-        
-        if (this == o) {
-            return true;
-        }
-        
-        if (this.getClass() != o.getClass() || o == null) {
-            return false;
-        }
-        
-        Administrador admin = (Administrador) o;
-        
-        String user = this.getUsername();
-        String pswd = this.getPassword();
-        
-        return user.equals(admin.getUsername()) &&
-               pswd.equals(admin.getPassword());
-    }
-    
-    public Administrador clone() {
-        return new Administrador(this);
-    }   
 }
