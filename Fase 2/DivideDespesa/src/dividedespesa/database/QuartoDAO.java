@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dividedespesa.database;
 
 import dividedespesa.Quarto;
@@ -10,7 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -18,10 +12,19 @@ import java.util.TreeMap;
 
 /**
  *
- * @author João
+ * @author Carlos Pereira
+ * @author João Barreira
+ * @author João Gomes
+ * @author João Reis
+ * 
  */
 public class QuartoDAO {
-    
+    /**
+     * Colo na base de dados um dado quarto
+     * @param id ID do quarto
+     * @param preco Preco do Quarto.
+     * @throws SQLException 
+     */
     public void toDB(int id, double preco) throws SQLException {
 
         Connection c = Connect.connect();
@@ -34,6 +37,11 @@ public class QuartoDAO {
         c.close();
     }
     
+    /**
+     * Acede a base de dados de modo a calcular o numero de quartos que existe.
+     * @return Numero de quartos que existe.
+     * @throws SQLException Atira exceção caso ocorram erros SQL
+     */
     public int size() throws SQLException {
         int size = -1;
 
@@ -48,22 +56,13 @@ public class QuartoDAO {
 
         return size;
     }
-
-    public boolean isEmpty() throws SQLException {
-        boolean empty = true;
-        
-        Connection con = Connect.connect();
-        PreparedStatement ps = con.prepareStatement("select count(id) from quarto");
-        ResultSet rs = ps.executeQuery();
-
-        if(rs.next())
-            empty = false;
-
-        con.close();
-
-        return empty;
-    }
-
+    
+    /**
+     * Acede a base de dados de modo a verificar se um determinado quarto existe
+     * @param key ID do quarto
+     * @return true se existe, false se não.
+     * @throws SQLException Atira exceção caso ocorram erros SQL
+     */
     public boolean containsKey(Object key) throws SQLException {
         boolean r = false;
         Connection con = null;
@@ -82,7 +81,12 @@ public class QuartoDAO {
     }
 
 
-
+    /**
+     * Actualiza na base de dados a renda de um determinado quarto.
+     * @param key ID do quarto
+     * @param preco Nova renda
+     * @throws SQLException Atira exceção caso ocorram erros SQL
+     */
     public void updateRenda(int key, double preco) throws SQLException {
         Connection con = Connect.connect();
         
@@ -93,6 +97,12 @@ public class QuartoDAO {
         con.close();
     }
     
+    /**
+     * Acede a base de dados de modo a calcular o numero de morador num determinado quarto.
+     * @param key ID do quarto
+     * @return numero de moradores
+     * @throws SQLException Atira exceção caso ocorram erros SQL
+     */
     public int getNumMorador(int key) throws SQLException {
         Quarto c = null;
         Connection con = null;
@@ -113,36 +123,35 @@ public class QuartoDAO {
         return numMoradores;
     }
     
+    /**
+     * Controi um quarto, dado o seu ID
+     * @param key ID do quarto
+     * @return Quarto
+     * @throws SQLException 
+     */
     public Quarto get(int key) throws SQLException {
         Quarto c = null;
         Connection con = null;
 
         con = Connect.connect();
-            
-        //OBTEM DADOS DO MORADOR QUE ESTA NAQUELE QUARTO
-        PreparedStatement ps_quarto = con.prepareStatement("SELECT morador FROM moradorquarto WHERE quarto = ?");
-        ps_quarto.setInt(1, key);
-        ResultSet rs_quarto = ps_quarto.executeQuery();
-        Set<String> listamorador = new HashSet<>();
-            
-
-        while(rs_quarto.next())
-            listamorador.add(rs_quarto.getString("morador"));
 
         PreparedStatement ps = con.prepareStatement("select * from quarto where id = ?");
         ps.setInt(1,key);
         ResultSet rs = ps.executeQuery();
 
         if (rs.next())
-            return new Quarto(rs.getInt("id"),rs.getInt("preco"),listamorador);
+            return new Quarto(rs.getInt("id"),rs.getInt("preco"));
 
-            
         con.close();
             
         return c;
     }
 
-        
+    /**
+     * Consulta na base de dados os quartos existentes
+     * @return Array com ID e preco de todos os quartos.
+     * @throws SQLException Atira exceção caso ocorram erros SQL
+     */
     public String[] getAll() throws SQLException {
         String[] ret = new String[this.size()];
         Connection con = null;
@@ -169,7 +178,11 @@ public class QuartoDAO {
         
         return ret;        
     }
-
+    /**
+     * Acede a base de dados de modo a calcular, para todos moradores, a renda que teriam de pagar naquela altura.
+     * @return Map com Username e a renda correspondente.
+     * @throws SQLException Atira exceção caso ocorram erros SQL
+     */
     public Map<String, Double> getUsernamesPrecos() throws SQLException {
         
         Map<String, Double> usernames = new TreeMap<>();

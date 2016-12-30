@@ -20,59 +20,24 @@ public class Quarto {
     
     private int numQuarto; // número do quarto
     private double preco;
-    private Set<String> moradores; // lista dos usernames dos moradores do quarto
 
 
     // Construtores
     
-    public Quarto (int numQuarto, double preco, Set<String> moradores) {
+    public Quarto (int numQuarto, double preco) {
 
         this.numQuarto = numQuarto;
         this.preco = preco;
-        this.moradores = moradores;
     }
     
     
     public Quarto (Quarto q) {
         this.numQuarto = q.getNumQuarto();
         this.preco = q.getPreco();
-        this.moradores = q.getMoradores();
-    }
-    
-    // Métodos de instância
-    
 
-    public void addMorador(String morador) {
-        if (!moradores.contains(morador)) {
-            moradores.add(morador);
-        }
     }
     
-    public boolean containsUsername(String user) {
-        return moradores.contains(user);
-    }
-    
-    public int getNumMoradores() {
-        return moradores.size();
-    }
-    
-    public void takeMorador(String user) {
-        Set<String> new_moradores = new HashSet<>();
-        
-        for(String s : moradores) {
-            if (s.equals(user)) {
-                
-            } else {
-                new_moradores.add(s);
-            }
-        }
-        
-        setMoradores(new_moradores);
-    }
-    
-
-    
-    // Getters e Setters
+     // Getters e Setters
     
     public int getNumQuarto() {
         return numQuarto;
@@ -82,18 +47,8 @@ public class Quarto {
         return preco;
     }
     
-    public Set<String> getMoradores() {
-        return new HashSet<>(moradores);
-    }
-
-    
     public void setNumQuarto(int numQuarto) {
         this.numQuarto = numQuarto;
-    }
-
-
-    public void setMoradores(Set<String> moradores) {
-        this.moradores = new HashSet<>(moradores);    
     }
     
     public void setPreco(double preco) {
