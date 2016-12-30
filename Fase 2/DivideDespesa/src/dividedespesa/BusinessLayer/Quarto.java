@@ -49,6 +49,7 @@ public class Quarto {
      * Devolve o id do quarto.
      * 
      * @return 
+     * @return idQuarto
      */
     public int getidQuarto() {
         return idQuarto;
@@ -65,6 +66,7 @@ public class Quarto {
     
     /**
      * Faz o set ao id do quarto.
+     * 
      * @param idQuarto 
      */
     public void setidQuarto(int numQuarto) {
