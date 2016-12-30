@@ -25,7 +25,7 @@ public class Connect{
         
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connect = (Connection ) DriverManager.getConnection("jdbc:mysql://localhost/divide_despesas", "root", "password");
+            connect = (Connection ) DriverManager.getConnection("jdbc:mysql://localhost/divide_despesas", "root", "qweqwe");
         } catch (ClassNotFoundException ex) {
             System.out.println("Base de dados inexistente");
         }

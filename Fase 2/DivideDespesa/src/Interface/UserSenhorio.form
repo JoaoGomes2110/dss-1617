@@ -53,21 +53,19 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace pref="62" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="cobrarRenda" alignment="1" max="32767" attributes="0"/>
-                      <Component id="alterarRenda" alignment="1" max="32767" attributes="0"/>
-                      <Component id="removerMorador" alignment="1" max="32767" attributes="0"/>
-                      <Component id="verDespesas" alignment="0" max="32767" attributes="0"/>
-                      <Component id="adicionarMorador" alignment="0" max="32767" attributes="0"/>
-                      <Component id="alterarDadosMorador" alignment="1" pref="189" max="32767" attributes="0"/>
-                  </Group>
-                  <EmptySpace pref="62" max="32767" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="sair" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="cobrarRenda" alignment="1" max="32767" attributes="0"/>
+                          <Component id="alterarRenda" alignment="1" max="32767" attributes="0"/>
+                          <Component id="removerMorador" alignment="1" max="32767" attributes="0"/>
+                          <Component id="verDespesas" alignment="0" max="32767" attributes="0"/>
+                          <Component id="adicionarMorador" alignment="0" max="32767" attributes="0"/>
+                          <Component id="alterarDadosMorador" alignment="1" pref="189" max="32767" attributes="0"/>
+                      </Group>
+                      <Component id="sair" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>

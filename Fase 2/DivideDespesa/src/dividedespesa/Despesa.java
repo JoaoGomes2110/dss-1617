@@ -56,7 +56,7 @@ public class Despesa {
         this.tipo = returnTipo(t);
         this.dataEmissao = dataEmissao;
         this.dataLimite = dataLimite;
-        dataPagamento = null;
+        this.dataPagamento = dataPagamento;
     }
     
     //Métodos de instância
@@ -125,7 +125,7 @@ public class Despesa {
         return dataPagamento;
     }
     
-    public void setDataPagamento(Date g) { // confirmar gregorian
+    public void setDataPagamento(Date g) {
         dataPagamento = g;
     }
     

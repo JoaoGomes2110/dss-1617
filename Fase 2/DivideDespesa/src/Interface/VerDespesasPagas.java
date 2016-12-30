@@ -33,10 +33,11 @@ public class VerDespesasPagas extends javax.swing.JDialog {
         myInit();
         DefaultTableModel model = (DefaultTableModel) DespesasPagas.getModel();
         
-        Object[] o = facade.despesasPagas(morador);
+        String[][] despesas = facade.despesasPagas(morador);
 
-        model.addRow(o);
-
+        for(int i = 0; i < despesas.length; i++) {
+            model.addRow(despesas[i]);
+        }
     }
     
     public void myInit(){

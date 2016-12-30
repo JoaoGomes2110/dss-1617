@@ -56,20 +56,55 @@ public class DivideDespesa {
     
     public void adicionarDespesa(String nome, double valor, String tipo,
                                  Date data, String username) throws SQLException, NumberFormatException {
+        Date now = new Date();
+       
         
         int id = despesasDAO.size() + 1;
 
-        Despesa d = new Despesa(id, nome, valor, tipo, data, data, null);   
+        Despesa d = new Despesa(id, nome, valor, tipo, new Date(), data, null);   
         
         despesasDAO.put(d, username);
     }    
+
     
-    public Collection<Despesa> verDespesasPorPagar(String username) throws SQLException {
+    public Collection<Despesa> verDespesasPorPagarCollection(String username) throws SQLException {
         return despesasDAO.userPorPagar(username);
+    
     }
     
-    public Collection<Despesa> verDespesasPagas(String username) throws SQLException {
-        return despesasDAO.userPagas(username);
+    public String[][] verDespesasPorPagar(String username) throws SQLException {
+        List<Despesa> despesas = despesasDAO.userPorPagar(username);
+        int i = 0;
+        String [][] ret = new String[despesas.size()][5]; 
+        
+        for(Despesa d : despesas) {
+            ret[i][0] = String.valueOf(d.getId());
+            ret[i][1] = d.getInfo();
+            ret[i][2] = String.valueOf(d.getValor());
+            ret[i][3] = d.getDataEmissao().toString();
+            ret[i][4] = d.getDataLimite().toString();
+            i++;
+        }
+        
+        return ret;
+    }
+    
+    public String[][] verDespesasPagas(String username) throws SQLException {
+        List<Despesa> despesas = despesasDAO.userPagas(username);
+        int i = 0;
+        String [][] ret = new String[despesas.size()][6]; 
+        
+        for(Despesa d : despesas) {
+            ret[i][0] = String.valueOf(d.getId());
+            ret[i][1] = d.getInfo();
+            ret[i][2] = String.valueOf(d.getValor());
+            ret[i][3] = d.getDataEmissao().toString();
+            ret[i][4] = d.getDataLimite().toString();
+            ret[i][5] = d.getDataPagamento().toString();
+            i++;
+        }
+        
+        return ret;
     }
 
     

@@ -61,7 +61,6 @@ public class DespesaDAO {
         Date dataEmissao, dataLimite, dataPagamento;
         
         if(rs.next()){
-            System.out.println("ola");
             dataEmissao = rs.getDate("data_emissao");
             dataLimite = rs.getDate("data_limite");
             dataPagamento = rs.getDate("data_pagamento");
@@ -165,7 +164,9 @@ public class DespesaDAO {
                 dataEmissao = rs_dPagas.getDate("data_emissao");
                 dataLimite = rs_dPagas.getDate("data_limite");
                 dataPagamento = rs_dPagas.getDate("data_pagamento");
-                dPagas = new Despesa(rs_dPagas.getInt("id"), rs_dPagas.getString("info"), rs_dPagas.getDouble("valor"), rs_dPagas.getString("tipo"),dataEmissao, dataLimite, dataPagamento);
+                dPagas = new Despesa(rs_dPagas.getInt("id"), rs_dPagas.getString("info"),
+                                     rs_dPagas.getDouble("valor"), rs_dPagas.getString("tipo"),
+                                     dataEmissao, dataLimite, dataPagamento);
                 ret.add(dPagas);
         }
 

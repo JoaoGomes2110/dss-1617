@@ -65,7 +65,7 @@ public class AdicionarDespesa extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         confirmarButton = new javax.swing.JButton();
-        dataDespesaCalendario = new com.toedter.calendar.JCalendar();
+        dataLimiteCalendario = new com.toedter.calendar.JCalendar();
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -126,7 +126,7 @@ public class AdicionarDespesa extends javax.swing.JDialog {
             }
         });
 
-        dataDespesaCalendario.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        dataLimiteCalendario.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jLabel5.setText("Data Limite");
 
@@ -159,7 +159,7 @@ public class AdicionarDespesa extends javax.swing.JDialog {
                             .addComponent(jScrollPane1)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addComponent(dataDespesaCalendario, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(dataLimiteCalendario, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel4)
                     .addComponent(jLabel5))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -186,7 +186,7 @@ public class AdicionarDespesa extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(dataDespesaCalendario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(dataLimiteCalendario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -222,10 +222,10 @@ public class AdicionarDespesa extends javax.swing.JDialog {
        String nome = nomeDespesaField.getText();
        String valor = valorDespesaField.getText();
        String tipo = String.valueOf(tipoDespesa.getSelectedItem());
-       Date data = dataDespesaCalendario.getCalendar().getTime();
+       Date dataLimite = dataLimiteCalendario.getCalendar().getTime();
        List<String> moradores = listaMoradoresField.getSelectedValuesList();
        
-       String msg = facade.adicionarDespesa(nome, valor, tipo, data, moradores);
+       String msg = facade.adicionarDespesa(nome, valor, tipo, dataLimite, moradores);
        JOptionPane.showMessageDialog(this, msg);
     }//GEN-LAST:event_confirmarButtonActionPerformed
 
@@ -282,7 +282,7 @@ public class AdicionarDespesa extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton confirmarButton;
-    private com.toedter.calendar.JCalendar dataDespesaCalendario;
+    private com.toedter.calendar.JCalendar dataLimiteCalendario;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

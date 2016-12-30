@@ -174,11 +174,13 @@ public class VerDespesas extends javax.swing.JDialog {
             String morador = String.valueOf(moradoresList.getSelectedItem()); 
             
             if(tipo.equals("Ver Despesas Por Pagar")){
+                
                 VerDespesasPorPagar dialog1 = new VerDespesasPorPagar(new javax.swing.JFrame(),
                                                    true, facade, morador);
                 dialog1.setVisible(true);
             }
             if(tipo.equals("Ver Despesas Pagas")){
+                
                 VerDespesasPagas dialog2 = new VerDespesasPagas(new javax.swing.JFrame(),
                                                true, facade, morador);
                 dialog2.setVisible(true);

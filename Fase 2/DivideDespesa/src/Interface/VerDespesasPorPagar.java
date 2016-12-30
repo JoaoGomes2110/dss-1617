@@ -30,7 +30,12 @@ public class VerDespesasPorPagar extends javax.swing.JDialog {
         this.morador = morador;
         myInit();
         DefaultTableModel model = (DefaultTableModel) DespesasPorPagar.getModel();
-        model.addRow(facade.despesasPorPagar(morador));
+        
+        String[][] despesas = facade.despesasPorPagar(morador);
+
+        for(int i = 0; i < despesas.length; i++) {
+            model.addRow(despesas[i]);
+        }
     }
     public void myInit(){
         DefaultTableModel model = new DefaultTableModel();
@@ -39,7 +44,6 @@ public class VerDespesasPorPagar extends javax.swing.JDialog {
         model.addColumn("Valor");
         model.addColumn("DataEmissão");
         model.addColumn("DataLimite");
-        model.addColumn("DataPagamento");
         DespesasPorPagar.setModel(model);
     }
 
@@ -90,7 +94,7 @@ public class VerDespesasPorPagar extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 636, Short.MAX_VALUE)
+                        .addGap(0, 948, Short.MAX_VALUE)
                         .addComponent(jButton1))
                     .addComponent(jScrollPane1))
                 .addContainerGap())

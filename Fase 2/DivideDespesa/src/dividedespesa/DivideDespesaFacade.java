@@ -25,7 +25,6 @@ public class DivideDespesaFacade extends Observable {
     private List<Double> precos;
     
     public DivideDespesaFacade() {
-        
         dd = new DivideDespesa();
         precos = new ArrayList<>();
     }
@@ -75,25 +74,29 @@ public class DivideDespesaFacade extends Observable {
     public String adicionarDespesa(String nome, String valor, String tipo,
                                    Date data, List<String> moradores) {
         String ret;
-        
+        Date now = new Date();
+        int comp = data.compareTo(now);
         if(nome.isEmpty() || valor.isEmpty() || tipo.isEmpty() || moradores.isEmpty()) {
             ret = "Todos os campos têm que estar preenchidos.";
         } else {
-            try {                
-                double v = Double.valueOf(valor)/(moradores.size());
-                
-                for(String m : moradores) {
-                    String username = this.parseString(m);
-                    dd.adicionarDespesa(nome, v, tipo, data, username);
+            if (comp <= 0) {
+                ret = "A data limite tem que ser antes da data atual.";
+            } else {
+                try {                
+                    double v = Double.valueOf(valor)/(moradores.size());
+
+                    for(String m : moradores) {
+                        String username = this.parseString(m);
+                        dd.adicionarDespesa(nome, v, tipo, data, username);
+                    }
+
+                    ret = "Despesa adicionada.";
+                } catch (SQLException e) {
+                    ret = "Não foi possível ligar à Base de Dados.";
+                } catch (NumberFormatException e) {
+                    ret = "Introduza um valor válido para a despesa.";
                 }
-                
-                ret = "Despesa adicionada.";
-            } catch (SQLException e) {
-                ret = "Não foi possível ligar à Base de Dados.";
-            } catch (NumberFormatException e) {
-                ret = "Introduza um valor válido para a despesa.";
             }
-            
         }
         
         return ret;
@@ -180,7 +183,6 @@ public class DivideDespesaFacade extends Observable {
         
         int i = 0;
         for(double d : precos) {
-            System.out.println("Quarto " + i + " " + d);
             i++;
         }
         
@@ -190,7 +192,6 @@ public class DivideDespesaFacade extends Observable {
             dd.registaApartamento(senhorio, admin, precos);
             ret = true;
         } catch (SQLException e) {
-            System.out.println(e);
             ret = false;
         }
         
@@ -248,7 +249,6 @@ public class DivideDespesaFacade extends Observable {
     }
     
     public Set<String> getSetMoradores()  {
-     //   Set ret = null;
         
         try {
             return new HashSet<>(Arrays.asList(dd.getMoradoresString()));
@@ -256,41 +256,34 @@ public class DivideDespesaFacade extends Observable {
             return null;
         }
 
-   //     return ret;
     }
    
-    public Object[] despesasPagas(String morador) {
+    public String[][] despesasPagas(String morador) {
         Collection<Despesa> despesas = null;
-        Object[] o = null; 
+        String[][] ret = null; 
+        String username = parseString(morador);
         
         try {
-            despesas = dd.verDespesasPagas(morador);
-            
-            for(Despesa d: despesas){
-                o = new Object[]{d.getId(),d.getInfo(),d.getValor(),d.getDataEmissao(),d.getDataLimite(),d.getDataPagamento()};
-            }
-            
+            ret = dd.verDespesasPagas(username);
         } catch (SQLException e) {
-            o = null;
+            ret = null;
         }
-        
-        return o;
+
+        return ret;
     }
    
-    public Object[] despesasPorPagar(String morador) {
+    public String[][] despesasPorPagar(String morador) {
         Collection<Despesa> despesas = null;
-        Object[] o = null;
+        String[][] ret = null;
+        String username = parseString(morador);
         
         try {
-            despesas = dd.verDespesasPorPagar(morador);
-            for(Despesa d: despesas){
-                o = new Object[]{d.getId(),d.getInfo(),d.getValor(),d.getDataEmissao(),d.getDataLimite(),d.getDataPagamento()};
-            }
+            ret = dd.verDespesasPorPagar(username);
         } catch (SQLException ex) {
-            o = null;
+            ret = null;
         }
         
-        return o;
+        return ret;
     }
    
     public String alterarRenda(String numQuarto, String valorRenda) {
@@ -358,12 +351,13 @@ public class DivideDespesaFacade extends Observable {
         
         return ret;
     }
-   
+    
+    
     public String[] getDadosDespesa(String user) {
         String[] despesas = null;
         
         try {
-            Collection<Despesa> temp = dd.verDespesasPorPagar(user);
+            Collection<Despesa> temp = dd.verDespesasPorPagarCollection(user);
         
             if(temp != null) {
                 despesas = new String[temp.size()];
@@ -379,7 +373,7 @@ public class DivideDespesaFacade extends Observable {
                 }
             }
         } catch (SQLException e) {
-            
+            despesas = null;
         }
         
         return despesas;
@@ -409,7 +403,6 @@ public class DivideDespesaFacade extends Observable {
             dd.cobrarRenda();
             ret = "A renda do mês foi cobrada.";
         } catch (SQLException e) {
-            System.out.println(e);
             ret = "Não foi possível ligar à Base de Dados.";
         }
         
