@@ -37,7 +37,7 @@ public class DivideDespesaFacade extends Observable {
     //Contrutores
     
     /**
-     * Construtor vazio
+     * Construtor vazio.
      */
     public DivideDespesaFacade() {
         dd = new DivideDespesa();
@@ -372,7 +372,15 @@ public class DivideDespesaFacade extends Observable {
      *                  false caso contrário
      */
     public boolean isSenhorio(String username, String password) {
-        return dd.isSenhorio(username, password);
+        boolean ret;
+        
+        try {
+            ret = dd.isSenhorio(username, password);
+        } catch (SQLException e) {
+            ret = false;
+        }
+        
+        return ret;
     }
     
     /**
@@ -385,7 +393,15 @@ public class DivideDespesaFacade extends Observable {
      *                  false caso contrário
      */
     public boolean isAdministrador(String username, String password) {
-        return dd.isAdministrador(username, password);
+        boolean ret;
+        
+        try {
+            ret = dd.isAdministrador(username, password);
+        } catch (SQLException e) {
+            ret = false;
+        }
+        
+        return ret;
     }
     
     /**
@@ -473,8 +489,8 @@ public class DivideDespesaFacade extends Observable {
     }
    
     /**
-     * Devolve uma matriz onde as colunas são diferentes campos de informações
-     * sobre uma despesa paga e as linhas as despesas.
+     * Devolve uma matriz onde as colunas são diferentes campos de
+     * informações sobre uma despesa paga e as linhas às despesas.
      * Também faz o tratamento de excepções. Caso não tenha sido possível
      * aceder às despesas de um morador, devolve null.
      * 
@@ -495,8 +511,8 @@ public class DivideDespesaFacade extends Observable {
     }
    
     /**
-     * Devolve uma matriz onde as colunas são diferentes campos de informações
-     * sobre uma despesa por pagar e as linhas as despesas.
+     * Devolve uma matriz onde as colunas são diferentes campos de
+     * informações sobre uma despesa por pagar e as linhas as despesas.
      * Também faz o tratamento de excepções. Caso não tenha sido possível
      * aceder às despesas de um morador, devolve null.
      * 
