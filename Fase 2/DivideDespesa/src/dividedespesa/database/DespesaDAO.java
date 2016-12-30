@@ -45,7 +45,7 @@ public class DespesaDAO {
         st.setDate(4,dataEmissao);
         st.setDate(5,dataLimite);
         st.setDate(6,dataPagamento);        
-        st.setString(7,despesa.getTipoDespesaString());
+        st.setString(7,despesa.getTipoDespesa());
         st.setString(8, username);
         st.executeUpdate();
 

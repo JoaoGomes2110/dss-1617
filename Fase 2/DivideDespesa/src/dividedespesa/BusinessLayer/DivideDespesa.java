@@ -125,7 +125,7 @@ public class DivideDespesa {
     public String[][] verDespesasPorPagar(String username) throws SQLException {
         List<Despesa> despesas = despesasDAO.userPorPagar(username);
         int i = 0;
-        String [][] ret = new String[despesas.size()][5]; 
+        String [][] ret = new String[despesas.size()][6]; 
         
         for(Despesa d : despesas) {
             ret[i][0] = String.valueOf(d.getId());
@@ -133,6 +133,7 @@ public class DivideDespesa {
             ret[i][2] = String.valueOf(d.getValor());
             ret[i][3] = d.getDataEmissao().toString();
             ret[i][4] = d.getDataLimite().toString();
+            ret[i][5] = d.getTipoDespesa();
             i++;
         }
         
@@ -151,7 +152,7 @@ public class DivideDespesa {
     public String[][] verDespesasPagas(String username) throws SQLException {
         List<Despesa> despesas = despesasDAO.userPagas(username);
         int i = 0;
-        String [][] ret = new String[despesas.size()][6]; 
+        String [][] ret = new String[despesas.size()][7]; 
         
         for(Despesa d : despesas) {
             ret[i][0] = String.valueOf(d.getId());
@@ -160,6 +161,7 @@ public class DivideDespesa {
             ret[i][3] = d.getDataEmissao().toString();
             ret[i][4] = d.getDataLimite().toString();
             ret[i][5] = d.getDataPagamento().toString();
+            ret[i][6] = d.getTipoDespesa();
             i++;
         }
         

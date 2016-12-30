@@ -171,6 +171,7 @@ public class DivideDespesaFacade extends Observable {
         int comp = dataLimite.compareTo(now);   //Comparação da data atual
                                                 //à data limite
         
+
         if(nome.isEmpty() || valorTotal.isEmpty() || tipo.isEmpty() ||
            moradores.isEmpty()) {
             ret = "Todos os campos têm que estar preenchidos.";

@@ -41,6 +41,7 @@ public class VerDespesasPorPagar extends javax.swing.JDialog {
         model.addColumn("Valor");
         model.addColumn("DataEmissão");
         model.addColumn("DataLimite");
+        model.addColumn("Tipo");
         DespesasPorPagar.setModel(model);
     }
 

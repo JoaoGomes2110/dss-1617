@@ -10,24 +10,16 @@
 
 package dividedespesa.BusinessLayer;
 
-import java.util.Arrays;
 import java.util.Date;
 
 public class Despesa {
-    
-    // Variáveis de classe
-    
-    public enum TipoDespesa {
-        RECORRENTE, EXTRAORDINARIA, RENDA        
-    };    
-
     
     // Variáveis de instância
     
     private int id;                 //id da despesa
     private String info;            //informações da despesa
     private double valor;           //valor da despesa
-    private TipoDespesa tipo;       //tipo de despesa
+    private String tipo;            //tipo de despesa
     private Date dataEmissao;       //data de emissão da despesa
     private Date dataLimite;        //data limite de pagamento da despesa
     private Date dataPagamento;     //data de pagamento da despesa
@@ -53,7 +45,7 @@ public class Despesa {
         this.id = id;
         this.info = new String(info);
         this.valor = valor;
-        this.tipo = returnTipo(tipo);
+        this.tipo = new String(tipo);
         this.dataEmissao = dataEmissao;
         this.dataLimite = dataLimite;
         this.dataPagamento = dataPagamento;
@@ -71,41 +63,6 @@ public class Despesa {
         this.tipo = desp.getTipoDespesa();
         this.dataEmissao = desp.getDataEmissao();
         this.dataLimite = desp.getDataLimite();
-    }
-    
-    
-    //Métodos de instância
-    
-    /**
-     * Verifica se os tipos de despesa são iguais.
-     * 
-     * @param tipo  tipo de despesa
-     * @return true se forem iguais
-     *         false caso contrário
-     */
-    public boolean equalsTipo(TipoDespesa tipo) {
-        return this.tipo == tipo;
-    }  
-
-    /**
-     * Devolve como enum TipoDespesa a String que indica o tipo de despesa.
-     *
-     * @param t String a indicar o tipo de despesa
-     * @return tipo de despesa em formato TipoDespesa
-     */
-    public TipoDespesa returnTipo(String t) {
-        TipoDespesa tipo;
-        
-        switch (t) {
-            case "Recorrente":      tipo = TipoDespesa.RECORRENTE;
-                                    break;
-            case "Extraordinária":  tipo = TipoDespesa.EXTRAORDINARIA;
-                                    break;
-            default :               tipo = TipoDespesa.RENDA;
-                                    break;
-        }
-        
-        return tipo;
     }
     
     
@@ -143,28 +100,8 @@ public class Despesa {
      * 
      * @return tipo
      */
-    public TipoDespesa getTipoDespesa() {
-        return tipo;
-    }
-    
-    /**
-     * Devolve o tipo de despesa como String.
-     * 
-     * @return tipo como String
-     */
-    public String getTipoDespesaString() {
-        String ret;
-        
-        switch(tipo) {
-            case RECORRENTE:        ret = new String("recorrente");
-                                    break;
-            case EXTRAORDINARIA:    ret = new String("extraordinaria");
-                                    break;
-            default:                ret = new String("renda");
-                                    break;
-        }
-    
-        return tipo.toString();
+    public String getTipoDespesa() {
+        return new String(tipo);
     }
     
     /**
