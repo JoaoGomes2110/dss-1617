@@ -32,14 +32,21 @@ public class VerDespesas extends javax.swing.JDialog {
         
         if (moradores != null) {
             
-            for(String s: moradores){
-                moradoresList.addItem(s);
+            if (!moradores.isEmpty()) {
+                for(String s: moradores){
+                    moradoresList.addItem(s);
+                }
+
+                String[] arr = moradores.toArray(new String[0]);
+                moradoresList.setSelectedItem(arr[0]);
+
+                goNext = true;
+            } else {
+                String msg = "Não existem moradores no apartamento.";
+                JOptionPane.showMessageDialog(this, msg);
+                goNext = false;
             }
             
-            String[] arr = moradores.toArray(new String[0]);
-            moradoresList.setSelectedItem(arr[0]);
-            
-            goNext = true;
         } else {
             String msg = "Não foi possível ligar à Base de Dados.";
             JOptionPane.showMessageDialog(this, msg);

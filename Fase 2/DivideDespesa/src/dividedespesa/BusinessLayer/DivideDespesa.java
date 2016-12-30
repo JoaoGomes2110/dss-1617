@@ -448,8 +448,16 @@ public class DivideDespesa {
         }
     }
 
-
-
+    /**
+     * Devolve um array com o número de cada quarto e o seu preço total.
+     *
+     * @return              Array de quartos
+     * @throws SQLException Excepção atirada quando não é possível ligar
+     *                      à Base de Dados
+     */
+    public String[] getQuartosPrecoTotal() throws SQLException {
+        return quartosDAO.getAllPrecoTotal();
+    }
 }
 
 

@@ -137,7 +137,7 @@ public class AlterarRenda extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void myInit() {
-        String[] quartos = facade.getQuartos();
+        String[] quartos = facade.getQuartosPrecoTotal();
         
         if (quartos == null) {
             String msg = "Não foi possível ligar à Base de Dados.";

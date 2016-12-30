@@ -18,6 +18,7 @@ public class AlterarDadosMorador extends javax.swing.JDialog {
 
     private static DivideDespesaFacade facade;
     
+    
     /**
      * Creates new form AlterarDadosMorador
      */
@@ -30,6 +31,38 @@ public class AlterarDadosMorador extends javax.swing.JDialog {
     }
     
 
+    private void myInit() {
+        String[] moradores = this.facade.getMoradores();
+        String[] quartos = this.facade.getQuartosPrecoTotal();
+        
+        if (moradores == null && quartos == null) {
+            String msg = "Não foi possível ligar à Base de Dados.";
+            JOptionPane.showMessageDialog(this, msg);
+            this.dispose();
+        } else {
+            quartosField.setModel(
+                    new javax.swing.AbstractListModel<String>() {
+                        public int getSize() {
+                            return quartos.length;
+                        }
+
+                        public String getElementAt(int i) {
+                            return quartos[i];
+                        }
+                    }
+                  );
+            
+            if (moradores.length > 0) {
+                listaMoradoresField.setModel(new javax.swing.DefaultComboBoxModel<>(moradores));
+            } else {
+                listaMoradoresField.removeAllItems();
+                String msg = "Não existem moradores no apartamento.";
+                JOptionPane.showMessageDialog(this, msg);
+                this.dispose();
+            }
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -151,30 +184,7 @@ public class AlterarDadosMorador extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void myInit() {
-        String[] moradores = facade.getMoradores();
-        String[] quartos = facade.getQuartos();
-        
-        if (moradores == null && quartos == null) {
-            String msg = "Não foi possível ligar à Base de Dados.";
-            JOptionPane.showMessageDialog(this, msg);
-            this.dispose();
-        } else {
-            quartosField.setModel(
-                new javax.swing.AbstractListModel<String>() {
-                    public int getSize() {
-                        return quartos.length;
-                    }
-
-                    public String getElementAt(int i) {
-                        return quartos[i];
-                    }
-                }
-            );
-        
-            listaMoradoresField.setModel(new javax.swing.DefaultComboBoxModel<>(moradores));
-        }
-    }
+    
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int opcao = JOptionPane.showConfirmDialog(this,"Deseja Cancelar?","Confirmação",YES_NO_OPTION);

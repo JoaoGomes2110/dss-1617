@@ -231,7 +231,7 @@ public class MoradorDAO {
     
     /**
      * Consulta na base de dados todos moradores.
-     * @return Array com o nome de e username de cada morador no aparamento.
+     * @return Array com o nome de e username de cada morador no apartamento.
      * @throws SQLException Atira exceção caso ocorram erros SQL
      */
     public String[] getAll() throws SQLException {

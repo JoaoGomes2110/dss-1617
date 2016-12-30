@@ -107,7 +107,7 @@ public class QuartoDAO {
 
         con = Connect.connect();
 
-        //OBTEM DADOS DO MORADOR QUE ESTA NAQUELE QUARTO
+        //OBTEM DADOS DO MORADOR QUE ESTÁ NAQUELE QUARTO
         PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM moradorquarto WHERE quarto = ?");
         ps.setInt(1, key);
         ResultSet rs = ps.executeQuery();
@@ -176,7 +176,9 @@ public class QuartoDAO {
         return ret;        
     }
     /**
-     * Acede a base de dados de modo a calcular, para todos moradores, a renda que teriam de pagar naquela altura.
+     * Acede à base de dados de modo a calcular, para todos moradores, a renda
+     * que teriam de pagar caso fosse para o quarto.
+     * 
      * @return Map com Username e a renda correspondente.
      * @throws SQLException Atira exceção caso ocorram erros SQL
      */
@@ -211,6 +213,31 @@ public class QuartoDAO {
         
         return usernames;
     }
-
-
+    
+    /**
+     * Consulta na base de dados os quartos existentes
+     * @return Array com ID e preco total de todos os quartos.
+     * @throws SQLException Atira exceção caso ocorram erros SQL
+     */
+    public String[] getAllPrecoTotal() throws SQLException {
+        String[] ret = new String[this.size()];
+        Connection con = null;
+        int i=0;          
+ 
+        con = Connect.connect();
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM quarto");
+        ResultSet rs = ps.executeQuery();
+ 
+        while(rs.next()){
+            StringBuilder sb = new StringBuilder();
+            sb.append(rs.getInt("id")).append(" - ").append(rs.getDouble("preco"));
+ 
+            ret[i] = sb.toString();
+            i++;
+        }
+       
+        con.close();
+       
+        return ret;        
+    }
 }

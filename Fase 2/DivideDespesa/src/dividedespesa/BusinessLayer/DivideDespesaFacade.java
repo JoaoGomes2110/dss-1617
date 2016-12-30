@@ -30,6 +30,7 @@ public class DivideDespesaFacade extends Observable {
     //Variáveis de instância
     
     private DivideDespesa dd;       //Objeto da classe DivideDespesa
+    
     private List<Double> precos;    //Lista auxiliar em que a posição
                                     //corresponde ao número do quarto
                                     //e o valor ao preço do quarto.
@@ -233,6 +234,28 @@ public class DivideDespesaFacade extends Observable {
             //Chama o método na DivideDespesa que vai à base de dados
             //obter as informações
             ret = dd.getQuartosString();
+        } catch (SQLException e) {
+            ret = null;
+        }
+        
+        return ret;
+    }
+    
+    
+    /**
+     * Devolve um array com as informações de todos os quartos.
+     * Caso não seja possível aceder aos quartos, devolve null que indica
+     * ter havido uma falha.
+     * 
+     * @return Array com os quartos 
+     */
+    public String[] getQuartosPrecoTotal() {
+        String[] ret;
+        
+        try {
+            //Chama o método na DivideDespesa que vai à base de dados
+            //obter as informações
+            ret = dd.getQuartosPrecoTotal();
         } catch (SQLException e) {
             ret = null;
         }
