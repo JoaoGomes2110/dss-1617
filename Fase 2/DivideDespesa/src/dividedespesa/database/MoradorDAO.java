@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dividedespesa.database;
 
 import dividedespesa.Conta;
@@ -19,10 +14,20 @@ import java.util.Map;
 
 /**
  *
- * @author João
+ * @author Carlos Pereira
+ * @author João Barreira
+ * @author João Gomes
+ * @author João Reis
+ * 
  */
 public class MoradorDAO {
     
+    /**
+     * Coloca na base dados um morador assim como a lista de quartos a que lhe corresponde.
+     * @param morador Morador
+     * @param quartos Lista de quartos
+     * @throws SQLException Atira exceção caso ocorram erros SQL
+     */
     public void put(Morador morador, List<Integer> quartos) throws SQLException {
         Connection c = null;
  
@@ -53,6 +58,12 @@ public class MoradorDAO {
         c.close();
     }
     
+    /**
+     * Actualiza na base de dados a lista de quartos a ele associado.
+     * @param morador Morador
+     * @param quartos Lista de quartos
+     * @throws SQLException Atira exceção caso ocorram erros SQL
+     */
     public void updateMoradorQuarto (Morador morador, List<Integer> quartos) throws SQLException {
         Connection c = null;
         c = Connect.connect();
@@ -70,7 +81,11 @@ public class MoradorDAO {
         c.close();
     }
         
-    
+    /**
+     * Consulta a base de dados de modo a calcular o numero de moradores existes.
+     * @return Número de moradores
+     * @throws SQLException Atira exceção caso ocorram erros SQL
+     */
     public int size()  throws SQLException {
         int size = -1;
 
@@ -86,6 +101,12 @@ public class MoradorDAO {
         return size;
     }
     
+    /**
+     * Consulta a base dados de modo a conferir se um determinado morador existe.
+     * @param username Username do morador
+     * @return true se existe, false se não.
+     * @throws SQLException Atira exceção caso ocorram erros SQL. 
+     */
     public boolean containsKey (String username) throws SQLException {
         boolean exists = false;
         Connection con = null;
@@ -107,6 +128,12 @@ public class MoradorDAO {
         return exists;
     }
     
+    /**
+     * Controi um Morador dado um username.
+     * @param username Username do moradores
+     * @return Morador contruido.
+     * @throws SQLException Atira exceção caso ocorram erros SQL.
+     */
     public Morador get(String username)  throws SQLException {
         Morador m = null;
         Connection con = null;
@@ -171,7 +198,13 @@ public class MoradorDAO {
         return m;
     }
     
-
+    /**
+     * Consulta a base de dados de modo conferir se os dados de um morador estão correctos.
+     * @param username Username do morador.
+     * @param password Password do morador.
+     * @return true se está correcto, false se não.
+     * @throws SQLException Atira exceção caso ocorram erros SQL
+     */
     public boolean exists(String username, String password) throws SQLException {
         boolean exists = false;
         Connection con = null;
@@ -192,6 +225,12 @@ public class MoradorDAO {
         return exists;
     }
     
+    /**
+     * Actuliza na base dados a saída de um morador de um apartamento.
+     * @param username Username do morador
+     * @param saida Data de saída
+     * @throws SQLException Atira exceção caso ocorram erros SQL
+     */
     public void updateSaida (String username, java.util.Date saida) throws SQLException {
                 
         Connection con = Connect.connect();
@@ -206,6 +245,12 @@ public class MoradorDAO {
         con.close();
     } 
     
+    /**
+     * Actualiza na base de dados o saldo de um morador.
+     * @param username Username do morador.
+     * @param saldo Novo saldo
+     * @throws SQLException Atira exceção caso ocorram erros SQL.
+     */
     public void updateSaldo (String username, double saldo) throws SQLException {
 
         Connection con = Connect.connect();
@@ -216,7 +261,13 @@ public class MoradorDAO {
         ps.executeUpdate();
         con.close();
     }
-
+    
+    /**
+     * Actualiza na base dados a password de um morador.
+     * @param username Username do morador.
+     * @param password Password do morador.
+     * @throws SQLException Atira exceção caso ocorram erros SQL.
+     */
     public void updatePassword(String username, String password) throws SQLException {
         Connection con = Connect.connect();
 
@@ -227,6 +278,11 @@ public class MoradorDAO {
         con.close();
     }
     
+    /**
+     * Consulta na base de dados todos moradores.
+     * @return Array com o nome de e username de cada morador no aparamento.
+     * @throws SQLException Atira exceção caso ocorram erros SQL
+     */
     public String[] getAll() throws SQLException {
         String[] ret = new String[this.size()];
         Connection con = null;

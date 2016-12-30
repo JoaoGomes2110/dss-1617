@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dividedespesa.database;
 
 import dividedespesa.Senhorio;
@@ -13,27 +8,37 @@ import java.sql.SQLException;
 
 /**
  *
- * @author João
+ * @author Carlos Pereira
+ * @author João Barreira
+ * @author João Gomes
+ * @author João Reis
+ * 
  */
 public class SenhorioDAO {
     
+    /**
+     * Coloca na base de dados um senhorio.
+     * @param senhorio Senhorio
+     * @throws SQLException Atira exceção caso ocorram erros SQL
+     */
     public void toDB(Senhorio senhorio) throws SQLException {
-        //try{
-            Connection c = Connect.connect();
-            PreparedStatement st = c.prepareStatement("INSERT INTO senhorio VALUES(?,?,?)");
+        Connection c = Connect.connect();
+        PreparedStatement st = c.prepareStatement("INSERT INTO senhorio VALUES(?,?,?)");
 
-            st.setString(1,senhorio.getUsername());
-            st.setString(2,senhorio.getPassword());
-            st.setString(3,senhorio.getNome());
+        st.setString(1,senhorio.getUsername());
+        st.setString(2,senhorio.getPassword());
+        st.setString(3,senhorio.getNome());
 
-            st.executeUpdate();
-            c.close();
-       // } catch (SQLException e) {
-            //System.out.println("Erro SQL! " + e.toString());
-        //}
+        st.executeUpdate();
+        c.close();
     }
     
-     public Senhorio get(Object key) {
+    /**
+     * Constroi um morador dada o seu username.
+     * @param key Username do senhorio
+     * @return Senhorio
+     */
+    public Senhorio get(Object key) {
         Senhorio c = null;
         Connection con = null;
         try {
@@ -52,29 +57,40 @@ public class SenhorioDAO {
         return c;
     }
     
-     public boolean exists(String username, String password) {
+    /**
+     * Consulta a base de dados de modo conferir se os dados de um senhorio estão correctos.
+     * @param username Username do senhorio.
+     * @param password Password do senhorio.
+     * @return true se está correcto, false se não.
+     * @throws SQLException Atira exceção caso ocorram erros SQL
+     */
+    public boolean exists(String username, String password) throws SQLException {
         boolean exists = false;
         Connection con = null;
-        try {
-            con = Connect.connect();
-            
-            // OBTEM DADOS DO QUARTO
-            PreparedStatement ps = con.prepareStatement("select * from senhorio where username = ? and password = ?");
-            ps.setString(1, username);
-            ps.setString(2, password);
-            
-            
-            ResultSet rs = ps.executeQuery();
-            
-            if(rs.next())
-                exists = true;
-            
-            con.close();
-        } catch (SQLException e) {}
+  
+        con = Connect.connect();
+
+        PreparedStatement ps = con.prepareStatement("select * from senhorio where username = ? and password = ?");
+        ps.setString(1, username);
+        ps.setString(2, password);
+
+
+        ResultSet rs = ps.executeQuery();
+
+        if(rs.next())
+            exists = true;
+
+        con.close();
         
         return exists;
     }
      
+    /**
+     * Consulta base de dados de modo conferir se existe algum senhorio.
+     * Caso não exista, pode-se adicionar um apartamento.
+     * @return
+     * @throws SQLException 
+     */
     public boolean existeDB() throws SQLException{
         boolean ret = false;
        

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dividedespesa.database;
 
 import dividedespesa.Despesa;
@@ -17,10 +12,21 @@ import java.util.List;
 
 /**
  *
- * @author João
+ * @author Carlos Pereira
+ * @author João Barreira
+ * @author João Gomes
+ * @author João Reis
+ * 
  */
+
 public class DespesaDAO {
     
+    /**
+     * Coloca na base de dados uma desesa relativa a um morador.
+     * @param despesa Despesa
+     * @param username Username do morador
+     * @throws SQLException Atira exceção caso ocorram erros SQL
+     */
     public void put(Despesa despesa, String username) throws SQLException {
         Connection c = null;
 
@@ -48,13 +54,19 @@ public class DespesaDAO {
         c.close();
     }
     
+    /**
+     * Dado o id, devolve uma despesa.
+     * @param key Id da despesa
+     * @return Despesa caso exista, de outra maneira, devolve null.
+     * @throws SQLException  Atira exceção caso ocorram erros SQL
+     */
+    
     public Despesa get(Object key) throws SQLException {
         Despesa d = null;
         Connection con = null;
 
         con = Connect.connect();
 
-        // OBTEM DADOS DO QUARTO
         PreparedStatement ps = con.prepareStatement("select * from despesa where id = ?");
         ps.setInt(1, Integer.parseInt(key.toString()));
         ResultSet rs = ps.executeQuery();
@@ -72,7 +84,12 @@ public class DespesaDAO {
         return d;
     }
     
-    
+    /**
+     * Actuliza a data de pagamento de uma dada despesa.
+     * @param idDespesa ID da despesa
+     * @param data Data de pagamento
+     * @throws SQLException  Atira exceção caso ocorram erros SQL
+     */
     public void updateDespesa(int idDespesa, java.util.Date data)  throws SQLException {
                
         Connection con = Connect.connect();
@@ -86,7 +103,12 @@ public class DespesaDAO {
         con.close();
     }
     
-
+    /**
+     * Consulta na base de dados a ultima renda paga por um dado morador.
+     * @param username Username
+     * @return Data da ultima renda paga. Caso ainda não tenha sido cobrado qualquer renda, devolve null.
+     * @throws SQLException  Atira exceção caso ocorram erros SQL.
+     */
     public Date ultimaRenda(String username) throws SQLException {
         Connection con = Connect.connect();
  
@@ -105,24 +127,24 @@ public class DespesaDAO {
         return date;
     }
     
-    
+    /**
+     * Consulta na base dados as despesas por pagar de um dado morador.
+     * @param username Username
+     * @return Lista de despesas por pagar
+     * @throws SQLException  Atira exceção caso ocorram erros SQL.
+     */
     public List<Despesa> userPorPagar(String username) throws SQLException {
         List<Despesa> ret = new ArrayList<>();
         Connection con = null;
         
         con = Connect.connect();
 
-        // OBTEM DESPESAS
-
         PreparedStatement ps_dPorPagar;
         ResultSet rs_dPorPagar;
         Date dataEmissao, dataLimite, dataPagamento;
         Despesa dPorPagar;
 
-        // OBTEM DESPESAS PAGAS  
-
         ps_dPorPagar = con.prepareStatement("SELECT * FROM despesa WHERE data_pagamento IS NULL AND morador = ?");
-
         ps_dPorPagar.setString(1, username);
         rs_dPorPagar = ps_dPorPagar.executeQuery();
 
@@ -139,6 +161,12 @@ public class DespesaDAO {
         return ret;
     }
     
+    /**
+     * Consulta na base dados as despesas pagas de um dado morador.
+     * @param username Username
+     * @return Lista de despesas pagas
+     * @throws SQLException  Atira exceção caso ocorram erros SQL.
+     */
     public List<Despesa> userPagas(String username) throws SQLException {
         List<Despesa> ret = new ArrayList<>();
         Connection con = null;
@@ -146,17 +174,13 @@ public class DespesaDAO {
 
         con = Connect.connect();
 
-        // OBTEM DESPESAS
 
         PreparedStatement ps_dPagas;
         ResultSet rs_dPagas;
         Date dataEmissao, dataLimite, dataPagamento;
         Despesa dPagas;
 
-        // OBTEM DESPESAS PAGAS  
-
         ps_dPagas = con.prepareStatement("SELECT * FROM despesa WHERE data_pagamento IS NOT NULL AND morador = ?");
-
         ps_dPagas.setString(1, username);
         rs_dPagas = ps_dPagas.executeQuery();
             
@@ -175,7 +199,11 @@ public class DespesaDAO {
         return ret;
     }
     
-        
+    /**
+     * Consulta na base de dados a quantidade de despesas existentes.
+     * @return numero de despesas existentes.
+     * @throws SQLException 
+     */
     public int size() throws SQLException {
         int size = -1;
 

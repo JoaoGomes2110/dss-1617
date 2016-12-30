@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dividedespesa.database;
 
 import com.mysql.jdbc.Connection;
@@ -13,14 +8,19 @@ import java.sql.SQLException;
 
 /**
  *
- * @author João
+ * @author Carlos Pereira
+ * @author João Barreira
+ * @author João Gomes
+ * @author João Reis
+ * 
  */
+
 public class AdministradorDAO {
  
     /**
      * Coloca um administrador na base de dados.
      * @param administrador Administrador
-     * @throws SQLException 
+     * @throws SQLException  Atira a exceção caso exista erros SQL
      */
     public void toDB(Administrador administrador) throws SQLException {
         Connection c = Connect.connect();
@@ -33,42 +33,51 @@ public class AdministradorDAO {
         c.close();
     }
     
-     public Administrador get(Object key) {
+    /**
+     * Constroi um Administrador dado o seu username
+     * @param key Username
+     * @return Administrador
+     * @throws java.sql.SQLException Atira exceção caso existam problemas SQL
+     */
+    public Administrador get(Object key) throws SQLException {
         Administrador c = null;
-        Connection con = null;
-        try {
-            con = Connect.connect();
+        Connection con = Connect.connect();
             
-            // OBTEM DADOS DO QUARTO
-            PreparedStatement ps = con.prepareStatement("select * from administrador where username = ?");
-            ps.setString(1, key.toString());
-            ResultSet rs = ps.executeQuery();
+        PreparedStatement ps = con.prepareStatement("select * from administrador where username = ?");
+        ps.setString(1, key.toString());
+        ResultSet rs = ps.executeQuery();
+
+        if(rs.next())
+            c = new Administrador(rs.getString("username"),rs.getString("password"));
+
+        con.close();
             
-            if(rs.next())
-                c = new Administrador(rs.getString("username"),rs.getString("password"));
-            
-            con.close();
-        } catch (SQLException e) {}
         return c;
     }
-     public boolean exists(String username, String password) {
+     /**
+      * Verifica se o username e password do administrador estão correctos.
+      * @param username Username
+      * @param password Password
+      * @return boolean a indicar se estão correctos.
+     * @throws java.sql.SQLException
+      */
+    public boolean exists(String username, String password) throws SQLException {
         boolean exists = false;
         Connection con = null;
-        try {
-            con = Connect.connect();
+
+        con = Connect.connect();
             
-            // OBTEM DADOS DO QUARTO
-            PreparedStatement ps = con.prepareStatement("select * from administrador where username = ? and password = ?");
-            ps.setString(1, username);
-            ps.setString(2, password);
-            
-            ResultSet rs = ps.executeQuery();
-            
-            if(rs.next())
-                exists = true;
-            
-            con.close();
-        } catch (SQLException e) {}
+        PreparedStatement ps = con.prepareStatement("select * from administrador where username = ? and password = ?");
+        ps.setString(1, username);
+        ps.setString(2, password);
+
+        ResultSet rs = ps.executeQuery();
+
+        if(rs.next())
+            exists = true;
+
+        con.close();
+
         return exists;
     }
     
