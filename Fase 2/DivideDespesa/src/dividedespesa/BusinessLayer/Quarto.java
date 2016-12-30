@@ -48,7 +48,6 @@ public class Quarto {
     /**
      * Devolve o id do quarto.
      * 
-     * @return 
      * @return idQuarto
      */
     public int getidQuarto() {
