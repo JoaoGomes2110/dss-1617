@@ -10,10 +10,7 @@ import java.util.Set;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.YES_NO_OPTION;
 
-/**
- *
- * @author Gomes
- */
+
 public class RemoverMorador extends javax.swing.JDialog {
     
     private static DivideDespesaFacade facade;
@@ -151,11 +148,10 @@ public class RemoverMorador extends javax.swing.JDialog {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
        int opcao = JOptionPane.showConfirmDialog(this,"Deseja Cancelar?","Confirmação",YES_NO_OPTION);
+       
        if(opcao == 0){
-           System.out.print("sim");
            this.dispose();
        }
-       else System.out.print("não");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void moradoresListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moradoresListActionPerformed

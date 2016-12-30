@@ -10,10 +10,6 @@ package Interface;
 import dividedespesa.DivideDespesaFacade;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Gomes
- */
 public class UserAdministrador extends javax.swing.JDialog {
 
     private static DivideDespesaFacade facade;
@@ -113,11 +109,11 @@ public class UserAdministrador extends javax.swing.JDialog {
 
     private void sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairActionPerformed
        int opcao = JOptionPane.showConfirmDialog(this,"Deseja Sair?","Confirmação",JOptionPane.YES_NO_OPTION);
+       
        if(opcao == 0){
-           System.out.print("sim");
+
            this.dispose();
        }
-       else System.out.print("não");
     }//GEN-LAST:event_sairActionPerformed
 
     private void verDespesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verDespesasActionPerformed

@@ -10,10 +10,7 @@ package Interface;
 import dividedespesa.DivideDespesaFacade;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Gomes
- */
+
 public class JanelaInicial extends javax.swing.JFrame  {
 
     private static DivideDespesaFacade facade; 
