@@ -1,16 +1,15 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * @brief Classe Senhorio. Contém métodos para criar e validar um objecto
+ *        desta classe.
+ *
+ * @author Carlos Pereira   - A61887
+ * @author João Barreira    - A73831
+ * @author João Gomes       - A74033
+ * @author João Reis        - A75372
  */
+
 package dividedespesa;
 
-
-
-/**
- *
- * @author Carlos Pereira, João Gomes, João Pires Barreira, João Reis
- */
 public class Senhorio extends Utilizador {
     
     // Variáveis de instância
@@ -20,18 +19,38 @@ public class Senhorio extends Utilizador {
     
     // Construtores
     
+    /**
+     * Construtor por parâmetros.
+     * 
+     * @param nome      Nome do senhorio
+     * @param username  Username do senhorio
+     * @param password  Password do senhorio
+     */
     public Senhorio(String nome, String username, String password) {
         super(username, password);
         this.nome = nome;
     }
     
+    /**
+     * Construtor a partir de um objeto Senhorio.
+     * 
+     * @param s Senhorio
+     */
     public Senhorio(Senhorio s) {
         super(s.getUsername(), s.getPassword());
         nome = s.getNome();
     }
     
+    
     // Métodos de instância
 
+    /**
+     * Faz a validação do nome, username e password de um Senhorio.
+     * Para isso verifica se estes parâmetros contêm carateres especiais.
+     * 
+     * @return true caso seja válido
+     *         false caso contrário
+     */
     public boolean validaSenhorio() {
         String [] special = {"/", "#", "$", "%", "&", ">", "<", "-", ","};
         boolean ret = true;
@@ -46,65 +65,29 @@ public class Senhorio extends Utilizador {
         return ret && this.validaUsername() && this.validaPassword();
     }
     
+    /**
+     * Verifica se o username e a password de um utilizador recebido
+     * são iguais aos do senhorio.
+     * 
+     * @param u Utilizador a verificar
+     * @return  true se for senhorio
+     *          false caso contrário
+     */
     public boolean isSenhorio (Utilizador u) {
         System.out.println("CHEGOU AO isSenhorio");
         return this.getUsername().equals(u.getUsername()) &&
                this.getPassword().equals(u.getPassword());
     }
     
-    public void adicionarMorador(Morador m, Quarto q) {
-        
-    }
+   
+    // Getters
     
-    public void removeMorador(Morador m) {
-        
-    }    
-    
-    // e alterar quarto(s) de um morador?
-    public void alteraDadosMorador(Morador m, String nome) {
-        
-    }
-    
-    public void registaApartamento(Apartamento apt) {
-        
-    }
-    
-    // o que acontece às rendas dos moradores desse apartamento?
-    public void alteraRendaApartamento() {
-        
-    }
-    
-    // Getters e setters
-    
+    /**
+     * Devolve o parâmetro 'nome' de um Senhorio.
+     * 
+     * @return Parâmetro 'nome'
+     */
     public String getNome() {
         return nome;
     }
-    
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-    
-    //Métodos complementares comuns
-    
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        
-        if (this.getClass() != o.getClass() || o == null) {
-            return false;
-        }
-        
-        Senhorio s = (Senhorio) o;
-        
-        return (s.getNome().equals(this.getNome()) &&
-                s.getUsername().equals(this.getUsername()) &&
-                s.getPassword().equals(this.getPassword()));
-    }
-    
-    public Senhorio clone() {
-        return new Senhorio(this);
-    }
-
-
 }

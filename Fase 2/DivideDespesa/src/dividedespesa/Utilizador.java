@@ -1,39 +1,56 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * @brief Classe Utilizador. Contém métodos para criar e validar um objecto
+ *        desta classe.
+ *
+ * @author Carlos Pereira   - A61887
+ * @author João Barreira    - A73831
+ * @author João Gomes       - A74033
+ * @author João Reis        - A75372
  */
+
 package dividedespesa;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-/**
- *
- * @author Carlos Pereira, João Gomes, João Pires Barreira, João Reis
- */
 public class Utilizador {
     
-    // Variávies de instância
+    // Variáveis de instância
     
     private String username;
     private String password;
 
+    
     // Construtores
     
+    /**
+     * Construtor por parâmetros.
+     * 
+     * @param username  Username do utilizador
+     * @param password  Password do utilizador
+     */
     public Utilizador(String username, String password) {
         this.username = username;
         this.password = password;
     }
     
+    /**
+     * Construtor a partir de um objeto Utilizador.
+     * 
+     * @param u Utilizador
+     */
     public Utilizador(Utilizador u) {
         username = u.getUsername();
         password = u.getPassword();
     }    
     
+    
     // Métodos de instância
     
-
+    /**
+     * Faz a validação do username de um Utilizador.
+     * Para isso verifica a existência de carateres especiais neste parâmetro.
+     * 
+     * @return true caso seja válido
+     *         false caso contrário
+     */
     public boolean validaUsername()  {
         String [] special = {"»", "«", ":", "*", " ", "/", "#", "$", "%", "&",
                              ">", "<", "-", ",", "=", "|", "\\", "!", "\"\""};
@@ -50,6 +67,13 @@ public class Utilizador {
     }
     
     
+    /**
+     * Faz a validação da password de um Utilizador.
+     * Para isso verifica a existência de carateres especiais neste parâmetro.
+     * 
+     * @return true caso seja válido
+     *         false caso contrário
+     */
     public boolean validaPassword() {
         String [] special = {"»", "«", ":", "*", " ", "/", "#", "$", "%", "&",
                              ">", "<", "-", ",", "=", "|", "\\", "!", "\"\""};
@@ -64,40 +88,25 @@ public class Utilizador {
         
         return ret;
     }
+
     
-    public boolean login(Utilizador u) {
-        return username.equals(u.getUsername()) &&
-               password.equals(u.getPassword());
-    }
+    // Getters
     
-    
-    
-    // Getters e setters
-    
+    /**
+     * Devolve o username do Utilizador.
+     * 
+     * @return username
+     */
     public String getUsername() {
         return this.username;
     }
     
+    /**
+     * Devolve a password do Utilizador.
+     * 
+     * @return password
+     */
     public String getPassword() {
         return this.password;
-    }
-    
-    public void setUsername(String usr) {
-        username = usr;
-    }
-    
-    public void setPassword(String pass) {
-        password = pass;
-    }
-    
-    
-    // Métodos complementares comuns
-    
-    public boolean equalsUsername(Object o) {        
-        return username.equals(o);
-    }
-    
-    public Utilizador clone() {
-        return new Utilizador(this);
     }
 }
