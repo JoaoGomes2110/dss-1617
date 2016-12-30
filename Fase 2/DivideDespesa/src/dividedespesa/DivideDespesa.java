@@ -1,8 +1,14 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * @brief Classe DivideDespesa. Contém todos os métodos que acedem aos
+ *        objetos 
+
+ *
+ * @author Carlos Pereira   - A61887
+ * @author João Barreira    - A73831
+ * @author João Gomes       - A74033
+ * @author João Reis        - A75372
  */
+
 package dividedespesa;
 
 import dividedespesa.database.*;
@@ -13,10 +19,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-/**
- *
- * @author Carlos Pereira, João Gomes, João Pires Barreira, João Reis
- */
+
 public class DivideDespesa {
     
     // Variáveis de instância
@@ -28,8 +31,12 @@ public class DivideDespesa {
     private static MoradorDAO moradoresDAO;
     private static DespesaDAO despesasDAO;
     
+    
     // Construtores
     
+    /**
+     * Construtor vazio.
+     */
     public DivideDespesa() {
         utilizador = null;
         adminDAO = new AdministradorDAO();
@@ -43,6 +50,15 @@ public class DivideDespesa {
     
     // Métodos de instância
     
+    /**
+     * 
+     * @param username
+     * @param password
+     * @param nome
+     * @param qrts
+     * @throws MoradorExistenteException
+     * @throws SQLException 
+     */
     public void addMorador(String username, String password, String nome,
                                List<Integer> qrts) throws MoradorExistenteException, SQLException {
         
