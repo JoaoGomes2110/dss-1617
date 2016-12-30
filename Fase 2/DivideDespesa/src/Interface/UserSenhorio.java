@@ -165,7 +165,9 @@ public class UserSenhorio extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cobrarRendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cobrarRendaActionPerformed
-        String msg = facade.cobrarRenda();
+        CobraRenda dialog = new CobraRenda(new javax.swing.JFrame(), true,
+                                           facade);
+        dialog.setVisible(true);
     }//GEN-LAST:event_cobrarRendaActionPerformed
 
     private void sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairActionPerformed

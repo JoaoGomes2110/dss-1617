@@ -55,13 +55,12 @@ public class DivideDespesa {
     }
     
     public void adicionarDespesa(String nome, double valor, String tipo,
-                                 Date data, String username) throws SQLException, NumberFormatException {
+                                 Date dataLimite, String username) throws SQLException, NumberFormatException {
         Date now = new Date();
-       
-        
+
         int id = despesasDAO.size() + 1;
 
-        Despesa d = new Despesa(id, nome, valor, tipo, new Date(), data, null);   
+        Despesa d = new Despesa(id, nome, valor, tipo, new Date(), dataLimite, null);   
         
         despesasDAO.put(d, username);
     }    
@@ -109,14 +108,14 @@ public class DivideDespesa {
 
     
     
-    public void cobrarRenda() throws SQLException {
+    public void cobrarRenda(Date dataLimite) throws SQLException {
         String tipo = "Renda";
         Map<String, Double> usernameRendas = quartosDAO.getUsernamesPrecos();
         
         for(String username : usernameRendas.keySet()) {
             if (jaCobrouRenda(username)) {
                 adicionarDespesa("Renda mensal", usernameRendas.get(username),
-                                 "RENDA", new Date(), username);
+                                 "RENDA", dataLimite, username);
             }
         }
     }
@@ -142,12 +141,6 @@ public class DivideDespesa {
         
 
         return cobrar;
-        /*
-        
-        moradoresPreco.keySet().stream().forEach((user) -> {
-            this.adicionarDespesa(user,
-                                  new Despesa(despesasDAO.size(), "Renda", moradoresPreco.get(user), "Renda", new Date(), new Date(), null));
-        });*/
     }
     
     public void alteraRendaQuarto(int numQuarto, double valor) throws SQLException {
@@ -221,7 +214,7 @@ public class DivideDespesa {
         return ret;
     }
     
-    void registaApartamento(Senhorio senhorio, Administrador admin,
+    public void registaApartamento(Senhorio senhorio, Administrador admin,
                             List<Double> precosQuartos) throws SQLException {
         
         senhorioDAO.toDB(senhorio);
@@ -231,7 +224,7 @@ public class DivideDespesa {
         int i = 0;
         
         for(Double d : precosQuartos) {
-            quartosDAO.toDB(i, precosQuartos.get(i));
+            quartosDAO.toDB(i, d);
             i++;
         }
     }

@@ -72,10 +72,11 @@ public class DivideDespesaFacade extends Observable {
     
     
     public String adicionarDespesa(String nome, String valor, String tipo,
-                                   Date data, List<String> moradores) {
+                                   Date dataLimite, List<String> moradores) {
         String ret;
         Date now = new Date();
-        int comp = data.compareTo(now);
+        int comp = dataLimite.compareTo(now);
+        
         if(nome.isEmpty() || valor.isEmpty() || tipo.isEmpty() || moradores.isEmpty()) {
             ret = "Todos os campos têm que estar preenchidos.";
         } else {
@@ -87,7 +88,7 @@ public class DivideDespesaFacade extends Observable {
 
                     for(String m : moradores) {
                         String username = this.parseString(m);
-                        dd.adicionarDespesa(nome, v, tipo, data, username);
+                        dd.adicionarDespesa(nome, v, tipo, dataLimite, username);
                     }
 
                     ret = "Despesa adicionada.";
@@ -396,16 +397,22 @@ public class DivideDespesaFacade extends Observable {
         return ret;
     }
     
-    public String cobrarRenda() {
+    public String cobrarRenda(Date dataLimite) {
         String ret;
+        Date now = new Date();
+        int comp = dataLimite.compareTo(now);
         
-        try {
-            dd.cobrarRenda();
-            ret = "A renda do mês foi cobrada.";
-        } catch (SQLException e) {
-            ret = "Não foi possível ligar à Base de Dados.";
+        if (comp > 0) {
+            try {
+                dd.cobrarRenda(dataLimite);
+                ret = "A renda do mês foi cobrada.";
+            } catch (SQLException e) {
+                ret = "Não foi possível ligar à Base de Dados.";
+            }
+        } else {
+            ret = "A data limite da renda tem que ser depois do dia atual.";
         }
-        
+               
         return ret;
     }
     

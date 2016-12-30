@@ -5,18 +5,26 @@
  */
 package Interface;
 
+import dividedespesa.DivideDespesaFacade;
+import java.util.Date;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author João
  */
 public class CobraRenda extends javax.swing.JDialog {
 
+    private static DivideDespesaFacade facade;
+    
     /**
      * Creates new form CobraRenda
      */
-    public CobraRenda(java.awt.Frame parent, boolean modal) {
+    public CobraRenda(java.awt.Frame parent, boolean modal,
+                      DivideDespesaFacade facade) {
         super(parent, modal);
         initComponents();
+        this.facade = facade;
     }
 
     /**
@@ -30,7 +38,7 @@ public class CobraRenda extends javax.swing.JDialog {
 
         dataLimiteCalendario = new com.toedter.calendar.JCalendar();
         jPanel1 = new javax.swing.JPanel();
-        dataLimiteCalendario1 = new com.toedter.calendar.JCalendar();
+        dataLimiteField = new com.toedter.calendar.JCalendar();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -41,7 +49,7 @@ public class CobraRenda extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cobrar Renda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 18))); // NOI18N
 
-        dataLimiteCalendario1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        dataLimiteField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText("Data Limite");
@@ -49,6 +57,11 @@ public class CobraRenda extends javax.swing.JDialog {
         jButton1.setText("Cancelar");
 
         jButton2.setText("Cobrar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -65,7 +78,7 @@ public class CobraRenda extends javax.swing.JDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
-                                .addComponent(dataLimiteCalendario1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(dataLimiteField, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel1))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -76,7 +89,7 @@ public class CobraRenda extends javax.swing.JDialog {
                 .addGap(21, 21, 21)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(dataLimiteCalendario1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(dataLimiteField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -97,6 +110,12 @@ public class CobraRenda extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Date dataLimite = dataLimiteField.getCalendar().getTime();
+        String msg = facade.cobrarRenda(dataLimite);
+        JOptionPane.showMessageDialog(this, msg);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -128,7 +147,8 @@ public class CobraRenda extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                CobraRenda dialog = new CobraRenda(new javax.swing.JFrame(), true);
+                CobraRenda dialog = new CobraRenda(new javax.swing.JFrame(), true,
+                                                   facade);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -142,7 +162,7 @@ public class CobraRenda extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JCalendar dataLimiteCalendario;
-    private com.toedter.calendar.JCalendar dataLimiteCalendario1;
+    private com.toedter.calendar.JCalendar dataLimiteField;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
