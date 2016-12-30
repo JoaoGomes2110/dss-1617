@@ -1,3 +1,10 @@
+/*
+ * @author Carlos Pereira   - A61887
+ * @author João Barreira    - A73831
+ * @author João Gomes       - A74033
+ * @author João Reis        - A75372
+ */
+
 package dividedespesa.database;
 
 import dividedespesa.Quarto;
@@ -5,19 +12,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
-/**
- *
- * @author Carlos Pereira
- * @author João Barreira
- * @author João Gomes
- * @author João Reis
- * 
- */
 public class QuartoDAO {
     /**
      * Colo na base de dados um dado quarto

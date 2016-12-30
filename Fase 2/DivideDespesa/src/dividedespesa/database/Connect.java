@@ -1,18 +1,15 @@
+/*
+ * @author Carlos Pereira   - A61887
+ * @author João Barreira    - A73831
+ * @author João Gomes       - A74033
+ * @author João Reis        - A75372
+ */
+
 package dividedespesa.database;
 
 import com.mysql.jdbc.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
-
-/**
- *
- * @author Carlos Pereira
- * @author João Barreira
- * @author João Gomes
- * @author João Reis
- * 
- */
 
 public class Connect{
         

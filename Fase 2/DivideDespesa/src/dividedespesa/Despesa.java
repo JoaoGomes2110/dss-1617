@@ -1,19 +1,17 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * @brief Classe Despesa. Contém métodos para criar um objecto desta
+ *        classe.
+ *
+ * @author Carlos Pereira   - A61887
+ * @author João Barreira    - A73831
+ * @author João Gomes       - A74033
+ * @author João Reis        - A75372
  */
+
 package dividedespesa;
 
 import java.util.Arrays;
 import java.util.Date;
-
-/**
- *
- * @author Carlos Pereira
- */
-
-    
 
 public class Despesa {
     
@@ -26,17 +24,46 @@ public class Despesa {
     
     // Variáveis de instância
     
-    private int id;
-    private String info;
-    private double valor;
-    private TipoDespesa tipo;
-    private Date dataEmissao;
-    private Date dataLimite;
-    private Date dataPagamento; // null para despesas por pagar
+    private int id;                 //id da despesa
+    private String info;            //informações da despesa
+    private double valor;           //valor da despesa
+    private TipoDespesa tipo;       //tipo de despesa
+    private Date dataEmissao;       //data de emissão da despesa
+    private Date dataLimite;        //data limite de pagamento da despesa
+    private Date dataPagamento;     //data de pagamento da despesa
     
     
     //Construtores
+
+    /**
+     * Construtor por parâmetros
+     * 
+     * @param id            id
+     * @param info          informações
+     * @param valor         valor
+     * @param tipo          tipo de despesa
+     * @param dataEmissao   data de emissão
+     * @param dataLimite    data limite de pagamento
+     * @param dataPagamento data de pagamento
+     */
+    public Despesa (int id, String info, double valor, String tipo,
+                    Date dataEmissao, Date dataLimite,
+                    Date dataPagamento) {
+        
+        this.id = id;
+        this.info = new String(info);
+        this.valor = valor;
+        this.tipo = returnTipo(tipo);
+        this.dataEmissao = dataEmissao;
+        this.dataLimite = dataLimite;
+        this.dataPagamento = dataPagamento;
+    }
     
+    /**
+     * Construtor através de um objeto Despesa.
+     * 
+     * @param desp Despesa
+     */
     public Despesa (Despesa desp) {
         this.id = desp.getId();
         this.info = desp.getInfo();
@@ -46,25 +73,26 @@ public class Despesa {
         this.dataLimite = desp.getDataLimite();
     }
     
-    public Despesa (int id, String info, double valor, String t,
-                    Date dataEmissao, Date dataLimite,
-                    Date dataPagamento) {
-        
-        this.id = id;
-        this.info = new String(info);
-        this.valor = valor;
-        this.tipo = returnTipo(t);
-        this.dataEmissao = dataEmissao;
-        this.dataLimite = dataLimite;
-        this.dataPagamento = dataPagamento;
-    }
     
     //Métodos de instância
     
-    public boolean equalsTipo(TipoDespesa t) {
-        return tipo == t;
+    /**
+     * Verifica se os tipos de despesa são iguais.
+     * 
+     * @param tipo  tipo de despesa
+     * @return true se forem iguais
+     *         false caso contrário
+     */
+    public boolean equalsTipo(TipoDespesa tipo) {
+        return this.tipo == tipo;
     }  
 
+    /**
+     * Devolve como enum TipoDespesa a String que indica o tipo de despesa.
+     *
+     * @param t String a indicar o tipo de despesa
+     * @return tipo de despesa em formato TipoDespesa
+     */
     public TipoDespesa returnTipo(String t) {
         TipoDespesa tipo;
         
@@ -80,24 +108,50 @@ public class Despesa {
         return tipo;
     }
     
+    
     //Getters e Setters
     
+    /**
+     * Devolve o id da despesa.
+     * 
+     * @return id
+     */
     public int getId() {
         return id;
     }
     
+    /**
+     * Devolve as informações da despesa.
+     * 
+     * @return info
+     */
     public String getInfo() {
         return new String(info);
     }
     
+    /**
+     * Devolve o valor da despesa.
+     * 
+     * @return valor
+     */
     public double getValor() {
         return valor;
     }
     
+    /**
+     * Devolve o tipo de despesa.
+     * 
+     * @return tipo
+     */
     public TipoDespesa getTipoDespesa() {
         return tipo;
     }
     
+    /**
+     * Devolve o tipo de despesa como String.
+     * 
+     * @return tipo como String
+     */
     public String getTipoDespesaString() {
         String ret;
         
@@ -113,49 +167,40 @@ public class Despesa {
         return tipo.toString();
     }
     
+    /**
+     * Devolve a data de emissão da despesa.
+     * 
+     * @return dataEmissao
+     */
     public Date getDataEmissao() {
         return dataEmissao;
     }
     
+    /**
+     * Devolve a data limite de pagamento da despesa.
+     * 
+     * @return dataLimite
+     */
     public Date getDataLimite() {
         return dataLimite;
     }
     
+    /**
+     * Devolve a data de pagamento da despesa.
+     * 
+     * @return dataPagamento
+     */
     public Date getDataPagamento() {
         return dataPagamento;
     }
     
+    /**
+     * Faz o set da data de pagamento da despesa.
+     * 
+     * @param g nova data de pagamento
+     */
     public void setDataPagamento(Date g) {
         dataPagamento = g;
-    }
-    
-    
-    //Métodos complementares comuns
-    
-    @Override
-    public int hashCode() {
-        return Arrays.hashCode(new Object[] {info, valor, tipo, dataEmissao, dataLimite, dataPagamento});
-    }
-        
-    @Override
-    public boolean equals (Object o) {
-        if (this == o) {
-            return true;
-        }
-        
-        if (o == null || this.getClass() != o.getClass()) {
-            return false;
-        }
-        
-        Despesa desp = (Despesa) o;
-        
-        return (id == desp.getId() && dataLimite.equals(desp.getDataLimite()) &&
-                dataEmissao.equals(desp.getDataEmissao()) &&
-                valor == desp.getValor() && this.equalsTipo(desp.getTipoDespesa()));
-    }
-    
-    public Despesa clone() {
-        return new Despesa(this);
     }
 } 
 

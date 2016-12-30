@@ -1,3 +1,10 @@
+/*
+ * @author Carlos Pereira   - A61887
+ * @author João Barreira    - A73831
+ * @author João Gomes       - A74033
+ * @author João Reis        - A75372
+ */
+
 package dividedespesa.database;
 
 import dividedespesa.Despesa;
@@ -9,15 +16,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-/**
- *
- * @author Carlos Pereira
- * @author João Barreira
- * @author João Gomes
- * @author João Reis
- * 
- */
 
 public class DespesaDAO {
     

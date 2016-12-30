@@ -1,25 +1,21 @@
+/*
+ * @author Carlos Pereira   - A61887
+ * @author João Barreira    - A73831
+ * @author João Gomes       - A74033
+ * @author João Reis        - A75372
+ */
+
 package dividedespesa.database;
 
 import dividedespesa.Conta;
-import dividedespesa.Despesa;
 import dividedespesa.Morador;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-/**
- *
- * @author Carlos Pereira
- * @author João Barreira
- * @author João Gomes
- * @author João Reis
- * 
- */
+
 public class MoradorDAO {
     
     /**

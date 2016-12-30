@@ -1,3 +1,10 @@
+/*
+ * @author Carlos Pereira   - A61887
+ * @author João Barreira    - A73831
+ * @author João Gomes       - A74033
+ * @author João Reis        - A75372
+ */
+
 package dividedespesa.database;
 
 import dividedespesa.Senhorio;
@@ -6,14 +13,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- *
- * @author Carlos Pereira
- * @author João Barreira
- * @author João Gomes
- * @author João Reis
- * 
- */
 public class SenhorioDAO {
     
     /**
